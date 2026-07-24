@@ -17,6 +17,102 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'enrico-viii-confusione-sentimentale-accoppiamento',
+    title: "LA CONFUSIONE SENTIMENTALE DI ENRICO VIII: \"NON SONO IO, SEI TU... E IL PAPA CHE NON MI DÀ IL DIVORZIO!\"",
+    subtitle: "Sei mogli, una Chiesa creata da zero per disperazione amorosa e il Tinder del Cinquecento: storia di un sovrano che non sapeva come dire 'prendiamoci una pausa' e finì per rifare la mappa religiosa d'Europa.",
+    category: 'accoppiamento',
+    categoryLabel: 'ACCOPPIAMENTO E DINTORNI',
+    author: 'Redazione & Coach Marcus (Consultant di Coppia)',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Ritratto reale ed elegante in stile Tudor di un sovrano rinascimentale dubbioso e sfarzoso',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 48900,
+    isHot: true,
+    content: {
+      intro: "Tutti abbiamo avuto quell'amico che, dopo sei mesi di relazione, comincia a dire: 'Sento che ci stiamo allontanando, ho bisogno dei miei spazi, forse dovrei fondare una mia religione personale per annullare il matrimonio'. Ecco, quel ragazzo nell'Inghilterra del '500 si chiamava Enrico VIII Tudor. Un sovrano con l'emotività di un adolescente alle prime armi, la pazienza di un gatto affamato e la perentoria abitudine di risolvere i cavilli burocratici di coppia fondando la Chiesa d'Inghilterra. Analizziamo insieme le tappe della più grande crisi d'identità sentimentale della storia!",
+      sections: [
+        {
+          heading: "1. IL SINDROME DA 'GHOSTING' REALE: Da Caterina d'Aragona ad Anna Bolena",
+          paragraphs: [
+            "Tutto cominciò con Caterina d'Aragona. Venti anni di matrimonio tranquillo, fino a quando Enrico si sveglia una mattina, guarda il soffitto della stanza reale e pensa: 'Mmm, la routine mi uccide. E poi il Papa a Roma ci mette troppo tempo a rispondere ai miei messaggi su WhatsApp'.",
+            "Invece di andare in terapia di coppia o fare una passeggiata rigenerante a Greenwich, Enrico decide che l'unico modo elegante per lasciarsi è staccarsi direttamente dalla Chiesa Cattolica romana. Morale della favola: quando non sai come dire 'è finita', fonda una nuova confessione religiosa e nominati Capo Supremo della Fede. Risolutivo!"
+          ],
+          quote: "Se la tua ragazza ti chiede 'dove sta andando la nostra storia?', non panicaricare: puoi sempre emanare un Atto di Supremazia e dichiararti sovrano autonomo dei tuoi sentimenti."
+        },
+        {
+          heading: "2. IL 'TINDER' TUDOR E IL RITRATTO DI HANNOVER: Quando la foto profilo non rispecchia la realtà",
+          paragraphs: [
+            "Tra una decisione impulsiva e l'altra, Enrico sperimenta il primo 'catfishing' documentato della storia moderna con Anna di Cleves. Il pittore di corte Hans Holbein il Giovane fu mandato in Germania a dipingere il ritratto della futura sposa. Holbein, usando filtri artistici rinascimentali da capogiro, dipinse un capolavoro.",
+            "Quando Anna arrivò a Londra, Enrico la guardò e rimase pietrificato: la foto profilo (il dipinto) era leggermente diversa dal vivo. La risposta del re? Matrimonio annullato in quattro mesi e scuse ufficiali della diplomazia tedesca. Un'incomprensione da swipe a destra precipitoso che è passata ai manuali di storia!"
+          ]
+        },
+        {
+          heading: "3. LE 6 REGOLE DI ENRICO VIII PER GESTIRE LE RELAZIONI COMPLICATE",
+          paragraphs: [
+            "1. Non dire mai 'dobbiamo parlare': manda un cancelliere con una pergamena da 40 metri.",
+            "2. Se il tuo partner non va d'accordo con i tuoi amici, licenzia i tuoi amici e nomina un nuovo Cardinale.",
+            "3. L'anello di fidanzamento non si restituisce mai: si riutilizza per la consorte successiva cambiando solo l'incisione con un po' di carta vetrata.",
+            "4. Se ti senti indeciso tra due persone, organizza un banchetto di 12 portate con fagiano arrosto e datti tre mesi di riflessione in campagna."
+          ],
+          quote: "In amore vince chi fugge... oppure chi possiede la zecca di stato e la facoltà di riscrivere il diritto canonico."
+        }
+      ],
+      conclusion: "In conclusione, la storia di Enrico VIII ci insegna che la confusione sentimentale è una costante umana universalmente diffusa. L'importante è gestirla con un pizzico di autoironia, senza dover per forza abolire i monasteri di mezza nazione!",
+      quiz: {
+        title: "👑 TEST DI AFFINITÀ TUDOR: QUANTO SEI CONFUSO IN AMORE COME ENRICO VIII?",
+        subtitle: "Rispondi sinceramente alle domande e scopri come gestisci le tue crisi sentimentali!",
+        questions: [
+          {
+            id: 'qh8_1',
+            question: "1. La tua storia d'amore attraversa un momento di piattezza e monotonia. Come reagisci?",
+            options: [
+              { label: 'A', text: 'Ne parlo serenamente con il partner davanti a una tazza di tisana calda.', outcomeText: 'Livello Enrico VIII: 0%. Troppo maturo e noioso! Nessuna Riforma Anglicana all\'orizzonte per te.' },
+              { label: 'B', text: 'Propongo un weekend fuori porta per ritrovare la complicità.', outcomeText: 'Livello Enrico VIII: 25%. Un approccio classico, ma manca il pathos drammatico dei Tudor.' },
+              { label: 'C', text: 'Dichiaro la mia indipendenza emotiva, cambio residenza e riscrivo gli statuti di famiglia!', outcomeText: 'Livello Enrico VIII: 100%! Sei pronto per incoronarti Sovrano del Dramma Sentimentale!' }
+            ]
+          },
+          {
+            id: 'qh8_2',
+            question: "2. Fissi un primo appuntamento dal vivo dopo aver conosciuto qualcuno online. Qual è la tua reazione se non è come nella foto?",
+            options: [
+              { label: 'A', text: 'Poco importa: la conversazione è piacevole e mi godo la serata con simpatia.', outcomeText: 'Spirito zen! Non hai nulla in comune con i vizi della corte rinascimentale.' },
+              { label: 'B', text: "Fingo un'improvvisa chiamata d'emergenza da parte del mio gatto e me ne vado dopo 20 minuti.", outcomeText: 'Un classico moderno! Abile fuga tattica degna della diplomazia del Cinquecento.' },
+              { label: 'C', text: "Annullo l'incontro, chiamo il pittore di corte per protestare e chiedo i danni morali!", outcomeText: 'Sua Maestà Enrico VIII approva! Il "catfishing" reale non è tollerato a Palazzo!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "💬 VUOI UN CONSIGLIO SENTIMENTALE DALLA NOSTRA REDAZIONE?",
+        subtitle: "Apri la Chat di Redazione per parlare con Coach Marcus o gli altri nostri Alter Ego di relazioni, indecisioni e consigli di coppia!",
+        buttonText: "💬 PARLA SUBITO IN CHAT CON GLI ESPERTI",
+        badge: "RUBRICA ACCOPPIAMENTO E DINTORNI"
+      }
+    },
+    comments: [
+      {
+        id: 'c-h8-1',
+        author: 'AnnaDiClevesOfficial',
+        avatar: '👑',
+        date: '4 minuti fa',
+        text: 'Confermo tutto! La mia foto profilo era senza filtri, è lui che non capiva il valore dell\'arte rinascimentale tedesca!',
+        likes: 1420
+      },
+      {
+        id: 'c-h8-2',
+        author: 'TommasoMoroFan',
+        avatar: '📜',
+        date: '10 minuti fa',
+        text: 'Articolo geniale! La prossima volta che il mio partner tentenna per decidere dove cenare, gli ricordo che Enrico VIII c\'ha rifatto la Chiesa per molto meno.',
+        likes: 980
+      }
+    ]
+  },
+  {
     id: 'filosofia-del-nulla-intervista-filosofi-naturalisti',
     title: "RUBRICA \"FILOSOFIA DEL NULLA\" #1: INTERVISTA ESCLUSIVA AI FILOSOFI NATURALISTI (\"L'ARCHÈ? È SOLO UN GRANDE MAL DI TESTA\")",
     subtitle: "Inauguriamo la nuova serie di interviste ai grandi pensatori partendo dai Presocratici: Talete, Anassimandro, Anassimene ed Eraclito ci svelano l'origine dell'universo tra pozzi, aria rarefatta, l'Apeiron infinito e il fiume della pigrizia.",
