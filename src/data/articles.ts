@@ -17,6 +17,102 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'accoppiamento-andare-in-bianco-marcus-coach',
+    title: "LEI DECIDE DI DARTELA (PERCHÉ NON NE PUÒ PIÙ DI SENTIRTI PARLARE) E RIESCI AD ANDARE IN BIANCO ANCHE QUESTA VOLTA",
+    subtitle: "Dalla spiegazione dettagliata del motore a quattro tempi della Fiat Duna fino al monologo sulle differenze tra la pittura fiamminga e il parquet prefinito: storia di un trionfo dello sfinimento trasformato in un disastro cosmico con i consigli di Marcus.",
+    category: 'accoppiamento',
+    categoryLabel: 'ACCOPPIAMENTO E DINTORNI',
+    author: 'Marcus "Alpha del Fallimento" & La Redazione',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Ritratto grottesco e comico su una serata romantica finita in un imbarazzante fallimento',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 31200,
+    isHot: true,
+    content: {
+      intro: "L'orologio segnava le 01:42 di notte. Dopo ben tre ore e quarantacinque minuti ininterrotti nei quali le hai spiegato la storia della moneta in Europa, la differenza strutturale tra il cartongesso idrofugo e la muratura in tufo, ed il motivo per cui preferisci la pasta corta a quella lunga, la sua resistenza psicologica è crollata. Con lo sguardo vitreo, i capelli arruffati e il sospiro disperato di chi preferirebbe l'ergastolo, ti ha guardato negli occhi e ha mormorato: 'Va bene... facciamo quello che devi fare, basta che poi ti stai zitto'. Il traguardo era lì, a portata di mano. E invece sei riuscito ad andare in bianco anche questa volta. Un capolavoro di autodistruzione tattica curato nei minimi dettagli dal tuo Personal Coach di Seduzione e Disastri: Marcus.",
+      sections: [
+        {
+          heading: "1. Il Miracolo dello Sfinimento Oratorio (Capitolo 1 del Metodo Marcus)",
+          paragraphs: [
+            "Come spiega Coach Marcus nel suo bestseller 'Seducile per Esaurimento Nervoso': 'La donna contemporanea è abituata a complimenti banali e sguardi ammiccanti. L'Alpha vero, invece, la sottomette con il tedio puro. Parla della pressione delle gomme della tua Alfa 147 fino a quando i suoi neuroni non implodono'.",
+            "La strategia aveva funzionato alla perfezione. Lei non ti desiderava, non era attratta da te, non provava la minima chimica: voleva semplicemente che la tua bocca smettesse di produrre vibrazioni acustiche nella stanza. Era la vittoria del logoramento."
+          ],
+          quote: "Quando una donna ti dice 'Fai in fretta, vi prego', non è un rifiuto: è il segnale che il tuo monologo sulla tassazione degli immobili ha raggiunto il picco di seduzione."
+        },
+        {
+          heading: "2. Come Sabotare il Momento Inevitabile in 3 Mosse Istruttive",
+          paragraphs: [
+            "Tuttavia, proprio mentre il destino ti spalancava le porte del successo, hai messo in atto la celebre 'Trilogia del Bianco Fatto in Casa' suggerita da Marcus durante le sue sessioni di coaching:",
+            "• Mossa 1: Tirare fuori le ciabatte ortopediche. 'Prima dell'atto, infilati subito un paio di ciabatte sanitarie grigie con il calzino in spugna alzato al polpaccio. Dimostra stabilità domestica ed evita il contatto spiacevole con le piastrelle fredde'.",
+            "• Mossa 2: Chiedere conferma scritta dell'entusiasmo. 'Prima di ogni carezza, chiedile se ha letto i termini e le condizioni d'uso e se preferisce compilare prima il modulo della privacy'.",
+            "• Mossa 3: Il colpo di grazia finale. Mentre l'atmosfera si scalda a stento, sfilarti la maglietta rivelando la canottiera a rete e mormorare sornione: 'Sai che la canottiera a rete era usata dai legionari romani durante le campag-...' – Ed è qui che lei si è chiusa a riccio, si è infilata il piumino fino al mento e ti ha cacciato sul divano."
+          ]
+        },
+        {
+          heading: "3. La Filosofia di Marcus: 'Andare in Bianco è la Vera Vittoria dell'Uomo Solo'",
+          paragraphs: [
+            "Abbiamo intervistato Coach Marcus nel suo studio decorato con attestati stampati da Microsoft Word 97 e poster di lupi che ululano alla luna:",
+            "• 'Andare in bianco dopo aver ricevuto il via libera è il gesto supremo di dominanza quantistica! Risparmi energie mentali, non devi rifare les lenzuola e puoi passare il resto della notte a guardare i tutorial su come affilare le motoseghe su YouTube. Il vero maschio Alfa preferisce il divano e la pizza fredda al contatto umano!'"
+          ],
+          quote: "Se ti dice di sì e tu riesci comunque a fallire, non hai perso: hai solo dimostrato che la tua logorrea è più forte dei suoi ormoni."
+        }
+      ],
+      conclusion: "Non scoraggiarti! Se anche stasera dormirai sul divano abbracciato al cuscino del gatto, sappi che sei in ottima compagnia. Con il Metodo Marcus, il rifiuto è soltanto una forma avanzata di vittoria sociale!",
+      quiz: {
+        title: "🧪 TEST DEL FALLIMENTO SEDUTTIVO: QUANTO SEI ABILI AD ANDARE IN BIANCO?",
+        subtitle: "Verifica con Coach Marcus quante probabilità hai di finire la serata sul divano a dormire in canottiera!",
+        questions: [
+          {
+            id: 'qm1',
+            question: "1. Lei ti dice: 'Vieni da me, i miei non ci sono'. Come rispondi?",
+            options: [
+              { label: 'A', text: 'Arrivo subito con una presentazione PowerPoint di 48 slide sui condizionatori a inverter.', outcomeText: 'Perfezione assoluta secondo Marcus! Andrai in bianco entro 12 minuti dall\'ingresso!' },
+              { label: 'B', text: 'Mi presento con fiori, vino e un sorriso affascinante.', outcomeText: 'Sbagliato! Troppo banale e finto. Marcus ti toglie subito 50 punti Alpha!' },
+              { label: 'C', text: 'Le chiedo se la casa ha il cappotto termico e il riscaldamento a pavimento.', outcomeText: 'Eccellente! Il tedio immobiliare garantisce un sonno solitario sul tappeto!' }
+            ]
+          },
+          {
+            id: 'qm2',
+            question: "2. Cosa indossi per creare la giusta atmosfera romantica?",
+            options: [
+              { label: 'A', text: 'Canottiera a rete, ciabatte sanitarie grigie e calzino di spugna ben tirato.', outcomeText: 'Il look iconico del disastro! Marcus è orgoglioso di te.' },
+              { label: 'B', text: 'Camicia stirata e profumo leggero.', outcomeText: 'Troppo normale. Finirai per piacerle e ti toccherà davvero interagire con lei.' },
+              { label: 'C', text: 'Pigiama di pile con la sagoma di un cinghiale e le pantofole spaiate.', outcomeText: 'Vittoria immediata! L\'astinenza è garantita al 100%!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "💥 SUPER PROMO MASTERCLASS MARCUS: \"COME ANDARE IN BIANCO CON DIGNITÀ E LOGORREA\"!",
+        subtitle: "Iscriviti subito al corso esclusivo di Coach Marcus! Riceverai 12 videolezioni sui monologhi più noiosi della storia, il manuale della canottiera a rete e il diplomino 'Alpha del Divano' con il 70% di sconto!",
+        buttonText: "🔥 PRENOTA LA COACHING CON MARCUS E RICEVI IL TUO DISASTRO GARANTITO",
+        badge: "PROMO MASTERCLASS FALLIMENTO ALPHA"
+      }
+    },
+    comments: [
+      {
+        id: 'c-marcus-1',
+        author: 'GianniMotoreAScoppio',
+        avatar: '🏎️',
+        date: '4 minuti fa',
+        text: 'Grazie ai consigli di Marcus ieri le ho parlato per 4 ore della frizione idraulica della Fiat Duna. Quando ha detto "Basta ti prego" le ho mostrato la mia collezione di bulloni. Andato in bianco con lode sul divano!',
+        likes: 520
+      },
+      {
+        id: 'c-marcus-2',
+        author: 'SinglePerSfinimento',
+        avatar: '🛋️',
+        date: '18 minuti fa',
+        text: 'Marcus è un maestro! La canottiera a rete con ciabatta sanitaria è l\'arma definitiva per la pace dei sensi. Ho già acquistato il corso VIP!',
+        likes: 310
+      }
+    ]
+  },
+  {
     id: 'teresa-tarocchi-il-matto-pazza-gioia',
     title: "TERESA E I TAROCCHI: L'ARCANO ZERO \"IL MATTO\" – GUIDA ALLA PAZZA GIOIA E AI SALTI NEL VUOTO CON LA CIABATTA BUCATA",
     subtitle: "Camminare sul ciglio del burrone tenendo un sacchetto dell'Ipercoop e un cane stanco che ti morde le natiche: scopri perché Il Matto è la carta suprema della libertà assoluta e dell'incoscienza organizzata.",

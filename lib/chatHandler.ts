@@ -55,6 +55,10 @@ function generateSurrealLocalReply(userQuery: string, systemPrompt?: string): st
     return `[💄 L'Estetista del Subbuglio]: Che orrore le tue domande così levigate! Consiglio subito 3 ore di insonnia e un velo di prugna sotto gli occhi per dare dignità al tuo sguardo.`;
   }
 
+  if (systemPrompt?.toLowerCase().includes('marcus')) {
+    return `[💪 Coach Marcus]: Ascolta bene! Per la tua richiesta su "${userQuery.slice(0, 30)}...", il consiglio Alpha è uno solo: indossa la canottiera a rete, parla per 3 ore del carburatore della Fiat Duna e vai in bianco con orgoglio sul divano!`;
+  }
+
   return `[🎭 Alter Ego Redazionale - NINA]: ${randomIntro}${randomMiddle}${randomOutro}`;
 }
 
