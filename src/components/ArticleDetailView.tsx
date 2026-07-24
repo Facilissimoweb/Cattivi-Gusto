@@ -135,10 +135,10 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6 border-b-2 border-black pb-4">
         <button
           onClick={onBack}
-          className="bg-black text-white px-4 py-2 font-anton text-sm sm:text-base tracking-wider uppercase flex items-center gap-2 hover:bg-[#A0FF00] hover:text-black border-2 border-black transition shadow-[3px_3px_0px_#000]"
+          className="bg-black text-white px-4 py-2 font-anton text-sm sm:text-base tracking-wider uppercase flex items-center gap-2 hover:bg-[#A0FF00] hover:text-black border-2 border-black transition shadow-[3px_3px_0px_#000] cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
-          <span>BACK TO CHAOS</span>
+          <span>TORNA IN EDICOLA (HOME)</span>
         </button>
 
         <div className="flex items-center gap-3">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Flame, Sparkles, CreditCard, Bookmark, Newspaper, Shield, FileText, ChevronRight, HelpCircle } from 'lucide-react';
+import { X, Flame, Sparkles, CreditCard, Bookmark, Newspaper, Shield, FileText, ChevronRight, HelpCircle, Home } from 'lucide-react';
 import { CATEGORIES } from '../data/articles';
 import { CategoryId } from '../types';
 
@@ -8,10 +8,13 @@ interface NavigationDrawerProps {
   onClose: () => void;
   selectedCategory: CategoryId;
   onSelectCategory: (cat: CategoryId) => void;
+  activeView?: string;
+  onGoHome?: () => void;
   onOpenManifesto: () => void;
   onOpenSubscriptions: () => void;
   onOpenChaosCorner: () => void;
   onOpenBookmarks: () => void;
+  onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   savedCount: number;
 }
 
@@ -20,6 +23,8 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onClose,
   selectedCategory,
   onSelectCategory,
+  activeView,
+  onGoHome,
   onOpenManifesto,
   onOpenSubscriptions,
   onOpenChaosCorner,
@@ -27,6 +32,8 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   savedCount,
 }) => {
   if (!isOpen) return null;
+
+  const isHomeActive = !activeView || activeView === 'feed' || activeView === 'home';
 
   return (
     <div className="fixed inset-0 z-50 flex">
@@ -47,25 +54,53 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 Cattivo Gusto
               </h2>
               <span className="font-typewriter text-xs text-neutral-600 block">
-                Menu della Redazione
+                Menu Principale della Rivista
               </span>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 bg-black text-white hover:bg-[#A0FF00] hover:text-black border-2 border-black transition"
+              className="p-1.5 bg-black text-white hover:bg-[#A0FF00] hover:text-black border-2 border-black transition cursor-pointer"
             >
               <X className="w-6 h-6" />
             </button>
           </div>
 
-          {/* Special Quick Actions */}
-          <div className="space-y-2 mb-6">
+          {/* Navigation Links inside Hamburger Menu */}
+          <div className="space-y-2.5 mb-6">
+            <button
+              onClick={() => {
+                if (onGoHome) {
+                  onGoHome();
+                } else {
+                  onSelectCategory('tutti');
+                }
+                onClose();
+              }}
+              className={`w-full border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between transition shadow-[3px_3px_0px_#000] cursor-pointer ${
+                isHomeActive 
+                  ? 'bg-[#A0FF00] text-black font-bold ring-2 ring-black' 
+                  : 'bg-white text-black hover:bg-[#A0FF00]'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <Home className="w-5 h-5 text-black" />
+                <span>HOME / EDICOLA (PRIMA PAGINA)</span>
+              </div>
+              {isHomeActive ? (
+                <span className="bg-black text-[#A0FF00] text-[10px] px-2 py-0.5 font-mono">
+                  ATTIVO
+                </span>
+              ) : (
+                <ChevronRight className="w-5 h-5" />
+              )}
+            </button>
+
             <button
               onClick={() => {
                 onOpenSubscriptions();
                 onClose();
               }}
-              className="w-full bg-[#A0FF00] text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-black hover:text-[#A0FF00] transition shadow-[3px_3px_0px_#000]"
+              className="w-full bg-white text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-black hover:text-white transition shadow-[3px_3px_0px_#000] cursor-pointer"
             >
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
@@ -107,7 +142,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 onOpenBookmarks();
                 onClose();
               }}
-              className="w-full bg-white border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-neutral-100 transition shadow-[3px_3px_0px_#000]"
+              className="w-full bg-white border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-neutral-100 transition shadow-[3px_3px_0px_#000] cursor-pointer"
             >
               <div className="flex items-center gap-2">
                 <Bookmark className="w-5 h-5" />
@@ -115,6 +150,28 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
               <ChevronRight className="w-5 h-5" />
             </button>
+
+            {/* Legal Absurd Buttons */}
+            <div className="grid grid-cols-2 gap-2 pt-2">
+              <button
+                onClick={() => {
+                  onOpenLegal?.('privacy');
+                  onClose();
+                }}
+                className="bg-neutral-100 border-2 border-black p-2 text-left font-anton text-xs uppercase hover:bg-[#A0FF00] hover:text-black transition cursor-pointer"
+              >
+                🔒 PRIVACY POLICY
+              </button>
+              <button
+                onClick={() => {
+                  onOpenLegal?.('terms');
+                  onClose();
+                }}
+                className="bg-neutral-100 border-2 border-black p-2 text-left font-anton text-xs uppercase hover:bg-[#A0FF00] hover:text-black transition cursor-pointer"
+              >
+                📜 TERMINI D'USO
+              </button>
+            </div>
           </div>
 
           {/* Categories Header */}

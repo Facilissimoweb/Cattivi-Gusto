@@ -6,6 +6,7 @@ import { ArticleCard } from './components/ArticleCard';
 import { ArticleDetailView } from './components/ArticleDetailView';
 import { SubscriptionsView } from './components/SubscriptionsView';
 import { ManifestoModal } from './components/ManifestoModal';
+import { LegalAbsurdModal } from './components/LegalAbsurdModal';
 import { ChaosCorner } from './components/ChaosCorner';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
@@ -29,6 +30,8 @@ export default function App() {
   });
 
   const [isManifestoOpen, setIsManifestoOpen] = useState(false);
+  const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<'privacy' | 'terms'>('privacy');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isChaosAudioActive, setIsChaosAudioActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,6 +51,26 @@ export default function App() {
       // ignore
     }
   }, [savedArticleIds]);
+
+  // Always scroll to top whenever navigation, category, search, or active article changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeView, selectedArticleId, selectedCategory, searchQuery]);
+
+  // Explicit Go Home Handler
+  const handleGoHome = () => {
+    setActiveView('feed');
+    setSelectedArticleId(null);
+    setSelectedCategory('tutti');
+    setSearchQuery('');
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  };
+
+  // Legal Modal Handler
+  const handleOpenLegal = (tab: 'privacy' | 'terms' = 'privacy') => {
+    setLegalTab(tab);
+    setIsLegalModalOpen(true);
+  };
 
   // Sync subscription state
   const handleSubscribeSuccess = (planName: string) => {
@@ -147,8 +170,12 @@ export default function App() {
         onOpenMenu={() => setIsDrawerOpen(true)}
         activeTab={activeView}
         setActiveTab={(tab) => {
-          setActiveView(tab as any);
-          if (tab === 'home') setSelectedArticleId(null);
+          if (tab === 'home' || tab === 'feed') {
+            handleGoHome();
+          } else {
+            setActiveView(tab as any);
+            setSelectedArticleId(null);
+          }
         }}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenSubscriptions={() => setActiveView('subscriptions')}
@@ -171,10 +198,13 @@ export default function App() {
           setActiveView('feed');
           setSelectedArticleId(null);
         }}
+        activeView={activeView}
+        onGoHome={handleGoHome}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenChaosCorner={() => setActiveView('chaos')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
+        onOpenLegal={handleOpenLegal}
         savedCount={savedArticleIds.length}
       />
 
@@ -385,19 +415,32 @@ export default function App() {
         onClose={() => setIsManifestoOpen(false)}
       />
 
+      {/* Grotesque Legal Privacy & Terms Modal */}
+      <LegalAbsurdModal
+        isOpen={isLegalModalOpen}
+        onClose={() => setIsLegalModalOpen(false)}
+        initialTab={legalTab}
+      />
+
       {/* Footer */}
       <Footer
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenChaosCorner={() => setActiveView('chaos')}
+        onGoHome={handleGoHome}
+        onOpenLegal={handleOpenLegal}
       />
 
       {/* Sticky Mobile Bottom Nav */}
       <BottomNavMobile
         activeTab={activeView}
         setActiveTab={(tab) => {
-          setActiveView(tab as any);
-          if (tab === 'home') setSelectedArticleId(null);
+          if (tab === 'home' || tab === 'feed') {
+            handleGoHome();
+          } else {
+            setActiveView(tab as any);
+            setSelectedArticleId(null);
+          }
         }}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenSubscriptions={() => setActiveView('subscriptions')}

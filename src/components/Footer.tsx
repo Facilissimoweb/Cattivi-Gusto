@@ -5,12 +5,16 @@ interface FooterProps {
   onOpenSubscriptions: () => void;
   onOpenManifesto: () => void;
   onOpenChaosCorner: () => void;
+  onGoHome?: () => void;
+  onOpenLegal?: (tab: 'privacy' | 'terms') => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenSubscriptions,
   onOpenManifesto,
   onOpenChaosCorner,
+  onGoHome,
+  onOpenLegal,
 }) => {
   return (
     <footer className="bg-black text-[#F4F1EA] border-t-4 border-black pt-10 pb-20 md:pb-12 mt-16 font-typewriter">
@@ -20,7 +24,11 @@ export const Footer: React.FC<FooterProps> = ({
         
         {/* Brand Info */}
         <div className="md:col-span-5 space-y-3">
-          <h2 className="font-anton text-4xl uppercase text-[#A0FF00] tracking-tight">
+          <h2 
+            onClick={onGoHome}
+            className="font-anton text-4xl uppercase text-[#A0FF00] tracking-tight cursor-pointer hover:underline"
+            title="Torna in Edicola (Home)"
+          >
             CATTIVO GUSTO
           </h2>
           <p className="font-typewriter text-xs text-neutral-400 leading-relaxed max-w-sm">
@@ -53,8 +61,13 @@ export const Footer: React.FC<FooterProps> = ({
               </button>
             </li>
             <li>
-              <button onClick={onOpenChaosCorner} className="hover:text-[#A0FF00] transition">
-                Oroscopo degli Oggetti Inanimati
+              <button onClick={() => onOpenLegal?.('privacy')} className="hover:text-[#A0FF00] transition underline text-yellow-300">
+                🔒 Privacy Policy Grottesca
+              </button>
+            </li>
+            <li>
+              <button onClick={() => onOpenLegal?.('terms')} className="hover:text-[#A0FF00] transition underline text-yellow-300">
+                📜 Termini d'Uso dell'Assurdo
               </button>
             </li>
           </ul>

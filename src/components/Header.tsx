@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Search, Volume2, VolumeX, Sparkles, Bookmark, Flame, ShieldAlert, X } from 'lucide-react';
+import { Menu, Search, Volume2, VolumeX, Sparkles, Bookmark, Flame, ShieldAlert, X, Home } from 'lucide-react';
 
 interface HeaderProps {
   onOpenMenu: () => void;
@@ -18,6 +18,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenMenu,
+  activeTab,
   setActiveTab,
   onOpenManifesto,
   onOpenSubscriptions,
@@ -30,6 +31,8 @@ export const Header: React.FC<HeaderProps> = ({
   isSubscribed,
 }) => {
   const [showSearchModal, setShowSearchModal] = useState(false);
+
+  const isHomeActive = activeTab === 'feed' || activeTab === 'home';
 
   return (
     <header className="sticky top-0 z-40 bg-[#F4F1EA] border-b-2 border-black shadow-[0_2px_0px_#000]">
@@ -61,23 +64,23 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Main Header Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 sm:gap-4">
         
         {/* Left Action Controls */}
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenMenu}
-            className="flex items-center gap-2 bg-black text-white px-3 py-1.5 border-2 border-black font-anton tracking-wider text-sm sm:text-base hover:bg-[#A0FF00] hover:text-black transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5"
+            className="flex items-center gap-1.5 bg-black text-white px-3.5 py-2 border-2 border-black font-anton tracking-wider text-sm sm:text-base hover:bg-[#A0FF00] hover:text-black transition-all shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
             aria-label="Apri Menu"
           >
             <Menu className="w-5 h-5" />
-            <span className="hidden sm:inline">MENU</span>
+            <span>MENU</span>
           </button>
 
           {/* Chaos Audio Toggle */}
           <button
             onClick={onToggleChaosAudio}
-            className={`p-2 border-2 border-black font-mono text-xs flex items-center gap-1 transition shadow-[2px_2px_0px_#000] ${
+            className={`p-2 border-2 border-black font-mono text-xs flex items-center gap-1 transition shadow-[2px_2px_0px_#000] cursor-pointer ${
               isChaosAudioActive 
                 ? 'bg-[#A0FF00] text-black font-bold animate-pulse' 
                 : 'bg-white hover:bg-neutral-100 text-black'
@@ -85,16 +88,20 @@ export const Header: React.FC<HeaderProps> = ({
             title={isChaosAudioActive ? 'Disattiva Audio del Caos' : 'Attiva Audio del Caos'}
           >
             {isChaosAudioActive ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 text-neutral-500" />}
-            <span className="hidden md:inline">{isChaosAudioActive ? 'AUDIO CAOS' : 'AUDIO OFF'}</span>
+            <span className="hidden lg:inline">{isChaosAudioActive ? 'AUDIO CAOS' : 'AUDIO OFF'}</span>
           </button>
         </div>
 
         {/* Center Logo & Tagline */}
-        <div className="text-center cursor-pointer flex-1" onClick={() => setActiveTab('home')}>
-          <h1 className="font-anton text-3xl sm:text-5xl md:text-6xl tracking-tight text-black uppercase leading-none select-none drop-shadow-[2px_2px_0px_#A0FF00]">
+        <div 
+          className="text-center cursor-pointer flex-1 group py-1" 
+          onClick={() => setActiveTab('home')}
+          title="Cattivo Gusto - Torna alla Home Page"
+        >
+          <h1 className="font-anton text-2xl sm:text-5xl md:text-6xl tracking-tight text-black uppercase leading-none select-none drop-shadow-[2px_2px_0px_#A0FF00] group-hover:scale-[1.01] transition-transform">
             Cattivo Gusto
           </h1>
-          <p className="font-typewriter text-[11px] sm:text-sm text-neutral-800 tracking-wide mt-0.5 font-bold">
+          <p className="font-typewriter text-[10px] sm:text-xs md:text-sm text-neutral-800 tracking-wide mt-1 font-bold">
             La rivista che mancava a cura di alter ego
           </p>
         </div>
