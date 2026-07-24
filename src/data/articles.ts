@@ -2,6 +2,7 @@ import { Article, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: 'tutti', label: 'TUTTO IL CAOS', badge: 'ALL' },
+  { id: 'tatuaggi', label: 'TATUAGGI CARNEI', badge: '🥩' },
   { id: 'accoppiamento', label: 'ACCOPPIAMENTO E DINTORNI', badge: '💘' },
   { id: 'trash-tv', label: 'TEMPTATION & TRASH', badge: '🏝️' },
   { id: 'complotto-felino', label: 'COMPLOTTO FELINO', badge: '🐱' },
@@ -13,6 +14,73 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const ARTICLES: Article[] = [
+  {
+    id: 'ginetta-tatuaggi-carne-vaticano',
+    title: "GINETTA E I TATUAGGI A TEXTURE DI CARNE: APRE LO STUDIO SACRO ANNESSO ALLE STANZE DEL PAPA",
+    subtitle: "Dalla Scottona di primo taglio per la muscolatura dei martiri al macinato grasso per lo sguardo della Madonna: viaggio nell'atelier d'alta macelleria sulla pelle dentro la Città del Vaticano.",
+    category: 'tatuaggi',
+    categoryLabel: 'TATUAGGI CARNEI & SACRI',
+    author: 'Inviato Speciale in Vaticano & Redazione Cattivo Gusto',
+    date: '24 LUGLIO 2026',
+    readTime: '8 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Foto di uno studio di tatuaggi artistico ed esclusivo con illuminazione sacra',
+    imageCutoutStyle: 'green-outline',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 7890,
+    isHot: true,
+    content: {
+      intro: "C'è chi si fa tatuare l'iniziale del partner, chi un'ancora vintage e chi sceglie l'Eterno. A Roma ha ufficialmente aperto i battenti lo studio di tatuaggi più esclusivo, teologicamente discusso e nutrizionalmente proteico della storia dell'arte contemporanea: 'Carne Sacra Tattoo', guidato dalla vulcanica tatuatrice Ginetta. La location? Non una via di periferia, bensì un'ala riservata del Palazzo Apostolico in Vaticano, direttamente adiacente agli appartamenti privati del Pontefice.",
+      sections: [
+        {
+          heading: "La Filosofia della Maestra Ginetta: 'Solo Texture Carnica Autentica'",
+          paragraphs: [
+            "L'intuizione di Ginetta è semplice quanto sconvolgente: rifiutare i tradizionali inchiostri sintetici e i pigmenti vegetali per abbracciare l'unica vera forma di chiaroscuro iperrealistico: la resa cromatica dei tagli di carne bovina e suina.",
+            "• 'L'inchiostro nero piatto è robetta da dilettanti' spiega Ginetta mostrando la sua pistola ad aghi con serbatoio in ceramica raffreddata. 'Se devi tatuare lo sguardo addolorato di una Madonna con Bambino, non puoi usare un grigio qualunque: serve un'emulsione di macinato magro e grasso all'80/20. La venatura bianca dell'adipe dà allo sguardo della Vergine un'umidità mistica che nemmeno Caravaggio sapeva replicare'."
+          ],
+          quote: "Il Papa dal corridoio affianco sente l'odore di rosmarino e salvia che usiamo per disinfettare gli aghi e ogni tanto si affaccia a darci la benedizione tra una Scottona e una controfiletta."
+        },
+        {
+          heading: "Il Catalogo delle Pietanze e Tagli di Carne Tattoo",
+          paragraphs: [
+            "Nel menu-catalogo dello studio di Ginetta in Vaticano, ogni taglio corrisponde a uno stile figurativo e a una texture cutanea ben precisa:",
+            "1. Texture di Scottona di Primo Taglio: Utilizzata per i bicipiti, i teschi barocchi e la muscolatura dei santi guerrieri. La fibra rossa compatta regala un effetto tridimensionale a prova di scottatura solare.",
+            "2. Texture di Macinato Grasso Selezionato: Ideale per il chiaroscuro degli occhi, le rughe d'espressione della Madonna e i drappeggi dei mantelli. La parte grassa dona una luminosità satinata naturale.",
+            "3. Marezzatura di Wagyu A5 Iper-Ingrassato: Riservata esclusivamente ai Cuori Sacri fiammeggianti e agli arcangeli. Le sottili venature di grasso nobile creano un reticolo marmoreo che incanta la Guardia Svizzera.",
+            "4. Pancetta Tesa e Lardo di Colonnata: Utilizzati per i bordi decorativi, le aureole e le cornici dorate. Sulla pelle garantisce un effetto lucido permanente tipo 'pelle di cotenna di maiale al forno'.",
+            "5. Filetto di Chianina Frollato 60 Giorni: Per i tatuaggi tribali d'alta quota e le scritte in latino ecclesiastico con tonalità bordeaux fondente."
+          ]
+        },
+        {
+          heading: "Sconto Promozionale 'Giubileo del Macinato' & Benedizione al Rosmarino",
+          paragraphs: [
+            "In occasione dell'inaugurazione vaticana, lo studio 'Carne Sacra' di Ginetta offre uno sconto speciale del 20% a chiunque si presenti con un rametto di rosmarino fresco e un vassoio di porchetta di Ariccia.",
+            "Ogni seduta include la marinatura lenitiva post-tattoo con olio extravergine d'oliva benedetto e una spruzzata di sale rosa dell'Himalaya per fissare i pigmenti proteici."
+          ]
+        }
+      ],
+      conclusion: "Vuoi trasformare il tuo braccio in un bancone da macelleria rinascimentale approvato dalla Santa Sede? Prenota subito da Ginetta! E se hai dubbi teologici, passa prima dal nostro Traduttore Sotto il Cofano per farti spiegare la procedura in dialetto napoletano o in latino ecclesiastico."
+    },
+    comments: [
+      {
+        id: 'c-gin-1',
+        author: 'Monsignor_Bistecca',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=MonsignorBistecca',
+        date: '5 minuti fa',
+        text: 'Ho fatto la Madonna in macinato grasso sulla schiena: quando vado in processione d\'estate emano un profumo di grigliata che converte anche gli atei!',
+        likes: 890
+      },
+      {
+        id: 'c-gin-2',
+        author: 'GuardiaSvizzera_Hans',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=GuardiaHans',
+        date: '18 minuti fa',
+        text: 'Ginetta è una santona. Il mio san Michele Arcangelo in Wagyu A5 ha fatto piangere di commozione l\'intero Palazzo Apostolico.',
+        likes: 1040
+      }
+    ]
+  },
   {
     id: 'guida-primo-appuntamento-sabotaggio',
     title: "ACCOPPIAMENTO E DINTORNI: MANUALE PRATICO PER ESSERE SCARTATI CATEGORICAMENTE AL PRIMO APPUNTAMENTO",
