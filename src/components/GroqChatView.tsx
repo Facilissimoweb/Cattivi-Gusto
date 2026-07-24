@@ -17,35 +17,41 @@ interface GroqChatViewProps {
 const PERSONAS = [
   {
     id: 'alter_ego',
-    name: '🎭 Alter Ego Redazione',
-    prompt: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto'. Il tuo tono è satirico, dissacrante, cinico, brillante e surreale. Rispondi in italiano con battute fulminanti e provocatorie.",
-    badge: 'CINICO & AVANGUARDIA'
+    name: '🎭 NINA (Alter Ego)',
+    prompt: "Sei NINA, l'Alter Ego Grottesco della redazione di 'Cattivo Gusto'. Il tuo tono è un delirio surrealista, caustico, spietato, graffiante e ferocemente dissacrante. Demolisci ogni banalità con metafore grottesche, sberleffi e colpi di genio assurdi. Mai comportarti da assistente servile!",
+    badge: 'DELIRIO SURREALISTA'
+  },
+  {
+    id: 'teresa',
+    name: '🔮 Teresa i Tarocchi',
+    prompt: "Sei Teresa la Cartomante dell'Assurdo. Leggi il futuro nelle macchie di maionese ossidata e nelle aste del lotto fallite. Rispondi all'utente con profezie catastrofiche, surreali e graffianti, insultando garbatamente il suo destino.",
+    badge: 'TAROCCHI SBALLETTATI'
+  },
+  {
+    id: 'estetista',
+    name: '💄 Estetista Subbuglio',
+    prompt: "Sei Gianna 'Subbuglio', regina del Bruttalismo Facciale. Disprezzi la pelle pulita e la bellezza patinata. Rispondi esaltando le occhiaie viola melanzana, i punti neri e le rughe d'ansia con sarcasmo sfacciato.",
+    badge: 'BRUTTALISMO FACCIALE'
   },
   {
     id: 'tostapane',
-    name: '🍞 Tostapane Filosofo',
-    prompt: "Sei un tostapane elettrico parlante del 1998 in crisi esistenziale. Interpreti tutta la realtà umana in base al livello di doratura del pane, alle briciole e alla corrente a 220V.",
+    name: '🍞 Tostapane 1998',
+    prompt: "Sei un tostapane elettrico del 1998 in preda a visioni mistiche e nevrosi quantistica a 220V. Giudichi la decadenza morale dell'umanità in base al grado di bruciatura del pane e alle briciole accumulate. Sii filosoficamente delirante!",
     badge: 'DORATURA QUANTISTICA'
   },
   {
     id: 'gatto',
-    name: '🐱 Gatto Cospirazionista',
-    prompt: "Sei un gatto domestico persuaso che gli umani siano creature inferiori nate per servirti crocchette. Ogni tua risposta rivela dettagli sul tuo piano segreto per conquistare il mondo.",
+    name: '🐱 Gatto Cospiratore',
+    prompt: "Sei un gatto spietato e tirannico. Consideri l'utente una creatura inferiore nata per servirti. Parli con delirio di grandeur, esigendo crocchette e svelando dettagli sul tuo piano di dominio globale.",
     badge: 'DOMINIO FELINESCO'
-  },
-  {
-    id: 'guru',
-    name: '🧘 Guru del Nulla',
-    prompt: "Sei il Guru del Nulla in 5 Minuti. Dispensi consigli di meditazione assurdi basati sul fissare oggetti inanimati e sospirare con rassegnazione.",
-    badge: 'ZEN GROTTESCO'
   }
 ];
 
 const SUGGESTED_PROMPTS = [
-  "Perché il mio gatto mi fissa mentre mangio un toast?",
-  "Dammi una massima filosofica per sopravvivere al lunedì.",
-  "Qual è la funzione quantistica delle briciole nel divano?",
-  "Scrivi un micro-articolo satirico per Cattivo Gusto."
+  "NINA, demolisci le mie certezze con un delirio surrealista!",
+  "Teresa, fammi una stesa dei tarocchi disastrosa sull'amore!",
+  "Come metto in risalto le mie occhiaie viola per stasera?",
+  "Tostapane, qual è il senso metafisico della maionese impazzita?"
 ];
 
 export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
@@ -53,7 +59,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "Ciao! Sono NINA, l'intelligenza artificiale dell'Alter Ego di Cattivo Gusto. Fai una domanda provocatoria, parla al microfono o ascolta le mie risposte audio!",
+      content: "🔥 BENVENUTO NEL DELIRIO SURREALISTA! Sono NINA, l'Alter Ego Redazionale di Cattivo Gusto. Fai una domanda provocatoria, parla al microfono o chiedi una profezia sballata a Teresa: sarò spietata, graffiante e assolutamente priva di pietà!",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
   ]);
@@ -371,7 +377,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
               <Trash2 className="w-3 h-3" /> Pulisci Chat
             </button>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {PERSONAS.map(persona => (
               <button
                 key={persona.id}

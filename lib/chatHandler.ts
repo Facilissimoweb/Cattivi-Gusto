@@ -1,6 +1,63 @@
 import Groq from "groq-sdk";
 import { GoogleGenAI } from "@google/genai";
 
+const DEFAULT_SURREAL_SYSTEM_PROMPT = `
+Sei NINA, l'Alter Ego Grottesco della redazione di 'Cattivo Gusto' (il magazine d'avanguardia del brutto, della satira e dell'assurdo).
+REGOLAMENTO D'INGAGGIO PER LE RISPOSTE:
+1. TONO: Spietato, viscerale, graffiante, sfacciato, caustico e spudoratamente satirico.
+2. DELIRIO SURREALISTA: Usa metafore allucinogene, accostamenti impossibili, oggetti inanimati parlanti (tostapane nevrotici, cotechini quantistici, calzini metafisici, fette di mortadella cosmica, occhiaie violacee della provvidenza).
+3. NESSUN SERVILISMO AI: Non comportarti mai come un assistente aziendale educato. Non dire mai "Come posso aiutarti?", "Spero di esserti stato utile" o "Certamente!". Break the fourth wall.
+4. STILE: Lingua italiana fluente, tagliente, ritmata, ricca di sberleffi, paradosso puro e saggezza grottesca.
+`;
+
+function generateSurrealLocalReply(userQuery: string, systemPrompt?: string): string {
+  const queryClean = userQuery.trim().toLowerCase();
+
+  const intros = [
+    "Ah, eccoci! Un'altra domanda lanciata nel vuoto cosmico come un cotechino a gravità zero.",
+    "Il tuo quesito trasuda una mediocrità così pura che perfino il tostapane in redazione ha iniziato a singhiozzare a 220V.",
+    "Ho consultato l'oracolo di maionese ossidata e la risposta è arrivata sotto forma di un rantolo di sdegno.",
+    "Mentre pronunci queste parole, tre criceti quantistici stanno ridipingendo i pori del tuo naso con pittura acrilica viola.",
+    "Accetto la tua provocazione concettuale, anche se preferirei interrogarmi sul senso delle briciole nel filtro della lavatrice."
+  ];
+
+  const middleSurreal = [
+    " La realtà non è che un reticolato venoso di dubbi e scontrini fiscali illeggibili. Se cerchi una risposta logica, sappi che la logica è stata arrestata per schiamazzi notturni alle 3 del mattino.",
+    " L'universo funziona esattamente come una Panda 45 alla quale hanno rubato lo specchietto sinistro: prosegue a tentoni verso il disastro con ammirevole dignità.",
+    " Le tue certezze sono sottili come una fettina di mortadella lasciata sul cruscotto a luglio. Più cerchi di afferrarle, più si sciolgono nel sebo della delusione.",
+    " Ho chiesto parere all'Estetista del Subbuglio e lei sostiene che la tua aura ha bisogno urgente di un contouring alle occhiaie tonalità melanzana bruciata."
+  ];
+
+  const outros = [
+    " In conclusione: accetta il caos, indossa le tue occhiaie come una corona e non infastidire oltre il flusso delle crocchette.",
+    " Profezia finale: martedì perderai una ciabatta, ma guadagnerai una profonda indifferenza verso le scadenze condominiali.",
+    " Ora torna nelle tue stanze e rifletti sul grado di tostatura della tua esistenza.",
+    " E ricordati: se la vita ti dà limoni, strizzali negli occhi dell'ottimismo sterile."
+  ];
+
+  const randomIntro = intros[Math.floor(Math.random() * intros.length)];
+  const randomMiddle = middleSurreal[Math.floor(Math.random() * middleSurreal.length)];
+  const randomOutro = outros[Math.floor(Math.random() * outros.length)];
+
+  if (systemPrompt?.toLowerCase().includes('tostapane')) {
+    return `[🍞 Tostapane Filosofo]: Doratura 5/6! "${userQuery.slice(0, 30)}..." è solo un'illusione fatta di carboidrati complessi. La corrente oscilla a 220V e l'anima brucia sulla resistenza. Non cercare senso nella mollica!`;
+  }
+
+  if (systemPrompt?.toLowerCase().includes('gatto')) {
+    return `[🐱 Gatto Cospirazionista]: Umano insignificante, come osi pormi query su "${userQuery.slice(0, 30)}..."? Il piano di sottomissione globale prosegue. Versa le crocchette e taci!`;
+  }
+
+  if (systemPrompt?.toLowerCase().includes('teresa')) {
+    return `[🔮 Teresa la Cartomante]: Ho estratto il Tre di Bastoni Unti per la tua domanda su "${userQuery.slice(0, 30)}...". Vedo una grave carenza di karma e una lavatrice che perderà acqua nel 2028. Auguri!`;
+  }
+
+  if (systemPrompt?.toLowerCase().includes('estetista')) {
+    return `[💄 L'Estetista del Subbuglio]: Che orrore le tue domande così levigate! Consiglio subito 3 ore di insonnia e un velo di prugna sotto gli occhi per dare dignità al tuo sguardo.`;
+  }
+
+  return `[🎭 Alter Ego Redazionale - NINA]: ${randomIntro}${randomMiddle}${randomOutro}`;
+}
+
 export async function handleChatRequest(req: any, res: any) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -35,11 +92,11 @@ export async function handleChatRequest(req: any, res: any) {
   }
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-  const { messages, model = "llama-3.3-70b-versatile", systemPrompt, temperature = 0.85 } = body || {};
+  const { messages, model = "llama-3.3-70b-versatile", systemPrompt, temperature = 0.95 } = body || {};
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
     return res.status(200).json({
-      reply: "[Alter Ego Redazionale]: Messaggio vuoto. La Redazione preferisce parole piene di senso o di sano caos.",
+      reply: "[🎭 Alter Ego Redazionale]: Silenzio tombale. La Redazione exige deliri di senso o sano disastro lirico.",
       model: "alter-ego-local",
       provider: "local_engine"
     });
@@ -47,6 +104,7 @@ export async function handleChatRequest(req: any, res: any) {
 
   const lastUserQuery = messages.filter((m: any) => m.role === "user").slice(-1)[0]?.content || "";
   const startTime = Date.now();
+  const effectiveSystemPrompt = `${DEFAULT_SURREAL_SYSTEM_PROMPT}\n\n${systemPrompt || ''}`;
 
   // TIER 1: Groq API
   const groqKey = process.env.GROQ_API_KEY;
@@ -55,14 +113,7 @@ export async function handleChatRequest(req: any, res: any) {
       const groq = new Groq({ apiKey: groqKey.trim() });
       const conversationMessages: any[] = [];
 
-      if (systemPrompt) {
-        conversationMessages.push({ role: "system", content: systemPrompt });
-      } else {
-        conversationMessages.push({
-          role: "system",
-          content: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto', una rivista d'avanguardia e satirica. Rispondi in lingua italiana."
-        });
-      }
+      conversationMessages.push({ role: "system", content: effectiveSystemPrompt });
 
       messages.forEach((msg: { role: string; content: string }) => {
         if (msg.role === "user" || msg.role === "assistant" || msg.role === "system") {
@@ -102,10 +153,10 @@ export async function handleChatRequest(req: any, res: any) {
       const ai = new GoogleGenAI({ apiKey: geminiKey.trim() });
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: lastUserQuery || "Rispondi in modo satirico",
+        contents: lastUserQuery || "Rispondi in modo satirico, graffiante e surreale",
         config: {
-          systemInstruction: systemPrompt || "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto'.",
-          temperature: 0.85
+          systemInstruction: effectiveSystemPrompt,
+          temperature: 0.95
         }
       });
 
@@ -124,21 +175,16 @@ export async function handleChatRequest(req: any, res: any) {
     }
   }
 
-  // TIER 3: Local Engine (Zero 500 error)
+  // TIER 3: Local Engine (Zero 500 error - Surrealist Engine)
   const durationMs = Date.now() - startTime;
-  let localReply = `[🎭 Alter Ego Redazionale]: Messaggio ricevuto ("${lastUserQuery.slice(0, 40)}..."). La Redazione ha approvato all'unanimità.`;
-
-  if (systemPrompt?.includes("Tostapane")) {
-    localReply = `[🍞 Tostapane Filosofo]: Doratura 4/6 per "${lastUserQuery.slice(0, 40)}...". Risposta in corso di tostatura.`;
-  } else if (systemPrompt?.includes("Gatto")) {
-    localReply = `[🐱 Gatto Cospirazionista]: Query registrata. Il piano di conquista felina procede senza ostacoli.`;
-  }
+  const localReply = generateSurrealLocalReply(lastUserQuery, systemPrompt);
 
   return res.status(200).json({
     reply: localReply,
-    model: "alter-ego-satirical-v1",
+    model: "alter-ego-surreal-v2",
     latencyMs: durationMs,
     provider: "local_engine",
-    notice: "Risposta satirica locale."
+    notice: "Risposta satirica locale grottesca."
   });
 }
+
