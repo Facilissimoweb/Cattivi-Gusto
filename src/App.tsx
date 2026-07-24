@@ -12,6 +12,7 @@ import { CookieNoticeBanner } from './components/CookieNoticeBanner';
 import { ChaosCorner } from './components/ChaosCorner';
 import { GroqChatView } from './components/GroqChatView';
 import { UnderTheHoodTranslator } from './components/UnderTheHoodTranslator';
+import { ContactsView } from './components/ContactsView';
 import { FloatingNuvolettaGroq } from './components/FloatingNuvolettaGroq';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
@@ -23,7 +24,7 @@ import { Flame, Sparkles, Filter, Bookmark, X, AlertCircle } from 'lucide-react'
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('tutti');
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks' | 'groq_chat' | 'translator'>('feed');
+  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks' | 'groq_chat' | 'translator' | 'contacts'>('feed');
   
   const [savedArticleIds, setSavedArticleIds] = useState<string[]>(() => {
     try {
@@ -226,6 +227,7 @@ export default function App() {
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenChaosCorner={() => setActiveView('chaos')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
+        onOpenContacts={() => setActiveView('contacts')}
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}
         onOpenGroqChat={() => setActiveView('groq_chat')}
@@ -235,6 +237,14 @@ export default function App() {
 
       {/* Main View Switcher */}
       <main className="flex-1">
+
+        {/* CONTACTS VIEW */}
+        {activeView === 'contacts' && (
+          <ContactsView
+            onBackHome={handleGoHome}
+            onOpenGroqChat={() => setActiveView('groq_chat')}
+          />
+        )}
 
         {/* TRANSLATOR VIEW */}
         {activeView === 'translator' && (
@@ -486,6 +496,7 @@ export default function App() {
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenChaosCorner={() => setActiveView('chaos')}
         onGoHome={handleGoHome}
+        onOpenContacts={() => setActiveView('contacts')}
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}
         onOpenGroqChat={() => setActiveView('groq_chat')}

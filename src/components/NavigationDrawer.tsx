@@ -14,6 +14,7 @@ interface NavigationDrawerProps {
   onOpenSubscriptions: () => void;
   onOpenChaosCorner: () => void;
   onOpenBookmarks: () => void;
+  onOpenContacts?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
@@ -32,6 +33,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onOpenSubscriptions,
   onOpenChaosCorner,
   onOpenBookmarks,
+  onOpenContacts,
   onOpenLegal,
   savedCount,
   onOpenCookies,
@@ -175,6 +177,22 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
               <ChevronRight className="w-5 h-5" />
             </button>
+
+            {onOpenContacts && (
+              <button
+                onClick={() => {
+                  onOpenContacts();
+                  onClose();
+                }}
+                className="w-full bg-[#FFFEEB] text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-[#A0FF00] transition shadow-[3px_3px_0px_#000] cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-red-600" />
+                  <span>📞 CONTATTI ASSURDI & SEGNALAZIONI</span>
+                </div>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            )}
 
             {/* Legal Absurd Buttons */}
             <div className="grid grid-cols-2 gap-2 pt-2">

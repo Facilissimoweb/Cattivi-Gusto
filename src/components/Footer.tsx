@@ -6,6 +6,7 @@ interface FooterProps {
   onOpenManifesto: () => void;
   onOpenChaosCorner: () => void;
   onGoHome?: () => void;
+  onOpenContacts?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
@@ -17,6 +18,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenManifesto,
   onOpenChaosCorner,
   onGoHome,
+  onOpenContacts,
   onOpenLegal,
   onOpenCookies,
   onOpenGroqChat,
@@ -56,6 +58,13 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button onClick={onOpenTranslator} className="hover:text-[#A0FF00] transition text-[#A0FF00] font-bold flex items-center gap-1">
                   🔧 Traduttore Sotto il Cofano (Lingue Strane)
+                </button>
+              </li>
+            )}
+            {onOpenContacts && (
+              <li>
+                <button onClick={onOpenContacts} className="hover:text-[#A0FF00] transition text-yellow-200 font-bold flex items-center gap-1">
+                  📞 Contatti Assurdi & Segnalazioni al Vuoto
                 </button>
               </li>
             )}
