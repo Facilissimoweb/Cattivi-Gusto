@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-bebas {
+    font-family: 'Bebas Neue', 'Anton', sans-serif;
+  }
+  .font-anton {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+  }
+  .font-typewriter {
+    font-family: 'Special Elite', 'Courier Prime', monospace;
+  }
+  .font-grotesk {
+    font-family: 'Hanken Grotesk', 'Space Grotesk', sans-serif;
+  }
+}
+
+/* Custom Brutalist & Collage Styling */
+.acid-box {
+  background-color: #A0FF00;
+  color: #000000;
+  border: 2px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.acid-box:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.acid-box:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.brutalist-card {
+  border: 2px solid #000000;
+  background-color: #FAF8F5;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.15s ease-in-out;
+}
+
+.brutalist-card:hover {
+  box-shadow: 7px 7px 0px #000000;
+}
+
+.cutout-glow {
+  filter: drop-shadow(0px 0px 0px #000000) drop-shadow(0 0 6px rgba(160, 255, 0, 0.9));
+}
+
+.paper-tape {
+  position: relative;
+}
+
+.paper-tape::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 70px;
+  height: 22px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px dashed rgba(0, 0, 0, 0.3);
+  transform: rotate(-3deg);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EBE7DC;
+  border-left: 1px solid #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A0FF00;
+}
+

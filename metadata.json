@@ -1,0 +1,6 @@
+{
+  "name": "Cattivo Gusto",
+  "description": "La rivista che mancava a cura di alter ego — articoli assurdi, abbonamenti surreali e collage punk-neon.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

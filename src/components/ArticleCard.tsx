@@ -1,0 +1,88 @@
+import React from 'react';
+import { Article } from '../types';
+import { ArrowUpRight, Bookmark, Flame, Heart } from 'lucide-react';
+
+interface ArticleCardProps {
+  article: Article;
+  onRead: (articleId: string) => void;
+  isSaved: boolean;
+  onToggleSave: (articleId: string, e: React.MouseEvent) => void;
+}
+
+export const ArticleCard: React.FC<ArticleCardProps> = ({
+  article,
+  onRead,
+  isSaved,
+  onToggleSave,
+}) => {
+  return (
+    <article
+      onClick={() => onRead(article.id)}
+      className="group bg-[#FAF8F5] border-2 border-black p-4 shadow-[4px_4px_0px_#000] hover:shadow-[7px_7px_0px_#000] transition-all cursor-pointer flex flex-col justify-between relative overflow-hidden"
+    >
+      {/* Article Tag Bar */}
+      <div>
+        <div className="flex items-center justify-between border-b-2 border-black pb-2 mb-3">
+          <span className="bg-black text-[#A0FF00] font-anton text-xs px-2 py-0.5 tracking-wider uppercase">
+            {article.categoryLabel}
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-typewriter text-[11px] text-neutral-600 font-bold">
+              {article.readTime}
+            </span>
+            <button
+              onClick={(e) => onToggleSave(article.id, e)}
+              className={`p-1 border border-black transition ${
+                isSaved ? 'bg-[#A0FF00] text-black' : 'bg-white hover:bg-black hover:text-white'
+              }`}
+            >
+              <Bookmark className="w-3.5 h-3.5" fill={isSaved ? 'currentColor' : 'none'} />
+            </button>
+          </div>
+        </div>
+
+        {/* Thumbnail Image with Brutalist Border / Tape Accent */}
+        <div className="relative aspect-16/10 mb-3 border-2 border-black overflow-hidden bg-neutral-200">
+          <img
+            src={article.heroImage}
+            alt={article.imageAlt}
+            className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-300"
+          />
+          {article.isHot && (
+            <div className="absolute top-2 right-2 bg-[#A0FF00] text-black border border-black font-anton text-[10px] px-1.5 py-0.5 uppercase tracking-wider font-bold">
+              ⚡ HOT
+            </div>
+          )}
+        </div>
+
+        {/* Title & Subtitle */}
+        <h3 className="font-anton text-2xl sm:text-3xl uppercase tracking-tight text-black leading-none mb-2 group-hover:text-black">
+          {article.title}
+        </h3>
+
+        <p className="font-typewriter text-xs text-neutral-700 line-clamp-3 leading-relaxed mb-4">
+          {article.subtitle}
+        </p>
+      </div>
+
+      {/* Footer Action */}
+      <div className="pt-3 border-t-2 border-black flex items-center justify-between mt-auto">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onRead(article.id);
+          }}
+          className="bg-[#A0FF00] text-black border-2 border-black px-3.5 py-1.5 font-anton text-sm uppercase flex items-center gap-1 hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000]"
+        >
+          <span>LEGGI ORA</span>
+          <ArrowUpRight className="w-4 h-4" />
+        </button>
+
+        <span className="font-mono text-[11px] text-neutral-500 flex items-center gap-1 font-bold">
+          <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" />
+          {article.likesCount}
+        </span>
+      </div>
+    </article>
+  );
+};
