@@ -95,8 +95,9 @@ export const UnderTheHoodTranslator: React.FC<TranslatorProps> = ({ onBack }) =>
           <span className="bg-[#A0FF00] text-black font-anton text-xs px-3 py-1 border-2 border-black uppercase font-bold shadow-[2px_2px_0px_#000]">
             🔧 SOTTO IL COFANO
           </span>
-          <span className="bg-black text-white font-mono text-[10px] px-2 py-1 uppercase font-bold border border-black">
-            GOOGLE TRANSLATE ENGINE
+          <span className="bg-black text-[#A0FF00] font-mono text-[10px] px-2 py-1 uppercase font-bold border border-black flex items-center gap-1">
+            <Zap className="w-3 h-3 text-[#A0FF00]" />
+            GROQ AI LPU & GOOGLE ENGINE
           </span>
         </div>
       </div>
@@ -110,7 +111,7 @@ export const UnderTheHoodTranslator: React.FC<TranslatorProps> = ({ onBack }) =>
           </h1>
         </div>
         <p className="font-typewriter text-xs sm:text-sm text-neutral-700 leading-relaxed">
-          Motore di traduzione sotto il cofano collegato a <strong>Google Translate API</strong> e ai moduli bizzarri della Redazione di <i>Cattivo Gusto</i>. Traduci qualsiasi frase in lingue arcaiche, alieni e dialetti viscerali!
+          Motore di traduzione sotto il cofano direttamente collegato a <strong>Groq AI LPU (Llama 3.3 70B)</strong> e a <strong>Google Translate Engine</strong> per la Redazione di <i>Cattivo Gusto</i>. Traduci qualsiasi frase in tempo reale in dialetto napoletano, klingon imperiale, latino, gattese, emoji o alto elfico!
         </p>
       </div>
 

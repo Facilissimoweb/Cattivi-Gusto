@@ -240,7 +240,7 @@ async function startServer() {
     return handleImageGeneration(req, res);
   });
 
-  // Under-The-Hood Translator Endpoint (Google Translate + Bizarre Languages Engine)
+  // Under-The-Hood Translator Endpoint (Groq LPU AI + Google Translate Engine)
   app.post("/api/translate", async (req, res) => {
     try {
       const { text, targetLang = "nap" } = req.body || {};
@@ -250,7 +250,7 @@ async function startServer() {
 
       const cleanText = text.trim();
 
-      // Special deterministic/algorithmic strange languages
+      // Algorithmic strange languages
       if (targetLang === "binary") {
         const binary = cleanText
           .split("")
@@ -284,54 +284,21 @@ async function startServer() {
         });
       }
 
-      if (targetLang === "cat") {
-        const meows = ["Miau!", "Mrrrp...", "MIAO!", "Purrrr...", "Meow-meow!"];
-        const words = cleanText.split(/\s+/);
-        const catTranslated = words.map(() => meows[Math.floor(Math.random() * meows.length)]).join(" ");
-        return res.json({
-          translated: `${catTranslated} 🐾 [Traduzione certificata dal Gatto di Redazione]`,
-          provider: "Gattese Redazionale Engine",
-          targetLang
-        });
-      }
-
-      // Try Google Translate Free Web API for real languages (Latin, Esperanto)
-      if (["la", "eo"].includes(targetLang)) {
-        try {
-          const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(cleanText)}`;
-          const gRes = await fetch(gUrl);
-          if (gRes.ok) {
-            const gData = await gRes.json();
-            if (gData && gData[0]) {
-              const translatedStr = gData[0].map((item: any) => item[0]).join("");
-              return res.json({
-                translated: translatedStr,
-                provider: `Google Translate (${targetLang.toUpperCase()})`,
-                targetLang
-              });
-            }
-          }
-        } catch (gErr) {
-          console.warn("[Google Translate API Warning]:", gErr);
-        }
-      }
-
-      // Try Groq / Gemini AI for Neapolitan, Klingon, Emoji, Bizzarro, Elvish
-      const groqKey = process.env.GROQ_API_KEY;
-      const geminiKey = process.env.GEMINI_API_KEY;
-
       const langPrompts: Record<string, string> = {
-        nap: "Traduci il testo in Dialetto Napoletano stretto, verace, comico e viscerale. Restituisci SOLO la traduzione napoletana senza commenti aggiuntivi.",
-        tlh: "Traduci il testo in Klingon (Star Trek) o in un dialetto alieno guerriero foneticamente simile. Restituisci SOLO la traduzione in Klingon.",
-        la: "Traduci il testo in Latino solenne ed ecclesiastico. Restituisci SOLO la traduzione in latino.",
-        emoji: "Traduci o decodifica il testo interamente usando una sequenza di emoji cospirazioniste, buffe ed espressive.",
-        bizzarro: "Riscrivi il testo nello stile aulico, grottesco e iper-satirico dell'Alter Ego di Cattivo Gusto. Massima carica di sarcasmo.",
-        elvish: "Traduci il testo nello stile dell'Alto Elfico Quenya (Tolkien) con sonorità poetiche e mistiche.",
-        eo: "Traduci il testo in Esperanto. Restituisci solo la traduzione in Esperanto."
+        nap: "Traduci il seguente testo in Dialetto Napoletano stretto, verace, popolarissimo, comico e colorito. Restituisci SOLO la traduzione in napoletano senza introduzioni o spiegazioni.",
+        tlh: "Traduci il seguente testo in Klingon (Star Trek) o in un dialetto alieno guerriero sci-fi. Restituisci SOLO la traduzione in Klingon.",
+        la: "Traduci il seguente testo in Latino solenne ed ecclesiastico. Restituisci SOLO la traduzione in latino senza altri commenti.",
+        cat: "Riscrivi il testo simulando il linguaggio di un gatto filosofo e cospiratore, intervallando le parole con miagolii ('Miao', 'Mrrrp', 'Purrr') e osservazioni snob. Restituisci solo il testo tradotto.",
+        emoji: "Traduci e decodifica l'intero significato del testo usando una sequenza ricca ed espressiva di emoji e pittogrammi dell'assurdo. Restituisci SOLO le emoji.",
+        bizzarro: "Riscrivi il testo nello stile aulico, grottesco e iper-satirico dell'Alter Ego della rivista 'Cattivo Gusto'. Massima carica di sarcasmo e vocaboli forbiti.",
+        elvish: "Traduci il testo nello stile dell'Alto Elfico Quenya (Tolkien) con sonorità poetiche e mistiche. Restituisci solo la traduzione.",
+        eo: "Traduci il testo in Esperanto fluido ed elegante. Restituisci solo la traduzione."
       };
 
-      const systemInstruction = langPrompts[targetLang] || "Traduci il testo nella lingua richiesta con tono comico e accurato.";
+      const systemInstruction = langPrompts[targetLang] || "Traduci il testo nella lingua o stile richiesto con cura e tono espressivo.";
 
+      // TIER 1: Groq AI LPU Engine
+      const groqKey = process.env.GROQ_API_KEY;
       if (groqKey && groqKey.trim().length > 0) {
         try {
           const groq = new Groq({ apiKey: groqKey.trim() });
@@ -342,13 +309,13 @@ async function startServer() {
             ],
             model: "llama-3.3-70b-versatile",
             temperature: 0.7,
-            max_tokens: 300
+            max_tokens: 400
           });
           const result = completion.choices[0]?.message?.content?.trim();
           if (result) {
             return res.json({
               translated: result,
-              provider: "Google Translate + Groq AI LPU",
+              provider: "Groq AI LPU Engine (llama-3.3-70b)",
               targetLang
             });
           }
@@ -357,6 +324,8 @@ async function startServer() {
         }
       }
 
+      // TIER 2: Gemini AI Engine
+      const geminiKey = process.env.GEMINI_API_KEY;
       if (geminiKey && geminiKey.trim().length > 0) {
         try {
           const ai = new GoogleGenAI({ apiKey: geminiKey.trim() });
@@ -368,7 +337,7 @@ async function startServer() {
           if (response.text) {
             return res.json({
               translated: response.text.trim(),
-              provider: "Google Translate + Gemini AI Engine",
+              provider: "Gemini 2.5 Flash Engine",
               targetLang
             });
           }
@@ -377,11 +346,33 @@ async function startServer() {
         }
       }
 
-      // Satirical fallback if AI services are down
+      // TIER 3: Google Translate Free Web API (fallback for real languages)
+      if (["la", "eo"].includes(targetLang)) {
+        try {
+          const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(cleanText)}`;
+          const gRes = await fetch(gUrl);
+          if (gRes.ok) {
+            const gData = await gRes.json();
+            if (gData && gData[0]) {
+              const translatedStr = gData[0].map((item: any) => item[0]).join("");
+              return res.json({
+                translated: translatedStr,
+                provider: `Google Translate Web API (${targetLang.toUpperCase()})`,
+                targetLang
+              });
+            }
+          }
+        } catch (gErr) {
+          console.warn("[Google Translate API Warning]:", gErr);
+        }
+      }
+
+      // TIER 4: Satirical fallback if AI services are down
       const fallbacks: Record<string, string> = {
         nap: `Uaglio', chest e' 'a traduzione: "${cleanText}" sta a dicere ca 'o gatto tene sulo famme e o tostapane e' addiventato pazzo!`,
-        tlh: `nuqneH! Qapla'! [Klingon Translation]: ${cleanText.toUpperCase()} -- Qo'noS jIH!`,
+        tlh: `nuqneH! Qapla'! [Klingon]: ${cleanText.toUpperCase()} -- Qo'noS jIH!`,
         la: `[Latino Ecclesiastico]: Absurditas magna est: "${cleanText}" -- Amen et requiescat.`,
+        cat: `Mrrrp... Miao! ${cleanText} ...Purrrr! 🐾`,
         emoji: `🎭 🐈‍⬛ 🍞 ⚡ 🍕 🌀 🛸 ✨`,
         bizzarro: `[Bizzarro Redazionale]: Egregio lettore, la frase "${cleanText}" denota una profonda vacuità ontologica che la Redazione approva.`,
         elvish: `[Quenya]: Elen síla lúmenn' omentielvo: ${cleanText} -- Namárië.`
@@ -389,7 +380,7 @@ async function startServer() {
 
       return res.json({
         translated: fallbacks[targetLang] || `[Tradotto sotto il cofano]: ${cleanText}`,
-        provider: "Motore Redazionale Locale (Google Translate Sotto il Cofano)",
+        provider: "Motore Redazionale Locale Sotto il Cofano",
         targetLang
       });
     } catch (err: any) {

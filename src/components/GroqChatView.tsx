@@ -85,19 +85,40 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     };
   }, []);
 
-  // Speech Recognition (Microphone) Handler
-  const toggleListening = () => {
+  // Speech Recognition (Microphone) Handler with Apple / iOS Safari Support
+  const toggleListening = async () => {
     if (isListening) {
       if (recognitionRef.current) {
-        recognitionRef.current.stop();
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          // ignore
+        }
       }
       setIsListening(false);
       return;
     }
 
+    setErrorMessage(null);
+
+    // 1. Apple/iOS Safari Permission pre-check: Request audio stream to trigger iOS native mic prompt
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Immediately stop media tracks to release hardware for SpeechRecognition
+        stream.getTracks().forEach(track => track.stop());
+      } catch (mediaErr: any) {
+        console.warn("[Apple/iOS Mic Access Permission Error]:", mediaErr);
+        setErrorMessage("Permesso microfono non concesso. Su dispositivi Apple (iPhone/iPad/Mac Safari), consenti l'accesso al microfono nelle impostazioni del browser.");
+        setIsListening(false);
+        return;
+      }
+    }
+
+    // 2. Initialize WebSpeech / webkitSpeechRecognition
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      setErrorMessage("Il tuo browser non supporta il riconoscimento vocale. Prova ad usare Google Chrome o Edge.");
+      setErrorMessage("Il tuo browser o dispositivo Apple non supporta il riconoscimento vocale diretto. Assicurati di usare Safari aggiornato (iOS 14.5+) o Chrome.");
       return;
     }
 
@@ -106,6 +127,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       recognition.lang = 'it-IT';
       recognition.continuous = false;
       recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
 
       recognition.onstart = () => {
         setIsListening(true);
@@ -124,6 +146,16 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       recognition.onerror = (event: any) => {
         console.warn("Speech recognition error:", event.error);
         setIsListening(false);
+
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          setErrorMessage("Accesso al microfono bloccato da Safari/Apple. Sblocca il microfono nelle Impostazioni di iOS/Safari -> Privacy -> Microfono.");
+        } else if (event.error === 'no-speech') {
+          setErrorMessage("Nessun suono rilevato. Parla chiaramente vicino al microfono del tuo dispositivo.");
+        } else if (event.error === 'audio-capture') {
+          setErrorMessage("Nessun microfono trovato sul dispositivo Apple.");
+        } else if (event.error !== 'aborted') {
+          setErrorMessage(`Errore microfono (${event.error}). Puoi comunque digitare il messaggio.`);
+        }
       };
 
       recognition.onend = () => {
@@ -132,13 +164,14 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
 
       recognitionRef.current = recognition;
       recognition.start();
-    } catch (err) {
+    } catch (err: any) {
+      console.error("Speech Recognition Init error:", err);
       setIsListening(false);
-      setErrorMessage("Errore durante l'avvio del microfono.");
+      setErrorMessage("Impossibile attivare il microfono. Verifica i permessi in Safari/iOS.");
     }
   };
 
-  // Text-to-Speech (Audio Output) Handler
+  // Text-to-Speech (Audio Output) Handler with Apple Safari Support
   const speakMessage = (text: string, id: string) => {
     if (!('speechSynthesis' in window)) {
       setErrorMessage("La sintesi vocale audio non è supportata dal tuo browser.");
@@ -152,10 +185,27 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     }
 
     window.speechSynthesis.cancel();
+
+    // On iOS Safari, resume audio synthesis if paused
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'it-IT';
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
+
+    // Pick Italian voice on Apple Safari if available
+    try {
+      const voices = window.speechSynthesis.getVoices();
+      const italianVoice = voices.find(v => v.lang.startsWith('it'));
+      if (italianVoice) {
+        utterance.voice = italianVoice;
+      }
+    } catch (vErr) {
+      // fallback
+    }
 
     utterance.onend = () => setSpeakingMessageId(null);
     utterance.onerror = () => setSpeakingMessageId(null);
