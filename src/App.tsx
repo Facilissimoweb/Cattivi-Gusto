@@ -11,6 +11,7 @@ import { AbsurdCookieModal, ABSURD_COOKIES } from './components/AbsurdCookieModa
 import { CookieNoticeBanner } from './components/CookieNoticeBanner';
 import { ChaosCorner } from './components/ChaosCorner';
 import { GroqChatView } from './components/GroqChatView';
+import { FloatingNuvolettaGroq } from './components/FloatingNuvolettaGroq';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
 
@@ -459,6 +460,15 @@ export default function App() {
       <CookieNoticeBanner
         onOpenPreferences={() => setIsCookieModalOpen(true)}
         onAcceptAllQuick={handleAcceptAllCookiesQuick}
+      />
+
+      {/* Floating Classic Speech Bubble ("Nuvoletta Classica") Groq AI Chat Button */}
+      <FloatingNuvolettaGroq
+        onClick={() => {
+          setActiveView('groq_chat');
+          setSelectedArticleId(null);
+        }}
+        activeView={activeView}
       />
 
       {/* Footer */}
