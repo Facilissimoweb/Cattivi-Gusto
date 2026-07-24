@@ -2,6 +2,7 @@ import { Article, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: 'tutti', label: 'TUTTO IL CAOS', badge: 'ALL' },
+  { id: 'trash-tv', label: 'TEMPTATION & TRASH', badge: '🏝️' },
   { id: 'complotto-felino', label: 'COMPLOTTO FELINO', badge: '🐱' },
   { id: 'filosofia-nulla', label: 'FILOSOFIA DEL NULLA', badge: '🧠' },
   { id: 'moda-cringe', label: 'MODA CRINGE', badge: '👔' },
@@ -11,6 +12,75 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const ARTICLES: Article[] = [
+  {
+    id: 'temptation-island-perle-assurde',
+    title: "TEMPTATION ISLAND: FALÒ, DISSOCIAZIONE E LE PERLE PIÙ ASSURDE DELLE COPPIE IN CRISI",
+    subtitle: "Dall'iconico 'Ho visto cose che voi umani' alle corse disperate sulla spiaggia inseguiti dai cameraman: guida definitiva alla fenomenologia del crollo amoroso in diretta TV.",
+    category: 'trash-tv',
+    categoryLabel: 'TEMPTATION & DISSOCIAZIONE',
+    author: 'Inviato del Pinnettu & Redazione Alter Ego',
+    date: '24 LUGLIO 2026',
+    readTime: '7 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Foto realistica di un villaggio turistico sul mare di notte con luci e falò drammatico',
+    imageCutoutStyle: 'green-outline',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 5620,
+    isHot: true,
+    content: {
+      intro: "Ogni estate la Sardegna diventa il teatro del più grande esperimento sociologico del pianeta: prendere sei coppie sull'orlo del baratro, separarle in due villaggi ricchi di tentatori oliati, e far dire a Filippo Bisciglia con tono solenne la frase sacra: 'Ho un video per te'. Da quel momento in poi, la logica e la sintassi italiana smettono ufficialmente di esistere.",
+      sections: [
+        {
+          heading: "Le 'Perle di Saggezza' che hanno riscritto la lingua italiana",
+          paragraphs: [
+            "Temptation Island non è solo televisione: è un generatore automatico di aforismi filosofici contemporanei. Durante il rito del Pinnettu o davanti ai tronchi del falò di confronto, i protagonisti danno il meglio del loro repertorio cognitivo:",
+            "• 'Io sono venuto qui per capire se la rispetto... e invece l'ho vista ridere mentre mangiava un cocco con il tentatore! PER ME È FINITA!'",
+            "• 'L'ho vista felice... E QUESTO NON GLIELO PERDONO! Se voleva essere felice poteva rimanere a casa a stirare le mie magliette!'",
+            "• 'Filippo, io per lei ho fatto di tutto: ho lasciato la mia città, i miei amici, e persino il torneo di calcetto del giovedì. E lei mi ripaghi facendo acquagym con un single che si chiama Luan?!'",
+            "• 'Io con te volevo fare un percorso di crescita interiore... ma prima volevo capire se mi manchi davvero o se mi mancava solo il tuo abbonamento a Netflix.'",
+            "• 'Non è che l'ho tradita... stavo solo testando la stabilità strutturale del mio sentimento in un contesto di stress atmosferico!'"
+          ],
+          quote: "Filippo, se guarda un altro video io spacco la duna di sabbia e vado nell'altro villaggio a piedi nudi a riprendermi la mia dignità!"
+        },
+        {
+          heading: "I comportamenti più assurdi da antologia del trash",
+          paragraphs: [
+            "Accanto al frasario, ci sono i gesti atletici ed emotivi che sono ormai entrati nel mito:",
+            "1. La corsa sulla battigia: Il classico momento in cui il fidanzato scopre che la compagna ha scambiato due parole d'affetto e decide di superare i blocchi di sicurezza della produzione. Quattro cameraman in apnea e tre autori con le infradito cercano di placcarlo sulle rocce mentre lui urla il nome della fidanzata verso il mare aperto.",
+            "2. La distruzione dei pouf e delle palme: Quando la rabbia sale, la vegetazione sarda e l'arredamento da giardino diventano le prime vittime. C'è chi ha tirato pugni a cuscinetti decorativi e chi ha cercato di abbattere un pino a mani nude per dimostrare la propria virilità ferita.",
+            "3. Il bagno a mezzanotte in maglietta: Il segnale inequivocabile che il confine del 'percorso' è stato travalicato. Entrare in acqua vestiti con la t-shirt bianca della produzione equivale a firmare le carte del divorzio in mondovisione."
+          ]
+        },
+        {
+          heading: "Il Verdetto del Falò di Confronto Straordinario",
+          paragraphs: [
+            "Alla fine di ogni puntata, davanti al fuoco scoppiettante e alle domande imperturbabili di Filippo Bisciglia, avviene il miracolo: la coppia si insulta ininterrottamente per 45 minuti, rinfacciandosi ogni spesa dell'Eurospin dal 2019 ad oggi, per poi concludere con un clamoroso: 'Torniamo a casa insieme perché il nostro amore è troppo forte'.",
+            "La Redazione di Cattivo Gusto conferisce il premio 'Premio Dissociazione dell'Anno' a tutti i partecipanti che sono riusciti a piangere disperatamente mentre sorseggiavano un drink alla frutta servito in un cocco cavo."
+          ]
+        }
+      ],
+      conclusion: "Vuoi capire a che punto è la tua storia d'amore? Non serve andare in Sardegna: basta fare il nostro test di paranoia o consultare il Traduttore Bizzarro sotto il cofano!"
+    },
+    comments: [
+      {
+        id: 'c-ti-1',
+        author: 'Filippo Bisciglia (Fan Club)',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=FilippoFan',
+        date: '10 minuti fa',
+        text: 'Ho un video per voi! Nel video c\'è la vostra dignità che saluta dalla spiaggia e sale su un pedalò col tentatore!',
+        likes: 420
+      },
+      {
+        id: 'c-ti-2',
+        author: 'Spettatore del Pinnettu',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=PinnettuViewer',
+        date: '25 minuti fa',
+        text: 'L\'espressione "L\'ho vista felice e questo non glielo perdono" merita di essere scolpita sul marmo davanti al Ministero della Cultura.',
+        likes: 610
+      }
+    ]
+  },
   {
     id: 'emma-ai-italiana-disastro-mondiale',
     title: "EMMA: L'INTELLIGENZA ARTIFICIALE ITALIANA CHE HA FATTO UNA FIGURA MISERABILE NEL MONDO",

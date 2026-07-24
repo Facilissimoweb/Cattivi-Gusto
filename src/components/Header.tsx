@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, Search, Volume2, VolumeX, Sparkles, Bookmark, Flame, ShieldAlert, X, Home, MessageSquare } from 'lucide-react';
+import { SiteLanguageTranslator } from './SiteLanguageTranslator';
 
 interface HeaderProps {
   onOpenMenu: () => void;
@@ -112,6 +113,9 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          {/* Real Google Translate Site Language Selector */}
+          <SiteLanguageTranslator />
+
           {onOpenTranslator && (
             <button
               onClick={onOpenTranslator}
