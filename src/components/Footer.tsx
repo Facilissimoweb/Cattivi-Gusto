@@ -4,7 +4,6 @@ import { Flame, Heart } from 'lucide-react';
 interface FooterProps {
   onOpenSubscriptions: () => void;
   onOpenManifesto: () => void;
-  onOpenChaosCorner: () => void;
   onGoHome?: () => void;
   onOpenContacts?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
@@ -16,7 +15,6 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({
   onOpenSubscriptions,
   onOpenManifesto,
-  onOpenChaosCorner,
   onGoHome,
   onOpenContacts,
   onOpenLegal,
@@ -76,11 +74,6 @@ export const Footer: React.FC<FooterProps> = ({
             <li>
               <button onClick={onOpenManifesto} className="hover:text-[#A0FF00] transition">
                 Manifesto dell'Assurdo (Firma Qui)
-              </button>
-            </li>
-            <li>
-              <button onClick={onOpenChaosCorner} className="hover:text-[#A0FF00] transition">
-                Guru del Nulla in 5 Minuti
               </button>
             </li>
             <li>

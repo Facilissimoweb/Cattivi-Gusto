@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import { Article, Comment } from '../types';
 import { ArrowLeft, Volume2, VolumeX, Heart, Share2, MessageSquare, Send, Flame, Sparkles, AlertTriangle, ShieldCheck } from 'lucide-react';
-import { INANIMATE_FORTUNES, VOID_WEATHER } from '../data/chaos';
 import { ArticleShareButtons } from './ArticleShareButtons';
+
+const VOID_WEATHER = {
+  condition: 'Pioggia di oggetti smarriti (18°C)',
+  description: 'Incertezza diffusa con 85% di possibilità di dimenticare la propria password.',
+};
+
+const INANIMATE_FORTUNES = [
+  { id: '1', objectName: 'Tostapane', fortune: 'Non inserire pane integrale oggi. Sensazione di rifiuto imminente.', mood: 'Teso' },
+  { id: '2', objectName: 'Calzino Sinistro', fortune: 'Troverai la tua anima gemella nel filtro della lavatrice.', mood: 'Speranzoso' },
+  { id: '3', objectName: 'Router Wi-Fi', fortune: 'Le tue lucine rosse rivelano segreti inconfessabili.', mood: 'Misterioso' },
+];
 
 interface ArticleDetailViewProps {
   article: Article;

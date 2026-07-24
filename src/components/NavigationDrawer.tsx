@@ -12,7 +12,6 @@ interface NavigationDrawerProps {
   onGoHome?: () => void;
   onOpenManifesto: () => void;
   onOpenSubscriptions: () => void;
-  onOpenChaosCorner: () => void;
   onOpenBookmarks: () => void;
   onOpenContacts?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
@@ -31,7 +30,6 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onGoHome,
   onOpenManifesto,
   onOpenSubscriptions,
-  onOpenChaosCorner,
   onOpenBookmarks,
   onOpenContacts,
   onOpenLegal,
@@ -149,20 +147,6 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 <ChevronRight className="w-5 h-5" />
               </button>
             )}
-
-            <button
-              onClick={() => {
-                onOpenChaosCorner();
-                onClose();
-              }}
-              className="w-full bg-white border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-neutral-100 transition shadow-[3px_3px_0px_#000]"
-            >
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-600" />
-                <span>L'ANGOLO DEL CAOS (MINI-APP)</span>
-              </div>
-              <ChevronRight className="w-5 h-5" />
-            </button>
 
             <button
               onClick={() => {

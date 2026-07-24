@@ -5,7 +5,10 @@ export type CategoryId =
   | 'moda-cringe' 
   | 'cucina-incubo' 
   | 'manifesti'
-  | 'oroscopo-oggetti';
+  | 'oroscopo-oggetti'
+  | 'tatuaggi'
+  | 'accoppiamento'
+  | 'trash-tv';
 
 export interface Category {
   id: CategoryId;

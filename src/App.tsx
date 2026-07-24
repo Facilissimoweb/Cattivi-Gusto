@@ -9,7 +9,6 @@ import { ManifestoModal } from './components/ManifestoModal';
 import { LegalAbsurdModal } from './components/LegalAbsurdModal';
 import { AbsurdCookieModal, ABSURD_COOKIES } from './components/AbsurdCookieModal';
 import { CookieNoticeBanner } from './components/CookieNoticeBanner';
-import { ChaosCorner } from './components/ChaosCorner';
 import { GroqChatView } from './components/GroqChatView';
 import { UnderTheHoodTranslator } from './components/UnderTheHoodTranslator';
 import { ContactsView } from './components/ContactsView';
@@ -24,7 +23,7 @@ import { Flame, Sparkles, Filter, Bookmark, X, AlertCircle } from 'lucide-react'
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('tutti');
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks' | 'groq_chat' | 'translator' | 'contacts'>('feed');
+  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'bookmarks' | 'groq_chat' | 'translator' | 'contacts'>('feed');
   
   const [savedArticleIds, setSavedArticleIds] = useState<string[]>(() => {
     try {
@@ -40,7 +39,6 @@ export default function App() {
   const [legalTab, setLegalTab] = useState<'privacy' | 'terms'>('privacy');
   const [isCookieModalOpen, setIsCookieModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isChaosAudioActive, setIsChaosAudioActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   const [isSubscribed, setIsSubscribed] = useState(() => {
@@ -188,37 +186,6 @@ export default function App() {
     }
   };
 
-  // Audio Chaos Background Loop (Web Audio API Synthesizer)
-  useEffect(() => {
-    let interval: any = null;
-    if (isChaosAudioActive) {
-      try {
-        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        interval = setInterval(() => {
-          if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-          }
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          // Absurdist microtonal frequency
-          osc.frequency.value = 220 + Math.random() * 300;
-          gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.4);
-        }, 1200);
-      } catch (e) {
-        // ignore
-      }
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isChaosAudioActive]);
-
   // Currently Selected Article Object for Reader View
   const currentReaderArticle = ARTICLES.find(art => art.id === selectedArticleId) || heroArticle;
 
@@ -241,8 +208,6 @@ export default function App() {
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         savedCount={savedArticleIds.length}
         onOpenBookmarks={() => setActiveView('bookmarks')}
-        isChaosAudioActive={isChaosAudioActive}
-        onToggleChaosAudio={() => setIsChaosAudioActive(!isChaosAudioActive)}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         isSubscribed={isSubscribed}
@@ -265,7 +230,6 @@ export default function App() {
         onGoHome={handleGoHome}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenSubscriptions={() => setActiveView('subscriptions')}
-        onOpenChaosCorner={() => setActiveView('chaos')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
         onOpenContacts={() => setActiveView('contacts')}
         onOpenLegal={handleOpenLegal}
@@ -317,15 +281,6 @@ export default function App() {
             onBack={() => setActiveView('feed')}
             isSubscribed={isSubscribed}
             onSubscribeSuccess={handleSubscribeSuccess}
-          />
-        )}
-
-        {/* CHAOS CORNER MINI-APPS VIEW */}
-        {activeView === 'chaos' && (
-          <ChaosCorner
-            onBack={() => setActiveView('feed')}
-            onOpenManifesto={() => setIsManifestoOpen(true)}
-            onOpenTranslator={() => setActiveView('translator')}
           />
         )}
 
@@ -534,7 +489,6 @@ export default function App() {
       <Footer
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenManifesto={() => setIsManifestoOpen(true)}
-        onOpenChaosCorner={() => setActiveView('chaos')}
         onGoHome={handleGoHome}
         onOpenContacts={() => setActiveView('contacts')}
         onOpenLegal={handleOpenLegal}
@@ -556,7 +510,6 @@ export default function App() {
         }}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenSubscriptions={() => setActiveView('subscriptions')}
-        onOpenChaosCorner={() => setActiveView('chaos')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
         onOpenGroqChat={() => setActiveView('groq_chat')}
         savedCount={savedArticleIds.length}

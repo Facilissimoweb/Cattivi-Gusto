@@ -6,7 +6,6 @@ interface BottomNavMobileProps {
   setActiveTab: (tab: string) => void;
   onOpenManifesto: () => void;
   onOpenSubscriptions: () => void;
-  onOpenChaosCorner: () => void;
   onOpenBookmarks: () => void;
   onOpenGroqChat?: () => void;
   savedCount: number;
@@ -17,7 +16,6 @@ export const BottomNavMobile: React.FC<BottomNavMobileProps> = ({
   setActiveTab,
   onOpenManifesto,
   onOpenSubscriptions,
-  onOpenChaosCorner,
   onOpenBookmarks,
   onOpenGroqChat,
   savedCount,
@@ -44,27 +42,27 @@ export const BottomNavMobile: React.FC<BottomNavMobileProps> = ({
       {/* Manifesto */}
       <button
         onClick={onOpenManifesto}
-        className="flex flex-col items-center py-1 px-1.5 text-white hover:scale-105 transition"
+        className="flex flex-col items-center py-1 px-1.5 text-white hover:scale-105 transition cursor-pointer"
       >
         <Flame className="w-5 h-5 text-red-500 fill-red-500" />
         <span className="font-anton text-[9px] uppercase tracking-wider mt-0.5">MANIFESTO</span>
       </button>
 
-      {/* Caos */}
+      {/* Abbonati */}
       <button
-        onClick={onOpenChaosCorner}
-        className={`flex flex-col items-center py-1 px-1.5 transition ${
-          activeTab === 'chaos' ? 'text-[#A0FF00] font-bold' : 'text-neutral-400 hover:text-white'
+        onClick={onOpenSubscriptions}
+        className={`flex flex-col items-center py-1 px-1.5 transition cursor-pointer ${
+          activeTab === 'subscriptions' ? 'text-[#A0FF00] font-bold' : 'text-neutral-400 hover:text-white'
         }`}
       >
-        <CreditCard className="w-5 h-5" />
-        <span className="font-anton text-[9px] uppercase tracking-wider mt-0.5">CAOS</span>
+        <CreditCard className="w-5 h-5 text-yellow-400" />
+        <span className="font-anton text-[9px] uppercase tracking-wider mt-0.5">VIP</span>
       </button>
 
       {/* Bookmarks */}
       <button
         onClick={onOpenBookmarks}
-        className={`flex flex-col items-center py-1 px-1.5 relative transition ${
+        className={`flex flex-col items-center py-1 px-1.5 relative transition cursor-pointer ${
           activeTab === 'bookmarks' ? 'text-[#A0FF00] font-bold' : 'text-neutral-400 hover:text-white'
         }`}
       >

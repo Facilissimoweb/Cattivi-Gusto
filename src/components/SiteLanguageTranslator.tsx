@@ -28,7 +28,7 @@ export const SiteLanguageTranslator: React.FC = () => {
   useEffect(() => {
     // Check if script is already injected
     if (!document.getElementById('google-translate-script')) {
-      window.googleTranslateElementInit = () => {
+      (window as any).googleTranslateElementInit = () => {
         if ((window as any).google && (window as any).google.translate) {
           new (window as any).google.translate.TranslateElement(
             {

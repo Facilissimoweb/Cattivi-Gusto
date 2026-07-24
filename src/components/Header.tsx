@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Search, Volume2, VolumeX, Sparkles, Bookmark, Flame, ShieldAlert, X, Home, MessageSquare } from 'lucide-react';
+import { Menu, Search, Sparkles, Bookmark, Flame, ShieldAlert, X, Home, MessageSquare } from 'lucide-react';
 import { SiteLanguageTranslator } from './SiteLanguageTranslator';
 
 interface HeaderProps {
@@ -10,8 +10,6 @@ interface HeaderProps {
   onOpenSubscriptions: () => void;
   savedCount: number;
   onOpenBookmarks: () => void;
-  isChaosAudioActive: boolean;
-  onToggleChaosAudio: () => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   isSubscribed: boolean;
@@ -28,8 +26,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSubscriptions,
   savedCount,
   onOpenBookmarks,
-  isChaosAudioActive,
-  onToggleChaosAudio,
   searchQuery,
   setSearchQuery,
   isSubscribed,
@@ -80,20 +76,6 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>MENU</span>
-          </button>
-
-          {/* Chaos Audio Toggle - Icon only on mobile to save horizontal space */}
-          <button
-            onClick={onToggleChaosAudio}
-            className={`p-1.5 sm:p-2 border-2 border-black font-mono text-xs flex items-center gap-1 transition shadow-[2px_2px_0px_#000] cursor-pointer ${
-              isChaosAudioActive 
-                ? 'bg-[#A0FF00] text-black font-bold animate-pulse' 
-                : 'bg-white hover:bg-neutral-100 text-black'
-            }`}
-            title={isChaosAudioActive ? 'Disattiva Audio del Caos' : 'Attiva Audio del Caos'}
-          >
-            {isChaosAudioActive ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 text-neutral-500" />}
-            <span className="hidden lg:inline">{isChaosAudioActive ? 'AUDIO CAOS' : 'AUDIO OFF'}</span>
           </button>
         </div>
 
