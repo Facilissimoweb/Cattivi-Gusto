@@ -17,6 +17,93 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'filosofia-del-nulla-intervista-filosofi-naturalisti',
+    title: "RUBRICA \"FILOSOFIA DEL NULLA\" #1: INTERVISTA ESCLUSIVA AI FILOSOFI NATURALISTI (\"L'ARCHÈ? È SOLO UN GRANDE MAL DI TESTA\")",
+    subtitle: "Inauguriamo la nuova serie di interviste ai grandi pensatori partendo dai Presocratici: Talete, Anassimandro, Anassimene ed Eraclito ci svelano l'origine dell'universo tra pozzi, aria rarefatta, l'Apeiron infinito e il fiume della pigrizia.",
+    category: 'filosofia-nulla',
+    categoryLabel: 'FILOSOFIA DEL NULLA',
+    author: 'Il Guru del Nulla & La Redazione',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Busti dei filosofi greci presocratici immersi in un\'atmosfera surreale e concettuale',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 38900,
+    isHot: true,
+    content: {
+      intro: "Benvenuti alla prima puntata della nuova rubrica \"FILOSOFIA DEL NULLA\", il viaggio concettuale ed esilarante della nostra redazione tra i corridoi del pensiero umano. Ogni settimana intervisteremo i più grandi filosofi della storia per estrarre la loro saggezza più autentica e paradossale. Iniziamo dal principio: la scuola naturalistica dei Presocratici (VI-V secolo a.C.), quegli storici pensatori greci ossessionati dalla ricerca dell'Archè — il principio primo di ogni cosa. Spoiler: dopo secoli di speculazioni, hanno scoperto che all'origine del Cosmo c'è soprattutto un'immensa e meravigliosa perplessità.",
+      sections: [
+        {
+          heading: "1. TALETE DI MILETO: \"Tutto è Acqua. Specialmente quando ti cade il gelato sulle maniche!\"",
+          paragraphs: [
+            "• REDAZIONE: Maestro Talete, lei è considerato il padre della filosofia occidentale per aver affermato che l'Acqua è il principio fondamentale di tutte le cose. Come ci è arrivato?",
+            "• TALETE: \"Osservando la natura, caro mio! I semi hanno bisogno di umidità, il nutrimento è liquido e le piante fioriscono con la pioggia. Poi un giorno sono caduto dentro un pozzo mentre fissavo le stelle e ho capito: l'Acqua è ovunque, ed è incredibilmente rinfrescante quando cerchi di fare il saggio senza guardare dove metti i piedi!\""
+          ],
+          quote: "Non cercare di dominare l'universo: l'acqua prende la forma del contenitore. Sii come un decanter e mettiti comodo sul tavolo."
+        },
+        {
+          heading: "2. ANASSIMANDRO E L'APEIRON: \"L'Infinito Indeterminato è il luogo perfetto per rimandare gli impegni.\"",
+          paragraphs: [
+            "• REDAZIONE: Anassimandro, lei ha rifiutato l'acqua di Talete proponendo l'Apeiron: un principio infinito, indeterminato e privo di confini. Ce lo spieghi in parole semplici.",
+            "• ANASSIMANDRO: \"L'Apeiron è ciò che non ha forma né limiti. Tutte le cose nascono da esso e vi ritornano per espiare l'ingiustizia dell'esistenza. Avete presente la lista delle cose da fare la domenica sera? Ecco: quell'accumulo amorfo di intenzioni mai realizzate è la rappresentazione fisica più pura dell'Apeiron!\""
+          ]
+        },
+        {
+          heading: "3. ANASSIMENE ED ERACLITO: L'Aria condensata e il Fuoco del \"Panta Rei\"",
+          paragraphs: [
+            "• ANASSIMENE: \"L'Apeiron è troppo astratto! L'Aria è il vero Archè. Quando si rarefà diventa fuoco, quando si condensa diventa vento, nuvola e infine pietra. Respirare profondamente è il primo atto di filosofia del nulla.\"",
+            "• ERACLITO (L'OSCURO): \"Voi viillici non capite nulla! Panta Rei — tutto scorre! Il mondo è un fuoco eterno che si accende e si spegne con misura. Non ci si può tuffare due volte nello stesso fiume, non solo perché l'acqua cambia, ma perché la seconda volta non ne hai più alcuna voglia!\"",
+            "• REDAZIONE: In conclusione, Maestri, qual è il senso ultimo dell'Archè?",
+            "• I FILOSOFI IN CORO: \"Accettare che la ricerca del principio è infinitamente più riposante che trovare una soluzione definitiva!\""
+          ],
+          quote: "Panta Rei: il tempo scorre, i fiumi scorrono, ma la vera virtù sta nel saper fluire con grazia senza fare troppi sforzi."
+        }
+      ],
+      conclusion: "Si chiude così il primo capitolo della nostra Rubrica 'Filosofia del Nulla'. I presocratici ci insegnano che contemplare l'origine delle cose è l'esercizio ideale per alleggerire la mente dalle ansie quotidiane.",
+      quiz: {
+        title: "🧠 TEST PRESOCRATICO: QUAL È IL TUO ARCHÈ FILOSOFICO?",
+        subtitle: "Scopri quale elemento naturale guida la tua personale ricerca del Nulla!",
+        questions: [
+          {
+            id: 'qfn1',
+            question: "1. Come affronti un quesito esistenziale complesso?",
+            options: [
+              { label: 'A', text: 'Come Talete: guardo le stelle, cado nel pozzo dell\'introspezione e me la prendo comoda.', outcomeText: 'Sei guidato dall\'Acqua! Adattabile, fluido e perennemente bagnato d\'ispirazione.' },
+              { label: 'B', text: 'Come Anassimandro: mi rifugio nell\'Apeiron indeterminato e rimando la risposta al prossimo secolo.', outcomeText: 'Sei il Maestro dell\'Apeiron! Un oceano di potenziale mai espresso.' },
+              { label: 'C', text: 'Come Eraclito: esclamo "Panta Rei" e vado a fare un riposino vicino al camino.', outcomeText: 'Spirito di Fuoco e Mutamento! Niente dura per sempre, tranne la tua serenità.' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "🔮 VUOI DISCUTERNE CON IL GURU DEL NULLA IN CHAT?",
+        subtitle: "Accedi alla Chat della Redazione e seleziona il 'Guru del Nulla' per ricevere perle di saggezza filosofica deliziosamente inutili!",
+        buttonText: "💬 PARLA CON IL GURU DEL NULLA IN CHAT",
+        badge: "RUBRICA FILOSOFIA DEL NULLA"
+      }
+    },
+    comments: [
+      {
+        id: 'c-fn-1',
+        author: 'AristoteleFanPage',
+        avatar: '🏛️',
+        date: '3 minuti fa',
+        text: 'Finalmente una spiegazione chiara dell\'Apeiron! Ho capito che la mia scrivania in disordine è semplicemente un microcosmo indifferenziato.',
+        likes: 1250
+      },
+      {
+        id: 'c-fn-2',
+        author: 'EraclitoIlPessimista',
+        avatar: '🔥',
+        date: '8 minuti fa',
+        text: 'Panta Rei anche per i commenti! Comunque l\'intervista a Talete nel pozzo meritava l\'Oscar della filosofia.',
+        likes: 890
+      }
+    ]
+  },
+  {
     id: 'coach-marcus-articolo-ispirazionale-sfinimento',
     title: "MANIFESTO ISPORAZIONALE DI COACH MARCUS: \"NON PERSEGUITARE I TUOI SOGNI, SFINISCILI FINO A QUANDO NON SI ARRENDONO!\"",
     subtitle: "Dalla meditazione sulla pressione dell'olio della Fiat Duna al potere della canottiera a rete nei momenti di crisi: la guida motivazionale definitiva per abbracciare la sconfitta ed esibire il fallimento con orgoglio Alpha.",
