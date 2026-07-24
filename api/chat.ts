@@ -1,7 +1,8 @@
 import Groq from "groq-sdk";
+import { GoogleGenAI } from "@google/genai";
 
 export default async function handler(req: any, res: any) {
-  // Enable CORS for Vercel deployment
+  // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -12,85 +13,133 @@ export default async function handler(req: any, res: any) {
 
   // Status check via GET
   if (req.method === 'GET') {
-    const hasKey = !!process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.trim().length > 0;
+    const hasGroqKey = !!process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.trim().length > 0;
+    const hasGeminiKey = !!process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim().length > 0;
     return res.status(200).json({
-      configured: hasKey,
-      defaultModel: "llama-3.3-70b-versatile",
+      configured: hasGroqKey || hasGeminiKey,
+      hasGroqKey,
+      hasGeminiKey,
+      defaultModel: hasGroqKey ? "llama-3.3-70b-versatile" : "gemini-2.5-flash",
       availableModels: [
         "llama-3.3-70b-versatile",
         "llama-3.1-8b-instant",
         "mixtral-8x7b-32768",
-        "gemma2-9b-it"
+        "gemma2-9b-it",
+        "gemini-2.5-flash"
       ]
     });
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Metodo non consentito. Usa POST.' });
+    return res.status(200).json({ reply: "Metodo non supportato. Usa POST." });
   }
 
-  try {
-    const apiKey = process.env.GROQ_API_KEY;
-    if (!apiKey || apiKey.trim() === "") {
-      return res.status(400).json({
-        error: "GROQ_API_KEY_MISSING",
-        message: "Chiave GROQ_API_KEY non trovata nelle variabili d'ambiente. Aggiungi GROQ_API_KEY nei Secrets di Vercel o AI Studio."
-      });
-    }
+  const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+  const { messages, model = "llama-3.3-70b-versatile", systemPrompt, temperature = 0.85 } = body || {};
 
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-    const { messages, model = "llama-3.3-70b-versatile", systemPrompt, temperature = 0.85 } = body || {};
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(200).json({
+      reply: "[Alter Ego Redazionale]: Messaggio vuoto. La Redazione preferisce parole piene di senso o di sano caos.",
+      model: "alter-ego-local",
+      provider: "local_engine"
+    });
+  }
 
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return res.status(400).json({ error: "Messaggi non validi o vuoti." });
-    }
+  const lastUserQuery = messages.filter((m: any) => m.role === "user").slice(-1)[0]?.content || "";
+  const startTime = Date.now();
 
-    const groq = new Groq({ apiKey });
+  // TIER 1: Groq API
+  const groqKey = process.env.GROQ_API_KEY;
+  if (groqKey && groqKey.trim() !== "") {
+    try {
+      const groq = new Groq({ apiKey: groqKey.trim() });
+      const conversationMessages: any[] = [];
 
-    const conversationMessages: any[] = [];
-    if (systemPrompt) {
-      conversationMessages.push({
-        role: "system",
-        content: systemPrompt
-      });
-    } else {
-      conversationMessages.push({
-        role: "system",
-        content: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto', una rivista d'avanguardia e satirica. Rispondi con tono surreale, cinico, brillante, ironico e spaventosamente acuto in lingua italiana."
-      });
-    }
-
-    messages.forEach((msg: { role: string; content: string }) => {
-      if (msg.role === "user" || msg.role === "assistant" || msg.role === "system") {
+      if (systemPrompt) {
+        conversationMessages.push({ role: "system", content: systemPrompt });
+      } else {
         conversationMessages.push({
-          role: msg.role as "user" | "assistant" | "system",
-          content: msg.content
+          role: "system",
+          content: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto', una rivista d'avanguardia e satirica. Rispondi in lingua italiana."
         });
       }
-    });
 
-    const startTime = Date.now();
-    const completion = await groq.chat.completions.create({
-      messages: conversationMessages,
-      model: model,
-      temperature: temperature,
-      max_tokens: 1024,
-    });
-    const durationMs = Date.now() - startTime;
+      messages.forEach((msg: { role: string; content: string }) => {
+        if (msg.role === "user" || msg.role === "assistant" || msg.role === "system") {
+          conversationMessages.push({
+            role: msg.role as "user" | "assistant" | "system",
+            content: msg.content
+          });
+        }
+      });
 
-    const replyText = completion.choices[0]?.message?.content || "La mente dell'Alter Ego ha generato silenzio radio.";
+      const completion = await groq.chat.completions.create({
+        messages: conversationMessages,
+        model: model,
+        temperature: temperature,
+        max_tokens: 1024,
+      });
 
-    return res.status(200).json({
-      reply: replyText,
-      model: completion.model || model,
-      latencyMs: durationMs,
-      usage: completion.usage
-    });
-  } catch (err: any) {
-    console.error("Groq Vercel Serverless Error:", err);
-    return res.status(500).json({
-      error: "GROQ_EXECUTION_ERROR",
-      message: err?.message || "Errore durante la chiamata ai server Groq AI."
-    });
+      const durationMs = Date.now() - startTime;
+      const replyText = completion.choices[0]?.message?.content || "Silenzio radio dell'Alter Ego.";
+
+      return res.status(200).json({
+        reply: replyText,
+        model: completion.model || model,
+        latencyMs: durationMs,
+        provider: "groq",
+        usage: completion.usage
+      });
+    } catch (err: any) {
+      console.warn("Groq Vercel Warning:", err?.message || err);
+    }
   }
+
+  // TIER 2: Gemini API Fallback
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (geminiKey && geminiKey.trim() !== "") {
+    try {
+      const ai = new GoogleGenAI({ apiKey: geminiKey.trim() });
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: lastUserQuery || "Rispondi in modo satirico",
+        config: {
+          systemInstruction: systemPrompt || "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto'.",
+          temperature: 0.85
+        }
+      });
+
+      const durationMs = Date.now() - startTime;
+      if (response.text) {
+        return res.status(200).json({
+          reply: response.text,
+          model: "gemini-2.5-flash (Fallback)",
+          latencyMs: durationMs,
+          provider: "gemini_fallback",
+          notice: "Risposta elaborata via Gemini Engine."
+        });
+      }
+    } catch (gErr: any) {
+      console.warn("Gemini Vercel Fallback Warning:", gErr?.message || gErr);
+    }
+  }
+
+  // TIER 3: Local Engine (Zero 500 error)
+  const durationMs = Date.now() - startTime;
+  let localReply = `[🎭 Alter Ego Redazionale]: Messaggio ricevuto ("${lastUserQuery.slice(0, 40)}..."). La Redazione ha approvato all'unanimità.`;
+
+  if (systemPrompt?.includes("Tostapane")) {
+    localReply = `[🍞 Tostapane Filosofo]: Doratura 4/6 per "${lastUserQuery.slice(0, 40)}...". Risposta in corso di tostatura.`;
+  } else if (systemPrompt?.includes("Gatto")) {
+    localReply = `[🐱 Gatto Cospirazionista]: Query registrata. Il piano di conquista felina procede senza ostacoli.`;
+  }
+
+  return res.status(200).json({
+    reply: localReply,
+    model: "alter-ego-satirical-v1",
+    latencyMs: durationMs,
+    provider: "local_engine",
+    notice: "Risposta satirica locale."
+  });
 }
+

@@ -122,24 +122,6 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Groq AI Chat Trigger Button - Nuvoletta Classica */}
-          {onOpenGroqChat && (
-            <button
-              onClick={onOpenGroqChat}
-              className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-anton text-xs sm:text-sm border-2 border-black transition-all shadow-[3px_3px_0px_#000] hover:scale-105 active:scale-95 cursor-pointer ${
-                activeTab === 'groq_chat'
-                  ? 'bg-black text-[#A0FF00]'
-                  : 'bg-[#A0FF00] text-black hover:bg-black hover:text-[#A0FF00]'
-              }`}
-              title="Chatta con l'Alter Ego AI via GROQ_API_KEY (Nuvoletta Classica)"
-            >
-              <MessageSquare className="w-4 h-4 fill-current" />
-              <span>CHAT GROQ AI</span>
-              {/* Coda nuvoletta */}
-              <div className="absolute -bottom-1.5 right-3 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-black" />
-            </button>
-          )}
-
           {/* Search Trigger */}
           <button
             onClick={() => setShowSearchModal(true)}
