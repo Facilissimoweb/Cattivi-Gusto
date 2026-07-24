@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Flame, RefreshCw, Bot, HelpCircle, AlertTriangle, ShieldCheck, ArrowLeft, Volume2 } from 'lucide-react';
+import { Sparkles, Flame, RefreshCw, Bot, HelpCircle, AlertTriangle, ShieldCheck, ArrowLeft, Volume2, Image as ImageIcon, Download, Copy, Check } from 'lucide-react';
 import { GURU_QUOTES, INANIMATE_FORTUNES, VOID_WEATHER, CAT_PARANOIA_TESTS } from '../data/chaos';
 
 interface ChaosCornerProps {
@@ -8,6 +8,14 @@ interface ChaosCornerProps {
 }
 
 export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifesto }) => {
+  // AI Image Studio State
+  const [imagePrompt, setImagePrompt] = useState('Un tostapane filosofo con gli occhiali da sole che riflette sul senso dell\'esistenza');
+  const [imageStyle, setImageStyle] = useState('editorial');
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [imageNotice, setImageNotice] = useState<string | null>(null);
+  const [copiedUrl, setCopiedUrl] = useState(false);
+
   // Guru del Nulla State
   const [currentGuruQuote, setCurrentGuruQuote] = useState(GURU_QUOTES[0]);
   const [isLoadingAiGuru, setIsLoadingAiGuru] = useState(false);
@@ -18,6 +26,34 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
   // Cat Paranoia Calculator State
   const [catRiskScore, setCatRiskScore] = useState<number | null>(null);
   const [answers, setAnswers] = useState<number[]>([0, 0, 0]);
+
+  // AI Image Generation Studio Handler
+  const handleGenerateStudioImage = async () => {
+    if (!imagePrompt.trim()) return;
+    setIsGeneratingImage(true);
+    setImageNotice(null);
+    try {
+      const res = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: imagePrompt.trim(),
+          style: imageStyle,
+          width: 1024,
+          height: 1024
+        })
+      });
+      const data = await res.json();
+      if (data.url) {
+        setGeneratedImageUrl(data.url);
+        setImageNotice(data.notice || "Opera generata con successo.");
+      }
+    } catch (err) {
+      console.error("Studio Image Generation error:", err);
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
 
   // Generate Guru Wisdom (Local or Gemini API)
   const handleGenerateGuruQuote = async () => {
@@ -80,9 +116,138 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
           L'ANGOLO DEL CAOS
         </h1>
         <p className="font-typewriter text-sm sm:text-base text-neutral-700">
-          Strumenti interattivi inutili creati dalla redazione dell'Alter Ego per misurare l'irrilevanza quotidiana.
+          Strumenti interattivi creati dalla redazione dell'Alter Ego per misurare l'irrilevanza quotidiana.
         </p>
       </div>
+
+      {/* Tool 0: Generatore di Immagine & Illustrazioni AI */}
+      <section className="bg-black text-white border-3 border-black p-6 sm:p-8 shadow-[8px_8px_0px_#A0FF00] relative">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-4 border-b border-neutral-700 pb-3">
+          <div className="flex items-center gap-2">
+            <ImageIcon className="w-6 h-6 text-[#A0FF00]" />
+            <h2 className="font-anton text-2xl sm:text-3xl uppercase tracking-tight text-[#A0FF00]">
+              STUDIO D'ARTE SATIRICA AI
+            </h2>
+          </div>
+          <span className="bg-[#A0FF00] text-black font-mono text-xs px-2.5 py-1 font-bold uppercase">
+            MOTORE OPEN-SOURCE FLUX / IMAGEN
+          </span>
+        </div>
+
+        <p className="font-typewriter text-xs sm:text-sm text-neutral-300 mb-6">
+          Scrivi qualsiasi descrizione (es: <i>"Un gatto in giacca e cravatta che presiede un consiglio d'amministrazione di tostapane"</i>) e genera l'illustrazione in tempo reale.
+        </p>
+
+        {/* Input & Styles */}
+        <div className="space-y-4 mb-6">
+          <div>
+            <label className="block font-anton text-sm uppercase text-[#A0FF00] mb-1">
+              DESCRIZIONE DELL'OPERA (PROMPT):
+            </label>
+            <textarea
+              rows={3}
+              value={imagePrompt}
+              onChange={(e) => setImagePrompt(e.target.value)}
+              placeholder="Descrivi l'immagine assurda che desideri creare..."
+              className="w-full bg-neutral-900 border-2 border-neutral-700 p-3 font-mono text-sm text-white placeholder-neutral-500 focus:border-[#A0FF00] focus:outline-none"
+            />
+          </div>
+
+          {/* Preset Prompts */}
+          <div className="flex flex-wrap gap-2 text-xs font-mono">
+            <span className="text-neutral-400 self-center">Esempi rapidi:</span>
+            {[
+              "Un tostapane filosofo al tramonto",
+              "Gatto cospirazionista con taccuino segreto",
+              "Manifesto dell'assurdo in stile pop art vintage",
+              "Guru del nulla immerso in una tazza di caffè"
+            ].map((preset, idx) => (
+              <button
+                key={idx}
+                onClick={() => setImagePrompt(preset)}
+                className="bg-neutral-800 text-neutral-200 px-2.5 py-1 border border-neutral-700 hover:border-[#A0FF00] hover:text-[#A0FF00] transition cursor-pointer"
+              >
+                {preset}
+              </button>
+            ))}
+          </div>
+
+          {/* Style selector */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {[
+              { id: 'editorial', label: 'Editoriale Satirico' },
+              { id: 'poster', label: 'Manifesto Pop' },
+              { id: 'surreal', label: 'Surrealista' },
+              { id: 'cat', label: 'Cospirazione Felina' }
+            ].map((st) => (
+              <button
+                key={st.id}
+                onClick={() => setImageStyle(st.id)}
+                className={`p-2 font-anton text-xs uppercase border transition ${
+                  imageStyle === st.id
+                    ? 'bg-[#A0FF00] text-black border-[#A0FF00] font-bold'
+                    : 'bg-neutral-900 text-neutral-300 border-neutral-700 hover:border-white'
+                }`}
+              >
+                {st.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Generate Button */}
+        <div className="flex justify-center mb-6">
+          <button
+            onClick={handleGenerateStudioImage}
+            disabled={isGeneratingImage || !imagePrompt.trim()}
+            className="bg-[#A0FF00] text-black border-2 border-black px-8 py-3.5 font-anton text-lg uppercase flex items-center gap-2 hover:bg-white transition shadow-[4px_4px_0px_#000] cursor-pointer active:translate-x-0.5"
+          >
+            {isGeneratingImage ? (
+              <>
+                <RefreshCw className="w-5 h-5 animate-spin" />
+                <span>GENERAZIONE D'ARTE IN CORSO...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-5 h-5" />
+                <span>GENERA OPERA D'ARTE AI ORA</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Image Preview Area */}
+        {generatedImageUrl && (
+          <div className="bg-neutral-900 border-2 border-[#A0FF00] p-4 animate-in zoom-in-95 space-y-3">
+            <div className="relative overflow-hidden border border-neutral-700 bg-black flex justify-center">
+              <img
+                src={generatedImageUrl}
+                alt={imagePrompt}
+                className="max-h-[500px] w-auto object-contain"
+              />
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono pt-2 border-t border-neutral-800">
+              <span className="text-[#A0FF00]">
+                {imageNotice || "Opera pronta per la pubblicazione su Cattivo Gusto."}
+              </span>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href={generatedImageUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  download="cattivo-gusto-artwork.png"
+                  className="bg-[#A0FF00] text-black px-3 py-1 font-anton uppercase flex items-center gap-1 hover:bg-white transition"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>SCARICA</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
 
       {/* Tool 1: Guru del Nulla 5-Minute Generator */}
       <section className="bg-white border-3 border-black p-6 sm:p-8 shadow-[8px_8px_0px_#000] relative">

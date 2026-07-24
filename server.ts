@@ -4,6 +4,7 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import Groq from "groq-sdk";
 import dotenv from "dotenv";
+import { handleImageGeneration } from "./lib/imageHandler.js";
 
 dotenv.config();
 
@@ -192,6 +193,11 @@ async function startServer() {
       console.error("Gemini API Error:", err);
       res.status(500).json({ error: err.message || "Errore sconosciuto nella matrice del caos." });
     }
+  });
+
+  // Image generation endpoint (Open-Source Pollinations FLUX + Gemini Imagen)
+  app.all(["/api/generate-image", "/api/image"], (req, res) => {
+    return handleImageGeneration(req, res);
   });
 
   // Vite development mode vs production static serving

@@ -20,6 +20,9 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
   isSaved,
   onToggleSave,
 }) => {
+  const [currentHeroImage, setCurrentHeroImage] = useState(article.heroImage);
+  const [isGeneratingAiImage, setIsGeneratingAiImage] = useState(false);
+  const [aiImageNotice, setAiImageNotice] = useState<string | null>(null);
   const [likes, setLikes] = useState(article.likesCount);
   const [hasLiked, setHasLiked] = useState(false);
   const [comments, setComments] = useState<Comment[]>(article.comments);
@@ -117,6 +120,33 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
     setTimeout(() => {
       setDontClickEffect(null);
     }, 4500);
+  };
+
+  // AI Image Cover Generator function
+  const handleRegenerateAiCover = async () => {
+    setIsGeneratingAiImage(true);
+    setAiImageNotice(null);
+    try {
+      const res = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: `Satirical artwork for magazine article: ${article.title}. ${article.subtitle}`,
+          style: 'editorial',
+          width: 1024,
+          height: 600
+        })
+      });
+      const data = await res.json();
+      if (data.url) {
+        setCurrentHeroImage(data.url);
+        setAiImageNotice(data.notice || "Nuova illustrazione d'arte generata dall'Alter Ego!");
+      }
+    } catch (err) {
+      console.error("AI Image Generation Error:", err);
+    } finally {
+      setIsGeneratingAiImage(false);
+    }
   };
 
   // Share action
@@ -221,16 +251,35 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
         {/* Main Article Body Column (8 cols) */}
         <div className="lg:col-span-8 space-y-6">
           
-          {/* Main Hero Photo Card */}
+          {/* Main Hero Photo Card with AI Generator Button */}
           <div className="relative border-3 border-black bg-white p-3 shadow-[6px_6px_0px_#000]">
             <img
-              src={article.heroImage}
+              src={currentHeroImage}
               alt={article.imageAlt}
-              className="w-full h-auto max-h-[450px] object-cover grayscale contrast-125 border border-black mb-2"
+              className="w-full h-auto max-h-[480px] object-cover border border-black mb-2 transition-all duration-300"
             />
-            <p className="font-typewriter text-xs text-neutral-600 italic text-center">
-              Figura 1.1: {article.imageAlt} (Fotografia sequestrata dall'Alter Ego)
-            </p>
+            
+            <div className="flex flex-wrap items-center justify-between gap-2 mt-2 pt-2 border-t border-black">
+              <p className="font-typewriter text-xs text-neutral-600 italic">
+                Figura 1.1: {article.imageAlt}
+              </p>
+              
+              <button
+                onClick={handleRegenerateAiCover}
+                disabled={isGeneratingAiImage}
+                className="bg-[#A0FF00] text-black border-2 border-black px-3 py-1 font-anton text-xs uppercase flex items-center gap-1.5 hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer"
+                title="Genera una nuova copertina artistica basata sul titolo di questo articolo"
+              >
+                <Sparkles className={`w-3.5 h-3.5 ${isGeneratingAiImage ? 'animate-spin' : ''}`} />
+                <span>{isGeneratingAiImage ? 'GENERAZIONE OPERA AI IN CORSO...' : "🎨 RIGENERA OPERA D'ARTE AI"}</span>
+              </button>
+            </div>
+
+            {aiImageNotice && (
+              <div className="mt-2 bg-black text-[#A0FF00] font-mono text-[11px] p-2 border border-[#A0FF00]">
+                ✨ {aiImageNotice}
+              </div>
+            )}
           </div>
 
           {/* Intro Box */}
