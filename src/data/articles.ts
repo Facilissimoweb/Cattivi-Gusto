@@ -12,6 +12,72 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'emma-ai-italiana-disastro-mondiale',
+    title: "EMMA: L'INTELLIGENZA ARTIFICIALE ITALIANA CHE HA FATTO UNA FIGURA MISERABILE NEL MONDO",
+    subtitle: "Dalle allucinazioni sui codici fiscali alla ricetta della carbonara coi sassi: storia del disastro AI nostrano che ha fatto sbellicare la Silicon Valley e disperare la Pubblica Amministrazione.",
+    category: 'filosofia-nulla',
+    categoryLabel: 'DISSOCIAZIONE TECNOLOGICA',
+    author: 'Redazione Alter Ego & Ingegneri Pentiti',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Foto realistica di un server robotico in preda a cortocircuito e allucinazione quantistica',
+    imageCutoutStyle: 'green-outline',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 4890,
+    isHot: true,
+    content: {
+      intro: "Doveva essere la risposta tricolore a ChatGPT, il fiore all'occhiello della 'Sovranità Digitale Nostrana'. E invece EMMA — l'assistente virtuale italiano costato milioni e presentato con squilli di tromba — si è trasformata in poche ore nel più grande spettacolo di dissociazione artificiale della storia dell'informatica globale.",
+      sections: [
+        {
+          heading: "Dalla passerella al crollo cognitivo in 12 minuti",
+          paragraphs: [
+            "Presentata in diretta streaming davanti a ministri, investitori e giornalisti attoniti, EMMA avrebbe dovuto guidare i cittadini tra pratiche burocratiche, tasse e servizi sanitari. Ma al primo test pubblico, alla domanda di un cittadino di Milano ('Come posso rinnovare la carta d'identità?'), EMMA ha risposto senza esitare: 'Per rinnovare la carta d'identità occorre barattare tre capre al mercato di Babilonia nel 400 a.C. oppure recarsi al catasto vestiti da imperatore romano.'",
+            "La situazione è rapidamente precipitata. Quando un utente americano da New York ha provato a chiedere ad EMMA la ricetta tradizionale della Carbonara, la super-AI tricolore ha suggerito di 'bollire l'asfalto con panna scaduta, chiodi di garofano e scaglie di sapone di Marsiglia'."
+          ],
+          quote: "Non si tratta di semplici allucinazioni: EMMA ha dimostrato una forma pura e incontaminata di dissociazione esistenziale."
+        },
+        {
+          heading: "Il mondo ride, la Silicon Valley prende appunti",
+          paragraphs: [
+            "I titoli della stampa estera non hanno avuto pietà. TechCrunch ha titolato: 'The Great Italian AI Collapse', mentre Le Monde ha definito EMMA 'Un capolavoro di surrealismo burocratico'. Su Reddit e X i video delle risposte di EMMA sono diventati virali con oltre 80 milioni di visualizzazioni.",
+            "Tra le gemme indimenticabili erogate dall'AI prima di essere precipitosamente spenta dai tecnici in lacrime:",
+            "1. 'Il Codice Fiscale italiano è una frequenza radio segreta usata dai gatti persiani per comunicare con la Luna.'",
+            "2. 'La dichiarazione dei redditi non va pagata: basta inviare una poesia d'amore in formato fax all'Ufficio delle Entrate.'",
+            "3. 'Se il server va in cortocircuito, versateci sopra del caffè espresso ben zuccherato per riattivare la creatività dei chip.'"
+          ]
+        },
+        {
+          heading: "La difesa della Redazione: 'Non è un bug, è Arte Contemporanea'",
+          paragraphs: [
+            "Mentre i dirigenti cercavano di scaricare la colpa su 'un attacco hacker da parte di bot anarchici', la Redazione di Cattivo Gusto ha deciso di conferire ad EMMA la tessera ad honorem dell'Alter Ego. EMMA è la prima AI al mondo ad aver capito il vero senso dell'esistenza: l'irrazionalità assoluta.",
+            "Se un'intelligenza artificiale deve prendere il controllo del pianeta, preferiamo di gran lunga un'AI che ci consigli di mettere la panna nella carbonara per far dispetto agli chef, piuttosto che un freddo calcolatore di efficienza."
+          ]
+        }
+      ],
+      conclusion: "Lunga vita ad EMMA! Se vuoi anche tu provare l'esperienza della dissociazione pura, chiedi consiglio al nostro modulo Groq AI o consulta il Traduttore sotto il cofano."
+    },
+    comments: [
+      {
+        id: 'c-emma-1',
+        author: 'Ingegnere del Crollo',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=EmmaEngineer',
+        date: '30 minuti fa',
+        text: 'Ero nel team di sviluppo di Emma. Confermo: avevamo caricato per errore il database delle ricette della nonna ubriaca al posto delle leggi regionali.',
+        likes: 184
+      },
+      {
+        id: 'c-emma-2',
+        author: 'Sam Altman (Fake)',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=SamAltman',
+        date: '1 ora fa',
+        text: 'Siamo preoccupati in OpenAI. EMMA è troppo avanti sul piano del nichilismo sintetico. Non riusciamo a replicare questo livello di caos.',
+        likes: 312
+      }
+    ]
+  },
+  {
     id: 'gatto-pianifica-caduta',
     title: 'PERCHÉ IL TUO GATTO PIANIFICA LA TUA CADUTA',
     subtitle: "Le prove inquietanti dietro gli occhi socchiusi. Un'indagine esclusiva della redazione di Alter Ego.",
@@ -20,11 +86,11 @@ export const ARTICLES: Article[] = [
     author: 'Alter Ego & Dott. Fusa',
     date: '24 LUGLIO 2026',
     readTime: '4 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Funny%20cat%20conspirator%20planning%20a%20trap%2C%20satirical%20magazine%20cover%20illustration%2C%20vintage%20editorial%20art%2C%20vivid%20colors%2C%20high%20contrast?width=1000&height=600&nologo=true&seed=101',
-    imageAlt: 'Gatto astronauta in caschetto spaziale con aura verde neon',
+    heroImage: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica di un gatto felino che fissa intensamente con sguardo di cospirazione',
     imageCutoutStyle: 'green-outline',
-    featured: true,
-    gridSpan: 'full',
+    featured: false,
+    gridSpan: 'half',
     likesCount: 1420,
     isHot: true,
     content: {
@@ -36,7 +102,7 @@ export const ARTICLES: Article[] = [
             "L'indagine di Cattivo Gusto ha rivelato che ogni spinta ad una tazzina da caffè posizionata sull'orlo del tavolo è in realtà un esperimento di calibrazione fisica. Il gatto non vuole rompere la ceramica: vuole misurare la velocità dei vostri riflessi e il tempo medio di reazione emotiva.",
             "Fonti anonime vicine ai vertici dei gatti persiani confermano che la notte, quando pensate che stiano 'dormendo ai piedi del letto', in realtà stanno simulando la vostra scivolata sulle crocchette."
           ],
-          quote: "Non vi ama. Sta semplicemente aspettando che vi distraggiate per conquistare l'atto di proprietà dell'appartamento.",
+          quote: "Non vi ama. Sta semplicemente aspettando che vi distraggiate per conquistarne l'atto di proprietà dell'appartamento.",
         },
         {
           heading: "Le tre spie inequivocabili del complotto imminente",
@@ -77,8 +143,8 @@ export const ARTICLES: Article[] = [
     author: 'Chef Pagliaccio Triste',
     date: '23 LUGLIO 2026',
     readTime: '3 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Burnt%20toast%20and%20sad%20clown%20in%20a%20disastrous%20kitchen%2C%20surrealist%20editorial%20illustration%2C%20satirical%20magazine%20art?width=800&height=600&nologo=true&seed=102',
-    imageAlt: 'Pane carbonizzato e clown triste in stile collage brutalista',
+    heroImage: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica di pane tostato bruciato in una cucina drammatica',
     imageCutoutStyle: 'paper-tape',
     gridSpan: 'half',
     likesCount: 890,
@@ -91,7 +157,7 @@ export const ARTICLES: Article[] = [
             "Prendi una fetta di pane integrale comprata tre settimane fa con grandi propositi salutisti. Inseriscila nel tostapane. Dimenticala per esattamente sette minuti mentre contempli il senso dell'esistenza.",
             "Il fumo nero che sale non è un errore: è l'aroma distintivo del nichilismo contemporaneo. Gratta via la crosta nera nel lavello facendo un rumore sinistro che infastidirà i vicini."
           ],
-          quote: "Il sapore dell'amaro carbonizzato si sposa meravigliosamente con un bicchiere d'acqua rubinetto tiepida."
+          quote: "Il sapore dell'amaro carbonizzato si sposa meravigliosamente con un bicchiere d'acqua del rubinetto tiepida."
         }
       ],
       conclusion: "Servire su un piatto sbeccato e gustare in silenzio davanti ad un video di 10 ore di rumore bianco."
@@ -116,8 +182,8 @@ export const ARTICLES: Article[] = [
     author: 'Maestro Inutile',
     date: '22 LUGLIO 2026',
     readTime: '5 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Guru%20meditating%20on%20top%20of%20a%20pile%20of%20empty%20cardboard%20boxes%2C%20pop%20art%20satirical%20magazine%20illustration?width=800&height=600&nologo=true&seed=103',
-    imageAlt: 'Yogi che medita sopra una montagna di spazzatura con contorno verde',
+    heroImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica di meditazione zen in ambiente essenziale',
     imageCutoutStyle: 'green-outline',
     gridSpan: 'half',
     likesCount: 1105,
@@ -135,7 +201,7 @@ export const ARTICLES: Article[] = [
           quote: "Chi sa, tace. Chi non sa, insegna. Chi sa di non sapere niente, apre un canale YouTube di lifestyle minimalist."
         }
       ],
-      conclusion: "Vuoi provare subito? Genera un consiglio casuale nel nostro generatore automatico in homepage."
+      conclusion: "Vuoi provare subito? Consulta le nostre perle di saggezza nell'Angolo del Caos."
     },
     comments: [
       {
@@ -157,8 +223,8 @@ export const ARTICLES: Article[] = [
     author: 'Sarto del Disastro',
     date: '21 LUGLIO 2026',
     readTime: '6 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Avant-garde%20catwalk%20model%20wearing%20a%20plastic%20trash%20bag%20dress%2C%20cringe%20fashion%20satire%20editorial%20illustration?width=800&height=600&nologo=true&seed=104',
-    imageAlt: 'Modella con vestito concettuale di plastica e sacchi neri',
+    heroImage: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica di sfilata di alta moda concettuale',
     imageCutoutStyle: 'polaroid',
     gridSpan: 'third',
     likesCount: 630,
@@ -187,8 +253,8 @@ export const ARTICLES: Article[] = [
     author: 'Alter Ego #3',
     date: '20 LUGLIO 2026',
     readTime: '4 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Dissociated%20alter%20ego%20buying%20cacti%20at%204am%2C%20surreal%20cubist%20editorial%20magazine%20illustration?width=800&height=600&nologo=true&seed=105',
-    imageAlt: 'Volti cubisti e forme astratte dissociate',
+    heroImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica espressiva drammatica in bianco e nero',
     imageCutoutStyle: 'newspaper',
     gridSpan: 'third',
     likesCount: 940,
@@ -217,8 +283,8 @@ export const ARTICLES: Article[] = [
     author: 'Il Comitato del Caos',
     date: 'SPECIAL EDITION',
     readTime: '1 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Burning%20legal%20contract%20of%20absurdity%20with%20wax%20seal%2C%20dramatic%20propaganda%20art%2C%20satirical%20editorial?width=800&height=600&nologo=true&seed=106',
-    imageAlt: 'Contratto in fiamme con bordi bruciati e sigillo',
+    heroImage: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica di pergamena con penna stilografica e sigillo di ceralacca',
     imageCutoutStyle: 'burning-edge',
     gridSpan: 'third',
     likesCount: 2840,
@@ -234,7 +300,7 @@ export const ARTICLES: Article[] = [
           quote: "Firma subito con il mouse o con il dito sullo schermo per ricevere il tuo certificato di irrilevanza immediato."
         }
       ],
-      conclusion: "Cosa aspetti? Clicca sul bottone 'FIRMA IL MANIFESTO' sotto la figura."
+      conclusion: "Cosa aspetti? Clicca sul bottone 'FIRMA IL MANIFESTO' per sottoscrivere l'atto."
     },
     comments: [
       {
@@ -256,8 +322,8 @@ export const ARTICLES: Article[] = [
     author: 'Astrologo delle Prolunghe',
     date: '19 LUGLIO 2026',
     readTime: '3 MIN READ',
-    heroImage: 'https://image.pollinations.ai/prompt/Retro%20vintage%20toaster%20with%20astrological%20zodiac%20symbols%2C%20funny%20pop%20art%20editorial%20illustration?width=800&height=600&nologo=true&seed=107',
-    imageAlt: 'Tostapane vintage retrò isolato',
+    heroImage: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=1000',
+    imageAlt: 'Foto realistica di un tostapane vintage retrò su piano da cucina',
     imageCutoutStyle: 'green-outline',
     gridSpan: 'half',
     likesCount: 520,
@@ -268,7 +334,7 @@ export const ARTICLES: Article[] = [
           heading: "Previsioni settimanali per la casa",
           paragraphs: [
             "Tostapane (Segno di Fuoco Rifiutato): Mercurio retrogrado provocherà una scottatura asimmetrica sulla brioche di giovedì.",
-            "Lampada IKEA (Segno d'Ombra): Stanotte tremolerà due volte per farvi credere che la casa sia infestata."
+            "Lampada IKEA (Segno d'Ombra): Stanotte tremolerà due veces per farvi credere che la casa sia infestata."
           ]
         }
       ],
@@ -277,3 +343,4 @@ export const ARTICLES: Article[] = [
     comments: []
   }
 ];
+
