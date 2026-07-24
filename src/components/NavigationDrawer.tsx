@@ -15,6 +15,7 @@ interface NavigationDrawerProps {
   onOpenChaosCorner: () => void;
   onOpenBookmarks: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
+  onOpenCookies?: () => void;
   savedCount: number;
 }
 
@@ -30,6 +31,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onOpenChaosCorner,
   onOpenBookmarks,
   savedCount,
+  onOpenCookies,
 }) => {
   if (!isOpen) return null;
 
@@ -172,6 +174,20 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 📜 TERMINI D'USO
               </button>
             </div>
+
+            {/* Cookie Preferences Trigger Button */}
+            {onOpenCookies && (
+              <button
+                onClick={() => {
+                  onOpenCookies();
+                  onClose();
+                }}
+                className="w-full bg-[#A0FF00] text-black border-2 border-black p-2.5 font-anton text-xs uppercase flex items-center justify-between hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer mt-2"
+              >
+                <span>🍪 GESTISCI COOKIE GROTTESCHI (24H)</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
 
           {/* Categories Header */}

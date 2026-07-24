@@ -7,6 +7,7 @@ interface FooterProps {
   onOpenChaosCorner: () => void;
   onGoHome?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
+  onOpenCookies?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -15,6 +16,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenChaosCorner,
   onGoHome,
   onOpenLegal,
+  onOpenCookies,
 }) => {
   return (
     <footer className="bg-black text-[#F4F1EA] border-t-4 border-black pt-10 pb-20 md:pb-12 mt-16 font-typewriter">
@@ -70,6 +72,13 @@ export const Footer: React.FC<FooterProps> = ({
                 📜 Termini d'Uso dell'Assurdo
               </button>
             </li>
+            {onOpenCookies && (
+              <li>
+                <button onClick={onOpenCookies} className="hover:text-[#A0FF00] transition underline text-[#A0FF00] font-bold">
+                  🍪 Cookie Grotteschi (Pannello 24h)
+                </button>
+              </li>
+            )}
           </ul>
         </div>
 

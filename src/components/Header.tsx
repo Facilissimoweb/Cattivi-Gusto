@@ -14,6 +14,7 @@ interface HeaderProps {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   isSubscribed: boolean;
+  onOpenCookies?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -29,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
   searchQuery,
   setSearchQuery,
   isSubscribed,
+  onOpenCookies,
 }) => {
   const [showSearchModal, setShowSearchModal] = useState(false);
 
@@ -48,6 +50,16 @@ export const Header: React.FC<HeaderProps> = ({
           <span>✍️ MANIFESTO DELL'ASSURDO: OLTRE 1.000 FIRME UTILI AL NULLA.</span>
         </div>
         <div className="hidden md:flex items-center gap-3 shrink-0 ml-4 font-sans text-white text-[11px]">
+          {onOpenCookies && (
+            <button
+              onClick={onOpenCookies}
+              className="bg-[#A0FF00] text-black px-2 py-0.5 font-anton text-[10px] uppercase border border-black hover:bg-white transition cursor-pointer"
+              title="Gestisci i Cookie Briciole e Telepatia (Scadenza 24h)"
+            >
+              🍪 COOKIE (24H)
+            </button>
+          )}
+
           {isSubscribed ? (
             <span className="bg-[#A0FF00] text-black px-2 py-0.5 rounded font-black text-[10px] uppercase tracking-wider">
               VIP CAOS ATTIVO

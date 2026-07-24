@@ -6,12 +6,14 @@ interface LegalAbsurdModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTab?: 'privacy' | 'terms';
+  onOpenCookies?: () => void;
 }
 
 export const LegalAbsurdModal: React.FC<LegalAbsurdModalProps> = ({
   isOpen,
   onClose,
   initialTab = 'privacy',
+  onOpenCookies,
 }) => {
   const [activeTab, setActiveTab] = useState<'privacy' | 'terms'>(initialTab);
   const [acceptedCookies, setAcceptedCookies] = useState<Record<string, boolean>>({
@@ -119,10 +121,24 @@ export const LegalAbsurdModal: React.FC<LegalAbsurdModalProps> = ({
 
             {/* Interactive Cookie Toggles */}
             <div className="bg-[#FFFEEB] border-2 border-black p-5 shadow-[4px_4px_0px_#000] space-y-3">
-              <h4 className="font-anton text-lg uppercase text-black flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-[#A0FF00] fill-black" />
-                <span>PANNELLO CONSENSO COOKIE ED ESTRONZI DIGITALI</span>
-              </h4>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b-2 border-black pb-2">
+                <h4 className="font-anton text-lg uppercase text-black flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#A0FF00] fill-black" />
+                  <span>PANNELLO CONSENSO COOKIE ED ESTRONZI DIGITALI</span>
+                </h4>
+
+                {onOpenCookies && (
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenCookies();
+                    }}
+                    className="bg-[#A0FF00] text-black font-anton text-xs px-3 py-1.5 border-2 border-black hover:bg-black hover:text-[#A0FF00] transition cursor-pointer shrink-0"
+                  >
+                    🍪 APRI PANNELLO COMPLETO COOKIE (24H)
+                  </button>
+                )}
+              </div>
 
               <div className="space-y-2 font-mono text-xs">
                 <label className="flex items-center justify-between bg-white border border-black p-2.5 cursor-pointer hover:bg-neutral-50">

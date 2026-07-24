@@ -7,6 +7,8 @@ import { ArticleDetailView } from './components/ArticleDetailView';
 import { SubscriptionsView } from './components/SubscriptionsView';
 import { ManifestoModal } from './components/ManifestoModal';
 import { LegalAbsurdModal } from './components/LegalAbsurdModal';
+import { AbsurdCookieModal, ABSURD_COOKIES } from './components/AbsurdCookieModal';
+import { CookieNoticeBanner } from './components/CookieNoticeBanner';
 import { ChaosCorner } from './components/ChaosCorner';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
@@ -32,6 +34,7 @@ export default function App() {
   const [isManifestoOpen, setIsManifestoOpen] = useState(false);
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'privacy' | 'terms'>('privacy');
+  const [isCookieModalOpen, setIsCookieModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isChaosAudioActive, setIsChaosAudioActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -70,6 +73,19 @@ export default function App() {
   const handleOpenLegal = (tab: 'privacy' | 'terms' = 'privacy') => {
     setLegalTab(tab);
     setIsLegalModalOpen(true);
+  };
+
+  const handleAcceptAllCookiesQuick = () => {
+    const now = Date.now();
+    const updated: Record<string, boolean> = {};
+    ABSURD_COOKIES.forEach(c => { updated[c.id] = true; });
+    try {
+      localStorage.setItem('cattivo_gusto_cookie_choices', JSON.stringify(updated));
+      localStorage.setItem('cattivo_gusto_cookie_timestamp', now.toString());
+      localStorage.setItem('cattivo_gusto_cookie_accepted', 'true');
+    } catch (e) {
+      // ignore
+    }
   };
 
   // Sync subscription state
@@ -186,6 +202,7 @@ export default function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         isSubscribed={isSubscribed}
+        onOpenCookies={() => setIsCookieModalOpen(true)}
       />
 
       {/* Slide-out Navigation Drawer */}
@@ -205,6 +222,7 @@ export default function App() {
         onOpenChaosCorner={() => setActiveView('chaos')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
         onOpenLegal={handleOpenLegal}
+        onOpenCookies={() => setIsCookieModalOpen(true)}
         savedCount={savedArticleIds.length}
       />
 
@@ -420,6 +438,19 @@ export default function App() {
         isOpen={isLegalModalOpen}
         onClose={() => setIsLegalModalOpen(false)}
         initialTab={legalTab}
+        onOpenCookies={() => setIsCookieModalOpen(true)}
+      />
+
+      {/* Absurd 24-Hour Cookie Preference Manager Modal */}
+      <AbsurdCookieModal
+        isOpen={isCookieModalOpen}
+        onClose={() => setIsCookieModalOpen(false)}
+      />
+
+      {/* Persistent / Auto-expiring 24h Cookie Notice Banner */}
+      <CookieNoticeBanner
+        onOpenPreferences={() => setIsCookieModalOpen(true)}
+        onAcceptAllQuick={handleAcceptAllCookiesQuick}
       />
 
       {/* Footer */}
@@ -429,6 +460,7 @@ export default function App() {
         onOpenChaosCorner={() => setActiveView('chaos')}
         onGoHome={handleGoHome}
         onOpenLegal={handleOpenLegal}
+        onOpenCookies={() => setIsCookieModalOpen(true)}
       />
 
       {/* Sticky Mobile Bottom Nav */}
