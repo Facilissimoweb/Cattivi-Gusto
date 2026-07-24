@@ -2,6 +2,7 @@ import { Article, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: 'tutti', label: 'TUTTO IL CAOS', badge: 'ALL' },
+  { id: 'teresa-tarocchi', label: 'TERESA E I TAROCCHI', badge: '🔮' },
   { id: 'estetica-bellezza', label: 'ESTETICA & BELLEZZA BRUTTA', badge: '💄' },
   { id: 'tatuaggi', label: 'TATUAGGI CARNEI', badge: '🥩' },
   { id: 'accoppiamento', label: 'ACCOPPIAMENTO E DINTORNI', badge: '💘' },
@@ -11,10 +12,79 @@ export const CATEGORIES: Category[] = [
   { id: 'moda-cringe', label: 'MODA CRINGE', badge: '👔' },
   { id: 'cucina-incubo', label: 'CUCINA DA INCUBO', badge: '🍞' },
   { id: 'manifesti', label: 'MANIFESTI & ATTI', badge: '🔥' },
-  { id: 'oroscopo-oggetti', label: 'OROSCOPO OGGETTI', badge: '🔮' },
+  { id: 'oroscopo-oggetti', label: 'OROSCOPO OGGETTI', badge: '✨' },
 ];
 
 export const ARTICLES: Article[] = [
+  {
+    id: 'teresa-tarocchi-come-non-leggere-i-tarocchi',
+    title: "TERESA E I TAROCCHI: GUIDA PRATICA SU COME NON LEGGERE I TAROCCHI E ROVINARE OGNI PREVISIONE",
+    subtitle: "Per fare una lettura dei tarocchi completamente sballata basta davvero poco e chiunque ne è perfettamente capace. Ecco i segreti di Teresa per seminare il panico esoterico a costo zero.",
+    category: 'teresa-tarocchi',
+    categoryLabel: 'TERESA E I TAROCCHI',
+    author: 'Teresa la Cartomante dell\'Assurdo',
+    date: '24 LUGLIO 2026',
+    readTime: '5 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1572916140766-61b21262d400?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Tavolo di cartomanzia con carte dei tarocchi e candele per divinazione satirica',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 12580,
+    isHot: true,
+    content: {
+      intro: "Leggere i tarocchi con precisione e accuratezza richiede anni di studi esoterici, sensibilità spirituale e profonda conoscenza degli arcani maggiori e minori. Ma sapete cosa richiede zero sforzo, zero studio ed è alla portata di chiunque? Fare una lettura dei tarocchi completamente sbagliata, disastrosa e catastrofica! Benvenuti al primo appuntamento con la nuova rubrica 'Teresa e i Tarocchi'. Per rovinare una stesa a un amico, a un parente o a se stessi basta pochissimo: tutti ne siamo perfettamente capaci. Ecco la guida pratica e definitiva di Teresa per fallire miseramente al tavolo della divinazione.",
+      sections: [
+        {
+          heading: "1. Inventa il Significato delle Carte Guardando solo gli Baffi di Unto sugli Angoli",
+          paragraphs: [
+            "Chi lo dice che La Torre indica il crollo delle vecchie certezze o un cambiamento improvviso? Se la carta presenta una piccola macchia di maionese nell'angolo in alto a destra, per Teresa significa chiaramente: 'Venerdì sera mangerai un trancio di pizza azzimo pesante che ti rimarrà sullo stomaco fino a martedì'.",
+            "Se estrai Il Bagatto ma stai usando un mazzo da briscola comprato in autogrill nel 1998, interpreta la carta in base al costo d'acquisto: 'Hai Il Bagatto ma il mazzo costava 3,50€, quindi la tua fortuna lavorativa sarà esattamente proporzionata al caffè all'acqua della macchinetta dell'ufficio'."
+          ],
+          quote: "Non serve studiare la Cabala o Jodorowsky. Basta guardare la carta, fare una faccia terrorizzata e dire: 'Vedo che tua zia nel 1994 ha detto una bugia sui carciofi'."
+        },
+        {
+          heading: "2. Confondi Sistematicamente gli Arcani con le Carte da Briscola e Piatti Tipici",
+          paragraphs: [
+            "Se durante una consultazione d'amore per una cliente in ansia da prestazione estrai per errore il Sette di Bastoni, non mostrare mai alcuna esitazione. Grida con finta solennità: 'L'Asso di Bastoni capovolto indica chiaramente che il tuo ex ti colpirà emotivamente con un abbonamento annuale in palestra!'",
+            "Se esce la carta de La Morte, sorridi a trentadue denti e rassicura la persona: 'Ah niente di grave! La Morte indica solo che dovrai cambiare operatore telefonico entro fine mese, altrimenti la tua promozione giga illimitati morirà nel sonno'."
+          ]
+        },
+        {
+          heading: "3. La Tecnica del Disorientamento e del Dramma Aggiuntivo Unico",
+          paragraphs: [
+            "Una vera lettura sbagliata non deve mai fornire risposte chiare o utili. Se il consultante ti chiede 'Troverò un lavoro stabile entro l'anno?', mescola il mazzo per dieci minuti facendolo cadere per terra due volte, fissalo negli occhi e pronuncia:"
+          ],
+          quote: "Vedo una grande ombra: la tua lavatrice accumulerà calcare nel cestello a causa di un karma negativo ereditato dal tuo bisnonno panettiere."
+        },
+        {
+          heading: "Il Consiglio d'Oro di Teresa: 'Il Bluff è Tutto'",
+          paragraphs: [
+            "'Ricordatevi sempre,' conclude Teresa guardando la sua palla di vetro piena di polvere, 'l'importante non è la verità scritta negli astri. L'importante è guardare la vittima con sguardo felino, tirare un lungo sospiro e mormorare: Ho visto cose che la tua banca preferirebbe tenere nascoste'."
+          ]
+        }
+      ],
+      conclusion: "Mettetevi subito alla prova! Prendete un mazzo di carte qualsiasi (vanno bene anche quelle della COOP o delle caramelle), mescolate a caso e pronunciate profezie prive di ogni nesso logico. Fare una pessima lettura dei tarocchi è un diritto inalienabile di tutti!"
+    },
+    comments: [
+      {
+        id: 'c-tarot-1',
+        author: 'MarioTarocco',
+        avatar: '🔮',
+        date: '5 minuti fa',
+        text: 'Ho seguito i consigli di Teresa: ho estratto il 4 di Picche al mio capo e gli ho detto che il suo condizionatore morirà domani. Mi ha subito concesso due giorni di ferie per paura!',
+        likes: 210
+      },
+      {
+        id: 'c-tarot-2',
+        author: 'SorellaEsoterica',
+        avatar: '🌙',
+        date: '15 minuti fa',
+        text: 'Rubrica fantastica! Finalmente qualcuno che sdogana la cartomanzia fatta male e in totale improvvisazione!',
+        likes: 145
+      }
+    ]
+  },
   {
     id: 'evidenziare-occhiaie-punti-neri-guida',
     title: "GUIDA COMPLETA SU COME EVIDENZIARE OCCHIAIE E PUNTI NERI: IL NUOVO TREND 'BRUTTALISMO FACCIALE'",
