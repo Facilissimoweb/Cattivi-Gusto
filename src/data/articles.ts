@@ -17,6 +17,92 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'coach-marcus-articolo-ispirazionale-sfinimento',
+    title: "MANIFESTO ISPORAZIONALE DI COACH MARCUS: \"NON PERSEGUITARE I TUOI SOGNI, SFINISCILI FINO A QUANDO NON SI ARRENDONO!\"",
+    subtitle: "Dalla meditazione sulla pressione dell'olio della Fiat Duna al potere della canottiera a rete nei momenti di crisi: la guida motivazionale definitiva per abbracciare la sconfitta ed esibire il fallimento con orgoglio Alpha.",
+    category: 'accoppiamento',
+    categoryLabel: 'ACCOPPIAMENTO E DINTORNI',
+    author: 'Coach Marcus (Motivational Disaster Coach)',
+    date: '24 LUGLIO 2026',
+    readTime: '5 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Coach Marcus in posa motivazionale in palestra con canottiera e ciabatte sanitarie',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 42100,
+    isHot: true,
+    content: {
+      intro: "Gente che si sveglia alle 5 del mattino per fare jogging, guru del 'mindset vincente' che bevono frullati di sedano e dicono che 'volere è potere'... BASTA! Avete rotto le scatole. Il mondo della crescita personale è pieno di bugie patinate. Oggi vi parlo io, Coach Marcus, l'unico vero Mental Coach che non vi promette il successo, ma vi insegna a godervi il collasso psicologico mentre indossate un paio di ciabatte sanitarie in ghisa e una canottiera a rete d'ordinanza. Guardatevi allo specchio e ripetete con me: 'Oggi non ce la farò, ma lo farò con uno stile imbattibile!'",
+      sections: [
+        {
+          heading: "1. La Regola dell'Aureo Tedio: Sfinire la Vita prima che la Vita Sfinisca Te",
+          paragraphs: [
+            "Tutti i corsi motivazionali vi dicono di superare i vostri limiti. Io vi dico: abbassate la sbarra fino a quando non potete scavalcarla semplicemente camminando!",
+            "Se un progetto di lavoro vi spaventa, non affrontatelo con grinta: inviate una mail di 14 pagine dettagliando il funzionamento della valvola di scarico del condizionatore aziendale. Il vostro capo sarà così esausto che vi promuoverà solo per farvi smettere di parlare. Questo è il Metodo Marcus: la vittoria per logoramento biologico."
+          ],
+          quote: "La motivazione è come una batteria di una Fiat Duna del '91: dura tre minuti d'inverno e poi ti lascia a piedi al semaforo. Fai affidamento solo sul pigiama di pile!"
+        },
+        {
+          heading: "2. I 3 Pilastri Quantistici della Crescita Personale al Contrario",
+          paragraphs: [
+            "1. L'Incoscienza Tattica: Quando la vita ti pone davanti a una scelta difficile tra A e B, tu scegli la ciabatta C. Fai finta di non capire la domanda e proponi un dibattito sul parquet prefinito.",
+            "2. La Canottiera della Rete Emotiva: Indossare la canottiera a rete sotto i vestiti eleganti crea uno schermo magnetico d'invisibilità sociale. Nessun problema della vita moderna può scalfire un uomo protetto da 400 fori di cotone ingiallito.",
+            "3. L'Orgoglio del Bianco: Che si tratti di un colloquio di lavoro, di un appuntamento galante o di una partita di calcetto, andare in bianco e finire sul divano alle 21:30 a mangiare pizza fredda è la forma più alta di illuminazione spirituale."
+          ]
+        },
+        {
+          heading: "3. La Preghiera Motivazionale del Mattino di Coach Marcus",
+          paragraphs: [
+            "Mettetevi a testa in giù dal letto, inspirate l'aroma di soffritto del vicino e recitate questo mantra a voce alta:",
+            "\"Caro Universo, oggi non pretendo di brillare. Mi basta non strapparmi le calze mentre mi infilo le scarpe. Se la fortuna vorrà baciarmi, le dirò che ho il mal di gola e mi metterò a dormire. Io sono l'Alpha del divano, e nulla potrà schiodarmi da qui.\""
+          ],
+          quote: "Non inseguire i tuoi sogni: aspetta che si stanchino di correre e ti crollino accanto sul divano."
+        }
+      ],
+      conclusion: "Ricorda: l'importante non è vincere, ma fare in modo che chi vince si penta di averti avuto intorno durante la gara. Sii fiero del tuo disastro quotidiano e continua a risplendere di pura pigrizia!",
+      quiz: {
+        title: "🧪 TEST DI RESILIENZA AL CONTRARIO CON COACH MARCUS",
+        subtitle: "Scopri quanto sei vicino alla completa illuminazione da divano con questo breve test!",
+        questions: [
+          {
+            id: 'qm_insp1',
+            question: "1. Suona la sveglia il lunedì mattina alle 07:00. Qual è la tua prima mossa Alpha?",
+            options: [
+              { label: 'A', text: 'Spengo la sveglia con una ciabatta, mi tiro il piumino sulla testa e pretendo di essere una statua di sale.', outcomeText: 'Risposta da vero discepolo di Marcus! L\'immobilità è la massima forma di resistenza.' },
+              { label: 'B', text: 'Mi alzo al volo, faccio 20 flessioni e bevo un frullato al cavolo nero.', outcomeText: 'ERRORE GRAVE! Troppo giovanilista e dannoso per la salute del tuo divano.' },
+              { label: 'C', text: 'Mando un messaggio vocale di 9 minuti sul gruppo di lavoro parlando di bulloni.', outcomeText: 'Sfinimento immediato dei colleghi! Marcus ti incorona Mago del Tedio!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "💪 VUOI CHATTARE CON COACH MARCUS PER RICEVERE ALTRI CONSIGLI SBAGLIATI?",
+        subtitle: "Coach Marcus è attivo 24/7 nella Chat di Redazione! Chiedigli consiglio sulla seduzione, sul lavoro o sul colore delle tue ciabatte sanitarie!",
+        buttonText: "💬 PARLA SUBITO CON COACH MARCUS IN CHAT",
+        badge: "CHAT COACHING ILLIMITATA"
+      }
+    },
+    comments: [
+      {
+        id: 'c-marcus-insp-1',
+        author: 'EroeDelDivano99',
+        avatar: '🛋️',
+        date: '1 minuto fa',
+        text: 'Questo articolo mi ha cambiato la vita. Ho letto la Preghiera di Marcus e mi sono rimesso a dormire fino a mezzogiorno. Grazie Coach!',
+        likes: 670
+      },
+      {
+        id: 'c-marcus-insp-2',
+        author: 'FanaticDuna',
+        avatar: '🚗',
+        date: '5 minuti fa',
+        text: 'Marcus è l\'unico vero saggio dei nostri tempi. La canottiera a rete mi ha curato l\'ansia da prestazione aziendale!',
+        likes: 410
+      }
+    ]
+  },
+  {
     id: 'accoppiamento-andare-in-bianco-marcus-coach',
     title: "LEI DECIDE DI DARTELA (PERCHÉ NON NE PUÒ PIÙ DI SENTIRTI PARLARE) E RIESCI AD ANDARE IN BIANCO ANCHE QUESTA VOLTA",
     subtitle: "Dalla spiegazione dettagliata del motore a quattro tempi della Fiat Duna fino al monologo sulle differenze tra la pittura fiamminga e il parquet prefinito: storia di un trionfo dello sfinimento trasformato in un disastro cosmico con i consigli di Marcus.",
