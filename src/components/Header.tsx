@@ -34,8 +34,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCookies,
   onOpenGroqChat,
 }) => {
-  const [showSearchModal, setShowSearchModal] = useState(false);
-
   const isHomeActive = activeTab === 'feed' || activeTab === 'home';
 
   return (
@@ -112,15 +110,6 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          {/* Search Trigger */}
-          <button
-            onClick={() => setShowSearchModal(true)}
-            className="p-1.5 sm:p-2 bg-white border-2 border-black hover:bg-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer"
-            title="Cerca tra le assurdistà"
-          >
-            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
-          </button>
-
           {/* Manifesto Quick Link - Shown only on desktop to keep mobile navbar clean */}
           <button
             onClick={onOpenManifesto}
@@ -146,48 +135,28 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Search Modal Overlay */}
-      {showSearchModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-start justify-center p-4 pt-20">
-          <div className="bg-[#F4F1EA] border-4 border-black p-6 w-full max-w-xl shadow-[8px_8px_0px_#000] relative">
+      {/* Direct Integrated Search Bar Strip */}
+      <div className="bg-[#EFECE6] border-t-2 border-black px-2 sm:px-4 py-1.5 flex items-center justify-center">
+        <div className="max-w-3xl w-full relative flex items-center">
+          <Search className="w-4 h-4 text-black absolute left-3 pointer-events-none shrink-0" />
+          <input
+            type="text"
+            placeholder="🔍 Cerca nell'archivio (es. gatto, pane, guru, tostapane, nulla)..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-white border-2 border-black pl-9 pr-8 py-1 sm:py-1.5 text-xs sm:text-sm font-mono placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-[#A0FF00] shadow-[2px_2px_0px_#000]"
+          />
+          {searchQuery && (
             <button
-              onClick={() => setShowSearchModal(false)}
-              className="absolute top-4 right-4 bg-black text-white p-1 hover:bg-[#A0FF00] hover:text-black transition border-2 border-black"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2 text-black hover:bg-black hover:text-white rounded-full p-0.5 transition cursor-pointer"
+              title="Svuota ricerca"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
-
-            <h3 className="font-anton text-2xl uppercase mb-2">CERCA NELL'ARCHIVIO DEL CAOS</h3>
-            <p className="font-typewriter text-xs text-neutral-600 mb-4">
-              Digita parole chiave come "gatto", "pane", "guru", "nulla" o "tostapane".
-            </p>
-
-            <div className="relative mb-4">
-              <input
-                type="text"
-                autoFocus
-                placeholder="Cosa vuoi sospettare oggi?..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white border-2 border-black px-4 py-3 font-mono text-base focus:outline-none focus:ring-2 focus:ring-[#A0FF00]"
-              />
-            </div>
-
-            <div className="flex justify-between items-center text-xs font-mono">
-              <span className="text-neutral-500">Risultati filtrati in tempo reale</span>
-              <button
-                onClick={() => {
-                  setShowSearchModal(false);
-                  setActiveTab('home');
-                }}
-                className="bg-black text-[#A0FF00] px-4 py-2 font-anton uppercase hover:bg-[#A0FF00] hover:text-black transition border-2 border-black"
-              >
-                VAI AGLI ARTICOLI
-              </button>
-            </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </header>
   );
 };
