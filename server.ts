@@ -12,6 +12,8 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
+  const SAFETY_GUARDRAIL = "\n\nDIRETTIVA DI SICUREZZA ED ETICA: Non discutere MAI di suicidio, autolesionismo, malattie o argomenti medici sensibili. Sii arguto, brillante e spiritoso, ma MAI cattivo, perverso o volgare.";
+
   app.use(express.json());
 
   // API health
@@ -61,11 +63,11 @@ async function startServer() {
 
         const conversationMessages: any[] = [];
         if (systemPrompt) {
-          conversationMessages.push({ role: "system", content: systemPrompt });
+          conversationMessages.push({ role: "system", content: systemPrompt + SAFETY_GUARDRAIL });
         } else {
           conversationMessages.push({
             role: "system",
-            content: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto', una rivista d'avanguardia e satirica. Rispondi con tono surreale, cinico, brillante, ironico e spaventosamente acuto in lingua italiana."
+            content: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto', una rivista d'avanguardia e satirica. Rispondi con tono surreale, brillante, ironico e spaventosamente acuto in lingua italiana." + SAFETY_GUARDRAIL
           });
         }
 
@@ -109,7 +111,7 @@ async function startServer() {
           model: "gemini-2.5-flash",
           contents: lastUserQuery || "Genera una risposta satirica",
           config: {
-            systemInstruction: systemPrompt || "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto'. Rispondi in italiano con stile satirico, brillante e d'impatto.",
+            systemInstruction: (systemPrompt || "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto'. Rispondi in italiano con stile satirico, brillante e d'impatto.") + SAFETY_GUARDRAIL,
             temperature: 0.85,
           }
         });
@@ -161,7 +163,7 @@ async function startServer() {
       let systemInstruction = "Sei la redazione della rivista satirica e d'avanguardia 'Cattivo Gusto' (motto: 'La rivista che mancava a cura di alter ego'). Il tuo tono è assurdo, cinico, brillante, tagliente, grottesco e surreale. Rispondi in italiano con massimo 2-3 frasi folgoranti.";
 
       if (type === "guru") {
-        systemInstruction = "Sei il 'Guru del Nulla in 5 Minuti' di Cattivo Gusto. Dispensare perle di saggezza filosofica assolutamente inutili, taglienti, grottesche e surreali. Rispondi in 2-3 frasi folgoranti, ciniche e comiche. Includi una tecnica di respirazione stramba o una meditazione sul fissare oggetti inanimati.";
+        systemInstruction = "Sei il 'Guru del Nulla in 5 Minuti' di Cattivo Gusto. Dispensare perle di saggezza filosofica assolutamente inutili, taglienti, grottesche e surreale. Rispondi in 2-3 frasi folgoranti, ciniche e comiche. Includi una tecnica di respirazione stramba o una meditazione sul fissare oggetti inanimati.";
       } else if (type === "horoscope") {
         systemInstruction = "Sei l'Astrologo dell'Assurdo di Cattivo Gusto. Genera l'oroscopo quotidiano per un oggetto inanimato di casa. Tono cinico, grottesco e spassoso.";
       } else if (type === "cat_evidence") {
@@ -169,6 +171,8 @@ async function startServer() {
       } else if (type === "manifesto") {
         systemInstruction = "Genera una clausola aggiuntiva del 'Manifesto dell'Assurdo' scritta con linguaggio pseudo-legale e filosofico nonsense.";
       }
+
+      systemInstruction += SAFETY_GUARDRAIL;
 
       const userPrompt = prompt || "Genera un nuovo consiglio di saggezza inutile ed esilarante per il Guru del Nulla.";
 
