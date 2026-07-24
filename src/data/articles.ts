@@ -17,6 +17,100 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'beatrice-dante-dubbia-figura-accoppiamento',
+    title: "LA DUBBIA FIGURA DI BEATRICE: DANTE, IL PRIMO 'STALKER' STILNOVISTA E LA DONNA CHE SALUTÒ UNA VOLTA E SPARÌ IN PARADISO",
+    subtitle: "Incontrata a nove anni sul ponte, mai preso un caffè insieme eppure protagonista di tre cantiche: indagine sul relazione più a distanza della letteratura italiana tra salutini di sfuggita e viaggi ultraterreni.",
+    category: 'accoppiamento',
+    categoryLabel: 'ACCOPPIAMENTO E DINTORNI',
+    author: 'Redazione & Coach Marcus (Esperto di Relazioni Asimmetriche)',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1543429776-2782fc8e1acd?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Scorcio medievale di Firenze sul fiume Arno d\'ispirazione dantesca e stilnovista',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 52400,
+    isHot: true,
+    content: {
+      intro: "Immaginate la scena: camminate per la strada a Firenze nel lontano 1283, vedete una ragazza per cinque secondi, lei vi fa un cenno discreto con la testa e voi, invece di chiederle il numero o offrirle un gelato alla crema, andate a casa e scrivete un'opera in prosa e poesia spiegando che quel saluto vi ha salvato l'anima. Benvenuti nel mondo di Dante Alighieri e Beatrice Portinari! Analizziamo la figura più enigmatica ed evasiva della storia amorosa: la donna che senza muovere un dito si è ritrovata regina del Paradiso.",
+      sections: [
+        {
+          heading: "1. IL BILANCIO DEL CORTEGGIAMENTO: Due incontri in diciotto anni (e zero spuntini insieme)",
+          paragraphs: [
+            "Tutti i manuali di letteratura ci raccontano della poesia 'Tanto gentile e tanto onesta pare'. Ma guardiamo i fatti con occhio moderno: Dante incontra Beatrice per la prima volta a nove anni. La rivede a diciotto anni. Fine delle interazioni sociali dirette.",
+            "Niente messaggi della buonanotte, niente uscite al cinema il giovedì sera, nessun aperitivo con gli amici. Bip, un saluto rapido per strada ed ecco scattare l'idealizzazione totale. Se Dante avesse avuto uno smartphone, probabilmente avrebbe passato la vita a controllare l'ultimo accesso di Beatrice su WhatsApp senza mai avere il coraggio di scriverle 'Ciao, come va?'."
+          ],
+          quote: "Se una persona ti saluta nel 1283, non significa che dovete sposarvi nel 1300: significa solo che è una persona educata!"
+        },
+        {
+          heading: "2. LA 'DONNA SCHERMO' E IL GHOSTING STILNOVISTA",
+          paragraphs: [
+            "Per non far capire a tutti che era cotto di Beatrice, Dante inventò la tattica della 'donna schermo': faceva finta di essere interessato ad altre gentildonne fiorentine. Risultato? Beatrice si indispettì e gli tolse il saluto. Il primo storico 'ghosting' della storia fiorentina!",
+            "E come reagisce Dante quando gli viene tolto il saluto? Anziché chiarirsi di persona, va in crisi mistica, si sottrae alla vista pubblica e decide di comporre una Commedia in cui lei diventa l'unica guida in grado di portarlo fino all'Empireo. Un livello di persistenza sentimentale che fa impallidire i moderni romanzi rosa!"
+          ]
+        },
+        {
+          heading: "3. COSA DICE COACH MARCUS: \"Gemma Donati è la vera eroina dimenticata!\"",
+          paragraphs: [
+            "Mentre Dante dedicava cantiche memorabili alla figura angelicata di Beatrice, a casa a Firenze c'era la moglie legittima, Gemma Donati, che gestiva la casa, quattro figli e le bollette del contado.",
+            "Coach Marcus commenta: 'Ragazzi, imparate la lezione: non inseguite chi vi saluta una volta ogni nove anni lasciandovi nello sconforto. Apprezzate chi rimane con voi a fare i conti della spesa il lunedì mattina! L'amore vero non ha bisogno dell'Inferno per essere dimostrato!'."
+          ],
+          quote: "L'Amore che move il sole e l'altre stelle è bellissimo, ma un piatto di pici all'aglione condiviso in due lo è ancora di più."
+        }
+      ],
+      conclusion: "Tra mito, metafora teologica e idealizzazione poetica, Beatrice rimane l'emblema della musa inarrivabile. Un promemoria per tutti noi: a volte l'amore ideale esiste solo perché non abbiamo mai dovuto deciderne la convivenza!",
+      quiz: {
+        title: "📜 TEST DI AFFINITÀ STILNOVISTA: QUANTO SEI 'DANTESCO' IN AMORE?",
+        subtitle: "Scopri come gestisci le tue cotte platoniche con il nostro test d'epoca!",
+        questions: [
+          {
+            id: 'qbeatrice_1',
+            question: "1. La persona che ti piace ti fa un leggero cenno di saluto dall'altra parte della strada. Come reagisci?",
+            options: [
+              { label: 'A', text: "Le vado incontro, le sorrido e le chiedo se le va di prendere un caffè insieme.", outcomeText: 'Livello Dante: 0%. Troppo pratico e diretto! Nessun poemetto allegorico in arrivo per te.' },
+              { label: 'B', text: "Rispondo al saluto e continuazione della passeggiata pensando 'Che carina'.", outcomeText: 'Approccio sobrio e moderno! Gestione equilibrata delle emozioni.' },
+              { label: 'C', text: "Torno a casa di corsa, mi chiudo in stanza e inizio a scrivere un poema in terzine incatenate sulla salvezza dell'anima!", outcomeText: 'Livello Dante: 100%! Sei pronto per farti guidare da Virgilio attraverso i nove gironi!' }
+            ]
+          },
+          {
+            id: 'qbeatrice_2',
+            question: "2. Il tuo partner o la tua cotta non risponde a un messaggio per tre ore. Cosa fai?",
+            options: [
+              { label: 'A', text: "Penso che sia occupato/a e continuo a svolgere le mie attività quotidiane.", outcomeText: 'Mente lucida e matura. Approvato da Gemma Donati!' },
+              { label: 'B', text: "Provo un attimo di curiosità, ma poi mi dedico a una serie tv.", outcomeText: 'Equilibrio perfetto tra cura ed indipendenza.' },
+              { label: 'C', text: "Ipotizzo di essere finito nella Selva Oscura e cerco una guida spirituale per ritrovare la diritta via!", outcomeText: 'Drammaturgia stilnovista allo stato puro! Prepara la corona d\'alloro!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "💬 VUOI CHATTARE CON COACH MARCUS E LA REDAZIONE SU ADESIONI E COTTE PLATONICHE?",
+        subtitle: "Entra nella Chat di Redazione per ricevere pareri spassosi sui tuoi dubbi amorosi e sulle relazioni a distanza!",
+        buttonText: "💬 APRI LA CHAT DI REDAZIONE",
+        badge: "RUBRICA ACCOPPIAMENTO E DINTORNI"
+      }
+    },
+    comments: [
+      {
+        id: 'c-bea-1',
+        author: 'GemmaDonatiOfficial',
+        avatar: '📜',
+        date: '2 minuti fa',
+        text: 'Grazie per aver ricordato chi portava a casa la spesa a Firenze mentre lui sognava gli angioletti!',
+        likes: 1850
+      },
+      {
+        id: 'c-bea-2',
+        author: 'FrancescoPetrarca',
+        avatar: '✒️',
+        date: '7 minuti fa',
+        text: 'Io con Laura ho fatto la stessa cosa per tutta la vita senza neanche bisogno di scendere all\'Inferno. Principianti!',
+        likes: 1210
+      }
+    ]
+  },
+  {
     id: 'enrico-viii-confusione-sentimentale-accoppiamento',
     title: "LA CONFUSIONE SENTIMENTALE DI ENRICO VIII: \"NON SONO IO, SEI TU... E IL PAPA CHE NON MI DÀ IL DIVORZIO!\"",
     subtitle: "Sei mogli, una Chiesa creata da zero per disperazione amorosa e il Tinder del Cinquecento: storia di un sovrano che non sapeva come dire 'prendiamoci una pausa' e finì per rifare la mappa religiosa d'Europa.",
