@@ -15,6 +15,7 @@ interface HeaderProps {
   setSearchQuery: (q: string) => void;
   isSubscribed: boolean;
   onOpenCookies?: () => void;
+  onOpenGroqChat?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -31,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
   setSearchQuery,
   isSubscribed,
   onOpenCookies,
+  onOpenGroqChat,
 }) => {
   const [showSearchModal, setShowSearchModal] = useState(false);
 
@@ -120,6 +122,22 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Groq AI Chat Trigger Button */}
+          {onOpenGroqChat && (
+            <button
+              onClick={onOpenGroqChat}
+              className={`flex items-center gap-1.5 px-3 py-1.5 font-anton text-xs sm:text-sm border-2 border-black transition shadow-[2px_2px_0px_#000] cursor-pointer ${
+                activeTab === 'groq_chat'
+                  ? 'bg-black text-[#A0FF00]'
+                  : 'bg-[#A0FF00] text-black hover:bg-black hover:text-[#A0FF00]'
+              }`}
+              title="Chatta con l'Alter Ego AI via GROQ_API_KEY"
+            >
+              <Sparkles className="w-4 h-4 text-black fill-black" />
+              <span>CHAT GROQ AI</span>
+            </button>
+          )}
+
           {/* Search Trigger */}
           <button
             onClick={() => setShowSearchModal(true)}

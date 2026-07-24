@@ -10,6 +10,7 @@ import { LegalAbsurdModal } from './components/LegalAbsurdModal';
 import { AbsurdCookieModal, ABSURD_COOKIES } from './components/AbsurdCookieModal';
 import { CookieNoticeBanner } from './components/CookieNoticeBanner';
 import { ChaosCorner } from './components/ChaosCorner';
+import { GroqChatView } from './components/GroqChatView';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
 
@@ -20,7 +21,7 @@ import { Flame, Sparkles, Filter, Bookmark, X, AlertCircle } from 'lucide-react'
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('tutti');
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks'>('feed');
+  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks' | 'groq_chat'>('feed');
   
   const [savedArticleIds, setSavedArticleIds] = useState<string[]>(() => {
     try {
@@ -203,6 +204,7 @@ export default function App() {
         setSearchQuery={setSearchQuery}
         isSubscribed={isSubscribed}
         onOpenCookies={() => setIsCookieModalOpen(true)}
+        onOpenGroqChat={() => setActiveView('groq_chat')}
       />
 
       {/* Slide-out Navigation Drawer */}
@@ -223,11 +225,17 @@ export default function App() {
         onOpenBookmarks={() => setActiveView('bookmarks')}
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}
+        onOpenGroqChat={() => setActiveView('groq_chat')}
         savedCount={savedArticleIds.length}
       />
 
       {/* Main View Switcher */}
       <main className="flex-1">
+
+        {/* GROQ AI CHAT VIEW */}
+        {activeView === 'groq_chat' && (
+          <GroqChatView onBackToHome={handleGoHome} />
+        )}
         
         {/* READER VIEW */}
         {activeView === 'reader' && (
@@ -461,6 +469,7 @@ export default function App() {
         onGoHome={handleGoHome}
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}
+        onOpenGroqChat={() => setActiveView('groq_chat')}
       />
 
       {/* Sticky Mobile Bottom Nav */}
@@ -478,6 +487,7 @@ export default function App() {
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenChaosCorner={() => setActiveView('chaos')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
+        onOpenGroqChat={() => setActiveView('groq_chat')}
         savedCount={savedArticleIds.length}
       />
 

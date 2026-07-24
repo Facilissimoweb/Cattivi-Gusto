@@ -16,6 +16,7 @@ interface NavigationDrawerProps {
   onOpenBookmarks: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
+  onOpenGroqChat?: () => void;
   savedCount: number;
 }
 
@@ -32,6 +33,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onOpenBookmarks,
   savedCount,
   onOpenCookies,
+  onOpenGroqChat,
 }) => {
   if (!isOpen) return null;
 
@@ -124,6 +126,22 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
               <ChevronRight className="w-5 h-5" />
             </button>
+
+            {onOpenGroqChat && (
+              <button
+                onClick={() => {
+                  onOpenGroqChat();
+                  onClose();
+                }}
+                className="w-full bg-[#A0FF00] text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-black hover:text-[#A0FF00] transition shadow-[3px_3px_0px_#000] cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 fill-black" />
+                  <span>CHAT GROQ AI (GROQ_API_KEY)</span>
+                </div>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            )}
 
             <button
               onClick={() => {

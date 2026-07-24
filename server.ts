@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
+import Groq from "groq-sdk";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -12,12 +13,95 @@ async function startServer() {
 
   app.use(express.json());
 
-  // API endpoints
+  // API health
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok", magazine: "Cattivo Gusto", version: "1.0.0" });
   });
 
-  // AI-powered generator endpoint
+  // Groq status check
+  app.get("/api/groq/status", (_req, res) => {
+    const hasKey = !!process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.trim().length > 0;
+    res.json({
+      configured: hasKey,
+      defaultModel: "llama-3.3-70b-versatile",
+      availableModels: [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "mixtral-8x7b-32768",
+        "gemma2-9b-it"
+      ]
+    });
+  });
+
+  // Groq Chat completions endpoint - ONLY USES GROQ_API_KEY
+  app.post("/api/groq/chat", async (req, res) => {
+    try {
+      const apiKey = process.env.GROQ_API_KEY;
+      if (!apiKey || apiKey.trim() === "") {
+        return res.status(400).json({
+          error: "GROQ_API_KEY_MISSING",
+          message: "Chiave GROQ_API_KEY non trovata nelle variabili d'ambiente. Aggiungi GROQ_API_KEY nei Secrets di AI Studio o Vercel."
+        });
+      }
+
+      const { messages, model = "llama-3.3-70b-versatile", systemPrompt, temperature = 0.85 } = req.body;
+
+      if (!messages || !Array.isArray(messages) || messages.length === 0) {
+        return res.status(400).json({ error: "Messaggi non validi o vuoti." });
+      }
+
+      const groq = new Groq({ apiKey });
+
+      const conversationMessages = [];
+      if (systemPrompt) {
+        conversationMessages.push({
+          role: "system" as const,
+          content: systemPrompt
+        });
+      } else {
+        conversationMessages.push({
+          role: "system" as const,
+          content: "Sei l'Alter Ego Grottesco della redazione di 'Cattivo Gusto', una rivista d'avanguardia e satirica. Rispondi con tono surreale, cinico, brillante, ironico e spaventosamente acuto in lingua italiana."
+        });
+      }
+
+      // Add user/assistant message history
+      messages.forEach((msg: { role: string; content: string }) => {
+        if (msg.role === "user" || msg.role === "assistant" || msg.role === "system") {
+          conversationMessages.push({
+            role: msg.role as "user" | "assistant" | "system",
+            content: msg.content
+          });
+        }
+      });
+
+      const startTime = Date.now();
+      const completion = await groq.chat.completions.create({
+        messages: conversationMessages,
+        model: model,
+        temperature: temperature,
+        max_tokens: 1024,
+      });
+      const durationMs = Date.now() - startTime;
+
+      const replyText = completion.choices[0]?.message?.content || "La mente dell'Alter Ego ha generato silenzio radio.";
+
+      res.json({
+        reply: replyText,
+        model: completion.model || model,
+        latencyMs: durationMs,
+        usage: completion.usage
+      });
+    } catch (err: any) {
+      console.error("Groq API Error:", err);
+      res.status(500).json({
+        error: "GROQ_EXECUTION_ERROR",
+        message: err?.message || "Errore durante la chiamata ai server Groq AI."
+      });
+    }
+  });
+
+  // AI-powered generator endpoint (Gemini)
   app.post("/api/ai/generate-absurdity", async (req, res) => {
     try {
       const apiKey = process.env.GEMINI_API_KEY;
@@ -80,3 +164,4 @@ async function startServer() {
 }
 
 startServer();
+
