@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Article, Comment } from '../types';
 import { ArrowLeft, Volume2, VolumeX, Heart, Share2, MessageSquare, Send, Flame, Sparkles, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { INANIMATE_FORTUNES, VOID_WEATHER } from '../data/chaos';
+import { ArticleShareButtons } from './ArticleShareButtons';
 
 interface ArticleDetailViewProps {
   article: Article;
@@ -174,7 +175,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
           <span>TORNA IN EDICOLA (HOME)</span>
         </button>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           {/* Audio Narrator */}
           <button
             onClick={toggleSpeechNarration}
@@ -188,19 +189,8 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
             <span>{isPlayingSpeech ? 'STOP VOCE ALTER EGO' : 'ASCOLTA CON VOCE'}</span>
           </button>
 
-          {/* Share */}
-          <button
-            onClick={handleShare}
-            className="p-2 bg-white border-2 border-black hover:bg-black hover:text-white transition shadow-[2px_2px_0px_#000] relative"
-            title="Condividi articolo"
-          >
-            <Share2 className="w-4 h-4" />
-            {copiedToast && (
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-[#A0FF00] font-mono text-[10px] px-2 py-1 border border-[#A0FF00] whitespace-nowrap shadow-md">
-                Link Copiato!
-              </span>
-            )}
-          </button>
+          {/* Social Share Quick Toolbar */}
+          <ArticleShareButtons article={article} variant="toolbar" />
         </div>
       </div>
 
@@ -366,6 +356,9 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
               🔥 FIRMA IL MANIFESTO
             </button>
           </div>
+
+          {/* Social Share Section (WhatsApp, Telegram, Email, Summary & Reference Image) */}
+          <ArticleShareButtons article={article} variant="footer" />
 
           {/* Comments Thread */}
           <div className="bg-[#FAF8F5] border-2 border-black p-6 shadow-[5px_5px_0px_#000] mt-10">

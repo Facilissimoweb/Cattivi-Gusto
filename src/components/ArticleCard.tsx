@@ -1,6 +1,6 @@
 import React from 'react';
 import { Article } from '../types';
-import { ArrowUpRight, Bookmark, Flame, Heart } from 'lucide-react';
+import { ArrowUpRight, Bookmark, Flame, Heart, Share2, MessageCircle, Send, Mail } from 'lucide-react';
 
 interface ArticleCardProps {
   article: Article;
@@ -15,6 +15,37 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   isSaved,
   onToggleSave,
 }) => {
+  const getArticleUrl = () => {
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('article', article.id);
+      return url.toString();
+    }
+    return `https://cattivo-gusto.it/articolo/${article.id}`;
+  };
+
+  const handleQuickWhatsApp = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const briefSummary = article.content.intro || article.subtitle;
+    const waText = `📰 *${article.title}*\n\n_${article.subtitle}_\n\n📝 *Riassunto*: ${briefSummary}\n\n🖼️ *Immagine*: ${article.heroImage}\n\n🔗 ${getArticleUrl()}`;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleQuickTelegram = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const briefSummary = article.content.intro || article.subtitle;
+    const tgText = `📰 ${article.title}\n\n${article.subtitle}\n\n📝 Riassunto: ${briefSummary}\n\n🖼️ Foto: ${article.heroImage}`;
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(getArticleUrl())}&text=${encodeURIComponent(tgText)}`, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleQuickEmail = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const briefSummary = article.content.intro || article.subtitle;
+    const subject = `📰 [Cattivo Gusto] ${article.title}`;
+    const body = `Ciao!\n\nTi consiglio questo articolo su Cattivo Gusto:\n\n📰 ${article.title}\n${article.subtitle}\n\n📝 RIASSUNTO:\n${briefSummary}\n\n🖼️ IMMAGINE DI RIFERIMENTO:\n${article.heroImage}\n\n🔗 LEGGI L'ARTICOLO:\n${getArticleUrl()}`;
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <article
       onClick={() => onRead(article.id)}
@@ -26,15 +57,34 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           <span className="bg-black text-[#A0FF00] font-anton text-xs px-2 py-0.5 tracking-wider uppercase">
             {article.categoryLabel}
           </span>
-          <div className="flex items-center gap-2">
-            <span className="font-typewriter text-[11px] text-neutral-600 font-bold">
-              {article.readTime}
-            </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handleQuickWhatsApp}
+              className="p-1 bg-[#25D366] text-white border border-black hover:scale-110 transition cursor-pointer"
+              title="Condividi su WhatsApp"
+            >
+              <MessageCircle className="w-3 h-3 fill-white text-[#25D366]" />
+            </button>
+            <button
+              onClick={handleQuickTelegram}
+              className="p-1 bg-[#0088cc] text-white border border-black hover:scale-110 transition cursor-pointer"
+              title="Condividi su Telegram"
+            >
+              <Send className="w-3 h-3" />
+            </button>
+            <button
+              onClick={handleQuickEmail}
+              className="p-1 bg-black text-white border border-black hover:scale-110 transition cursor-pointer"
+              title="Condividi via Email"
+            >
+              <Mail className="w-3 h-3" />
+            </button>
             <button
               onClick={(e) => onToggleSave(article.id, e)}
               className={`p-1 border border-black transition ${
                 isSaved ? 'bg-[#A0FF00] text-black' : 'bg-white hover:bg-black hover:text-white'
               }`}
+              title="Salva nei segnalibri"
             >
               <Bookmark className="w-3.5 h-3.5" fill={isSaved ? 'currentColor' : 'none'} />
             </button>
