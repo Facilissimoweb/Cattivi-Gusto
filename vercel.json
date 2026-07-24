@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/groq/chat",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/api/groq/status",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/((?!api/.*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ async function startServer() {
   });
 
   // Groq status check
-  app.get("/api/groq/status", (_req, res) => {
+  app.get(["/api/groq/status", "/api/chat/status"], (_req, res) => {
     const hasKey = !!process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.trim().length > 0;
     res.json({
       configured: hasKey,
@@ -34,7 +34,7 @@ async function startServer() {
   });
 
   // Groq Chat completions endpoint - ONLY USES GROQ_API_KEY
-  app.post("/api/groq/chat", async (req, res) => {
+  app.post(["/api/groq/chat", "/api/chat"], async (req, res) => {
     try {
       const apiKey = process.env.GROQ_API_KEY;
       if (!apiKey || apiKey.trim() === "") {

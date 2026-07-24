@@ -71,9 +71,13 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
   // Check Groq status on mount
   useEffect(() => {
     fetch('/api/groq/status')
+      .then(res => {
+        if (!res.ok) return fetch('/api/chat');
+        return res;
+      })
       .then(res => res.json())
       .then(data => {
-        setIsConfigured(data.configured);
+        setIsConfigured(data.configured ?? true);
       })
       .catch(() => {
         setIsConfigured(false);
@@ -102,16 +106,27 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     setErrorMessage(null);
 
     try {
-      const response = await fetch('/api/groq/chat', {
+      const payload = {
+        messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+        model: selectedModel,
+        systemPrompt: selectedPersona.prompt,
+        temperature: 0.85
+      };
+
+      let response = await fetch('/api/groq/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
-          model: selectedModel,
-          systemPrompt: selectedPersona.prompt,
-          temperature: 0.85
-        })
+        body: JSON.stringify(payload)
       });
+
+      // Fallback to /api/chat if /api/groq/chat is not found on Vercel
+      if (response.status === 404) {
+        response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
 
       const data = await response.json();
 
