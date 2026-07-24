@@ -41,20 +41,6 @@ export const BottomNavMobile: React.FC<BottomNavMobileProps> = ({
         )}
       </button>
 
-      {/* Groq Chat */}
-      <button
-        onClick={() => {
-          if (onOpenGroqChat) onOpenGroqChat();
-          else setActiveTab('groq_chat');
-        }}
-        className={`flex flex-col items-center py-1 px-1.5 transition ${
-          activeTab === 'groq_chat' ? 'text-[#A0FF00] font-bold scale-105' : 'text-[#A0FF00] opacity-90'
-        }`}
-      >
-        <Sparkles className="w-5 h-5 fill-[#A0FF00]" />
-        <span className="font-anton text-[9px] uppercase tracking-wider mt-0.5">GROQ AI</span>
-      </button>
-
       {/* Manifesto */}
       <button
         onClick={onOpenManifesto}
