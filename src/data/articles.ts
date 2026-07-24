@@ -17,6 +17,93 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'lady-gaga-tatuata-ginetta-intervista-tre-voci-inferno',
+    title: "LADY GAGA TATUATA DA GINETTA \"LA CARGNA\": INTERVISTA A TRE VOCI (DI CUI UNA COLLEGATA DIRETTAMENTE DALL'INFERNO)",
+    subtitle: "Siamo volati nello scantinato di Centocelle dove la popstar internazionale si è fatta inchiostrare una porchetta alata sul bicipite con aghi da calza arrugginiti. In collegamento dal Girone dei Golosi anche lo spirito di Belzebù che commenta la sfumatura al lardo.",
+    category: 'tatuaggi',
+    categoryLabel: 'TATUAGGI CARNEI',
+    author: 'Ginetta la Carnatrice & Belzebù in Vivavoce',
+    date: '24 LUGLIO 2026',
+    readTime: '7 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Lady Gaga nello studio grottesco e viscerale di Ginetta a Centocelle mentre si fa tatuare',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 51200,
+    isHot: true,
+    content: {
+      intro: "Un odore penetrante di strutto bruciato, alcol denaturato a 90 gradi e lacca per capelli degli anni '80 accoglie chiunque varchi la soglia dello scantinato di Ginetta \"La Cargna\" a Centocelle. Qui non ci sono luci a LED, poltrone anatomiche in ecopelle o sottofondi chillout: c'è solo un tavolo in formica unta, una sedia spaiata della cucina e la popstar planetaria LADY GAGA che stringe un pezzo di cotenna di maiale tra i denti per non urlare. In esclusiva per Cattivo Gusto, assistiamo all'evento dell'anno: un'intervista a tre voci tra Lady Gaga, Ginetta e la voce demoniaca di Belzebù collegata dal Terzo Girone dell'Inferno via radio a valvole arrugginita.",
+      sections: [
+        {
+          heading: "1. VOCE 1 – LADY GAGA: \"A Hollywood sono tutti finiti e leccati. Volevo il dolore vero della braciola sulla pelle!\"",
+          paragraphs: [
+            "• REDAZIONE: Gaga, sei arrivata a Roma con un jet privato e ti sei fatta portare direttamente a Centocelle su un Apecar. Perché proprio Ginetta?",
+            "• LADY GAGA: \"Oh darling, look at this! A Los Angeles i tatuatori usano aghi monouso in titanio con le lucine rgb e ti mettono la crema all'oppio. Che noia! Dove sta l'arte carnale? Io volevo un'opera d'arte che odorasse di rosmarino e soffritto. Ginetta è un'artista primordiale! Mi sta disegnando una porchetta di Ariccia con le ali da cherubino e la corona di alloro sul bicipite destro, e usa come inchiostro una riduzione di neroperla e aceto balsamico scaduto nel 1994!\""
+          ],
+          quote: "Il vero pop non è sfilare al Met Gala in seta pura: è farsi punzecchiare il bicipite da una settantenne romanesca con l'ago da lana mentre la radio passa i successi dei Cugini di Campagna!"
+        },
+        {
+          heading: "2. VOCE 2 – GINETTA LA CARGNA: \"Ammore de zia, questa c'ha la pelle dura come 'na cotenna d'inverno!\"",
+          paragraphs: [
+            "• REDAZIONE: Ginetta, come si lavora sulla cute di una diva internazionale che ha vinto Oscar e Grammy?",
+            "• GINETTA: \"A me de gli Oscar non me ne frega 'ncazzo! Per me quando uno entra qua dentro è solo carne da inchiostrare. Devo dire che la signorina Stefani (Gaga) è tosta: mentre le sfilettavo il bicipite col coltellino da prosciutto per fare le sfumature 3D della cotenna croccante, lei non ha fatto un verso! S'è scolata mezza bottiglia di grappa al pino silvestre e m'ha pure aiutato a chiudere le dita della porchetta col punto croce. Questa è una femmina di sostanza!\""
+          ]
+        },
+        {
+          heading: "3. VOCE 3 – BELZEBÙ DALL'INFERNO: \"Sfaccettature al lardo sublimi! Pure Lucifero sta prendendo appunti!\"",
+          paragraphs: [
+            "In quel momento, la radio a valvole geloso-phonola situata sopra il frigorifero impazzisce. Tra scariche elettriche e fumo di zolfo, risuona una voce cavernosa e metallica direttamente dal Girone dei Golosi dell'Oltretomba:",
+            "• BELZEBÙ (DALL'INFERNO): \"UAHAHAHAH! Salute a voi, mortali ingordi! Qui dalle fiamme eterne stiamo seguendo la diretta della stesa di inchiostro! Ginetta, la sfumatura di grasso sulle ali del maiale è di una diabolica bellezza. Abbiamo indetto un referendum nell'Averno: se Gaga si fa tatuare pure due zampetti di maiale sul collo, le concediamo il pass VIP per scendere giù a cantare per la festa di Ognissanti senza pagare il dazio della pece bollente!\"",
+            "• LADY GAGA: \"Azz! Belzebù, amò, prenota la stanza! Prossimo mese mi faccio fare da Ginetta pure un cotechino con le calze a rete sul polpaccio!\""
+          ],
+          quote: "Quando l'Arte Carnea supera i confini della materia, persino i demoni del Terzo Girone si mettono in fila per prenotare una stesa di aghi da Ginetta."
+        }
+      ],
+      conclusion: "Tra fumi di alcol denaturato, canti in dialetto e benedizioni infernali, il capolavoro carneo di Lady Gaga è completato. Un tatuaggio che non è solo inchiostro, ma una vera e propria braciola spirituale incisa nel destino della musica mondiale!",
+      quiz: {
+        title: "🧪 TEST CARNEO DI GINETTA: QUALE TATUAGGIO DA SCANTINATO MERITI?",
+        subtitle: "Rispondi alle domande del tribunale di Centocelle e scopri cosa ti inchiostrerà Ginetta!",
+        questions: [
+          {
+            id: 'qg1',
+            question: "1. Come reagisci quando l'ago da calza ti punge la pelle?",
+            options: [
+              { label: 'A', text: 'Canto "Poker Face" a squarciagola mentre mi disinfettano con la grappa al pino.', outcomeText: 'Sei degno del Tatuaggio della Porchetta Alata! Ginetta ti adotta subito come nipote spirituale.' },
+              { label: 'B', text: 'Svengo al primo millimetro di graffio e chiedo la pomata Anestetico-Vip.', outcomeText: 'Vergogna! Ginetta ti caccia dallo scantinato a scopate sul groppone!' },
+              { label: 'C', text: 'Evoco Belzebù per chiedergli una parere estetico sulle sfumature di grasso.', outcomeText: 'Spirito diabolico approvato! Il Terzo Girone dell\'Inferno ti offre uno spuntino di benvenuto!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "🩸 RICEVI UN PARERE DIABOLICO SUL TUO PROSSIMO TATUAGGIO IN CHAT!",
+        subtitle: "Apri la Chat di Redazione e chiedi ai nostri Alter Ego o a Coach Marcus un consiglio estetico viscerale per il tuo prossimo tatuaggio carneo!",
+        buttonText: "💬 APRI LA CHAT DI REDAZIONE E CONSULTA GLI ESPERTI",
+        badge: "ESCLUSIVO RUBRICA TATUAGGI CARNEI"
+      }
+    },
+    comments: [
+      {
+        id: 'c-gaga-1',
+        author: 'LittleMonsterDiCentocelle',
+        avatar: '🥩',
+        date: '2 minuti fa',
+        text: 'Ero fuori dallo scantinato quando Gaga è uscita abbagliante col braccio fasciato nella pellicola da salumeria! Ginetta patrimonio UNESCO subito!',
+        likes: 890
+      },
+      {
+        id: 'c-gaga-2',
+        author: 'LuciferoIlGoloso',
+        avatar: '🔥',
+        date: '10 minuti fa',
+        text: 'Dall\'Inferno confermiamo tutto: la sfumatura della porchetta è il capolavoro del secolo. Salutami il Terzo Girone!',
+        likes: 620
+      }
+    ]
+  },
+
+  {
     id: 'coach-marcus-articolo-ispirazionale-sfinimento',
     title: "MANIFESTO ISPORAZIONALE DI COACH MARCUS: \"NON PERSEGUITARE I TUOI SOGNI, SFINISCILI FINO A QUANDO NON SI ARRENDONO!\"",
     subtitle: "Dalla meditazione sulla pressione dell'olio della Fiat Duna al potere della canottiera a rete nei momenti di crisi: la guida motivazionale definitiva per abbracciare la sconfitta ed esibire il fallimento con orgoglio Alpha.",
