@@ -2,6 +2,7 @@ import { Article, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: 'tutti', label: 'TUTTO IL CAOS', badge: 'ALL' },
+  { id: 'estetica-bellezza', label: 'ESTETICA & BELLEZZA BRUTTA', badge: '💄' },
   { id: 'tatuaggi', label: 'TATUAGGI CARNEI', badge: '🥩' },
   { id: 'accoppiamento', label: 'ACCOPPIAMENTO E DINTORNI', badge: '💘' },
   { id: 'trash-tv', label: 'TEMPTATION & TRASH', badge: '🏝️' },
@@ -14,6 +15,73 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const ARTICLES: Article[] = [
+  {
+    id: 'evidenziare-occhiaie-punti-neri-guida',
+    title: "GUIDA COMPLETA SU COME EVIDENZIARE OCCHIAIE E PUNTI NERI: IL NUOVO TREND 'BRUTTALISMO FACCIALE'",
+    subtitle: "Basta correttori illuminanti e patch al retinolo! Ecco la rivoluzionaria skincare per sfoggiare un viola periorbitale da coma etilico e far brillare i tuoi pori ostruiti come costellazioni di notte.",
+    category: 'estetica-bellezza',
+    categoryLabel: 'ESTETICA & BELLEZZA BRUTTA',
+    author: 'Donna Cringe & L\'Estetista del Subbuglio',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1512290900676-26c2a0d0e5b0?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Primo piano satirico ed eccentrico sul makeup e cura del viso',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 9420,
+    isHot: true,
+    content: {
+      intro: "Hai passato anni a spendere stipendi in sieri illuminanti, BB cream e correttori arancioni per nascondere quel viola profondo sotto gli occhi che ti fa sembrare uno zombie di The Walking Dead dopo una maratona di 48 ore? Errore fatale! Il 2026 decreta la fine dell'estetica 'pulita e levigata' (Clean Girl Aesthetic). Benvenuti nella nuova era dell'ESTETICA BRUTTA e del 'Bruttalismo Facciale': la guida definitiva per esaltare con orgoglio le tue occhiaie storiche e mettere in risalto ogni singolo punto nero del naso come fosse un diamante incastonato.",
+      sections: [
+        {
+          heading: "Fase 1: Il Contouring delle Occhiaie 'Sguardo da Ospedale'",
+          paragraphs: [
+            "Perché spendere soldi per coprire l'ombra della tua stanchezza quando puoi intensificarla fino a far preoccupare i passanti per strada?",
+            "1. La Selezione delle Sfumature: Dimentica il beige. Procurati un ombretto opaco melanzana scuro, un tocco di prugna e del viola bruciato. Sfuma con cura partendo dal condotto lacrimale fino a raggiungere gli zigomi.",
+            "2. La Tecnica del Liquido di Bistecca: Per dare quel tocco di lucidità vischiosa e drammatica, applica una goccia di olio d'oliva o lucidalabbra trasparente al centro dell'occhiaia. Lo sbrilluccichio metterà in risalto il reticolo venoso con grazia vittoriana.",
+            "3. L'Effetto 'Nottambulo Professionista': Applica un velo di matita nera sbavata nella rima inferiore per simulare 72 ore ininterrotte di streaming o crisi d'ansia finanziaria."
+          ],
+          quote: "L'occhiaia marcata non è un difetto, è una mappa emotiva dei tuoi fallimenti e della tua insonnia. Portala con l'orgoglio di un re di periferia."
+        },
+        {
+          heading: "Fase 2: Valorizzare i Punti Neri della Zona T come la Via Lattea",
+          paragraphs: [
+            "I punti neri sul naso e sul mento sono stati ingiustamente demonizzati per decenni. È ora di considerarli per quello che sono davvero: una meravigliosa galassia cutanea che merita la giusta illuminazione.",
+            "• La Ceretta al Contrario: Anziché strofinare strisce purificanti per strapparli via, applica della vaselina e un illuminante dorato direttamente sulle narici. Il contrasto tra il sebo scuro ossidato e la polvere perlata creerà un fantastico effetto 'Cielo Stellato sopra il Raccordo Anulare'.",
+            "• Matita da Disegno 2B per i Pori Pigri: Se hai un naso purtroppo troppo pulito, niente paura. Prendi una matita da disegno morbida 2B e punteggia con precisione la zona T, simulando follicoli ostruiti da alta densità urbana."
+          ]
+        },
+        {
+          heading: "I Consigli dell'Esperta: L'Estetista del Subbuglio",
+          paragraphs: [
+            "Abbiamo intervistato la nota estetista e filosofa del degrado, Gianna 'Subbuglio', titolare dell'Atelier 'Bruttezza e Dignità' a Milano Lambrate:",
+            "• 'Le mie clienti arrivano piangendo perché non hanno abbastanza borse sotto gli occhi. Io consiglio subito due tazze di caffè solubile a mezzanotte, tre ore di scroll forsennato su TikTok al buio e zero idratazione prima di dormire. Nel giro di tre giorni il tuo sguardo acquisisce quella drammaticità da dramma scandinavo che oggi va fortissimo alle sfilate di Parigi'."
+          ],
+          quote: "Il trucco ideale è quello che spinge le persone a chiederti 'Scusa, stai bene o devo chiamare un'ambulanza?' appena entri in bar."
+        }
+      ],
+      conclusion: "Smettetela di nascondervi dietro i filtri di Instagram e i correttori coprenti. Abbracciate l'imperfezione, valorizzate i pori dilatati e sfoggiate quelle occhiaie violacee come la corona di gloria che vi spetta di diritto!"
+    },
+    comments: [
+      {
+        id: 'c-eb-1',
+        author: 'ChiaraPelleInsonne',
+        avatar: '👀',
+        date: '10 minuti fa',
+        text: 'Grazie! Finalmente una guida per me che dormo 3 ore a notte dal 2018. Ho provato il lucidalabbra sulle occhiaie ed al bar m\'hanno subito offerto un cornetto per pietà!',
+        likes: 184
+      },
+      {
+        id: 'c-eb-2',
+        author: 'GattoInsonne',
+        avatar: '🐱',
+        date: '25 minuti fa',
+        text: 'Mio umano si dipinge le occhiaie viola ogni mattina e adesso lo scambiano per un artista concettuale. Grandissimo articolo.',
+        likes: 92
+      }
+    ]
+  },
   {
     id: 'ginetta-tatuaggi-carne-vaticano',
     title: "GINETTA E I TATUAGGI A TEXTURE DI CARNE: APRE LO STUDIO SACRO ANNESSO ALLE STANZE DEL PAPA",

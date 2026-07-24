@@ -8,7 +8,8 @@ export type CategoryId =
   | 'oroscopo-oggetti'
   | 'tatuaggi'
   | 'accoppiamento'
-  | 'trash-tv';
+  | 'trash-tv'
+  | 'estetica-bellezza';
 
 export interface Category {
   id: CategoryId;
