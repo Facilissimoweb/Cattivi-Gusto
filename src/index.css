@@ -86,39 +86,50 @@
 }
 
 /* Fix Google Translate Overlapping Banner & Top Margin Offset */
-body {
+html, html body {
   top: 0px !important;
+  margin-top: 0px !important;
+  padding-top: 0px !important;
   position: static !important;
   min-height: 100vh;
 }
 
+iframe[src*="translate.google"],
+iframe[id*="goog"],
+iframe.goog-te-banner-frame,
 .goog-te-banner-frame,
 .goog-te-banner,
-iframe.goog-te-banner-frame,
-.goog-te-banner-frame.skiptranslate,
+.goog-te-balloon-frame,
+.goog-te-spinner-pos,
+#goog-gt-tt,
+#goog-gt-vt,
+.goog-tooltip,
+.goog-tooltip:hover,
 .VIpgJd-Z443b-O92Bfe,
 .VIpgJd-Z443b-e3131e,
 .VIpgJd-Z443b-fw218c,
-#goog-gt-tt,
-.goog-te-balloon-frame,
-.goog-tooltip,
-.goog-tooltip:hover {
+.skiptranslate,
+body > .skiptranslate,
+body > div[id*="google_translate"],
+body > iframe[src*="translate"] {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   height: 0 !important;
+  max-height: 0 !important;
   width: 0 !important;
+  overflow: hidden !important;
   pointer-events: none !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  z-index: -9999 !important;
 }
 
+/* Ensure language trigger inside SiteLanguageTranslator remains visible */
+#google_translate_element_hidden,
 .goog-te-gadget {
-  color: transparent !important;
-  font-size: 0px !important;
-}
-
-.goog-te-gadget .goog-te-combo {
-  color: black !important;
-  font-size: 12px !important;
+  display: none !important;
 }
 
 .goog-text-highlight {
@@ -127,6 +138,7 @@ iframe.goog-te-banner-frame,
 }
 
 header {
-  top: 0 !important;
+  top: 0px !important;
+  margin-top: 0px !important;
 }
 

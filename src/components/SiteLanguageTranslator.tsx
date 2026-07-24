@@ -65,16 +65,42 @@ export const SiteLanguageTranslator: React.FC = () => {
     }
 
     // Continuously ensure Google Translate banner frame is hidden and body position is unaffected
-    const interval = setInterval(() => {
-      if (document.body.style.top !== '0px') {
-        document.body.style.top = '0px';
-      }
-      const bannerIframe = document.querySelector('.goog-te-banner-frame') as HTMLElement;
-      if (bannerIframe) {
-        bannerIframe.style.display = 'none';
-        bannerIframe.style.visibility = 'hidden';
-      }
-    }, 300);
+    const hideGoogleBanner = () => {
+      // Force reset body & html layout offsets
+      if (document.body.style.top !== '0px') document.body.style.top = '0px';
+      if (document.body.style.marginTop !== '0px') document.body.style.marginTop = '0px';
+      if (document.documentElement.style.top !== '0px') document.documentElement.style.top = '0px';
+      if (document.documentElement.style.marginTop !== '0px') document.documentElement.style.marginTop = '0px';
+
+      // Select and remove / hide any injected Google Translate banner elements
+      const selectors = [
+        '.goog-te-banner-frame',
+        'iframe.goog-te-banner-frame',
+        '.VIpgJd-Z443b-O92Bfe',
+        '.VIpgJd-Z443b-e3131e',
+        '.VIpgJd-Z443b-fw218c',
+        '#goog-gt-tt',
+        '#goog-gt-vt',
+        'body > .skiptranslate',
+        'iframe[src*="translate.google"]'
+      ];
+
+      selectors.forEach((selector) => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          htmlEl.style.display = 'none';
+          htmlEl.style.visibility = 'hidden';
+          htmlEl.style.opacity = '0';
+          htmlEl.style.height = '0px';
+          htmlEl.style.maxHeight = '0px';
+          htmlEl.style.pointerEvents = 'none';
+        });
+      });
+    };
+
+    const interval = setInterval(hideGoogleBanner, 100);
+    hideGoogleBanner();
 
     return () => clearInterval(interval);
   }, []);
