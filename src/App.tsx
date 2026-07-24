@@ -11,6 +11,7 @@ import { AbsurdCookieModal, ABSURD_COOKIES } from './components/AbsurdCookieModa
 import { CookieNoticeBanner } from './components/CookieNoticeBanner';
 import { ChaosCorner } from './components/ChaosCorner';
 import { GroqChatView } from './components/GroqChatView';
+import { UnderTheHoodTranslator } from './components/UnderTheHoodTranslator';
 import { FloatingNuvolettaGroq } from './components/FloatingNuvolettaGroq';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
@@ -22,7 +23,7 @@ import { Flame, Sparkles, Filter, Bookmark, X, AlertCircle } from 'lucide-react'
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('tutti');
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks' | 'groq_chat'>('feed');
+  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'chaos' | 'bookmarks' | 'groq_chat' | 'translator'>('feed');
   
   const [savedArticleIds, setSavedArticleIds] = useState<string[]>(() => {
     try {
@@ -206,6 +207,7 @@ export default function App() {
         isSubscribed={isSubscribed}
         onOpenCookies={() => setIsCookieModalOpen(true)}
         onOpenGroqChat={() => setActiveView('groq_chat')}
+        onOpenTranslator={() => setActiveView('translator')}
       />
 
       {/* Slide-out Navigation Drawer */}
@@ -227,11 +229,17 @@ export default function App() {
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}
         onOpenGroqChat={() => setActiveView('groq_chat')}
+        onOpenTranslator={() => setActiveView('translator')}
         savedCount={savedArticleIds.length}
       />
 
       {/* Main View Switcher */}
       <main className="flex-1">
+
+        {/* TRANSLATOR VIEW */}
+        {activeView === 'translator' && (
+          <UnderTheHoodTranslator onBack={handleGoHome} />
+        )}
 
         {/* GROQ AI CHAT VIEW */}
         {activeView === 'groq_chat' && (
@@ -267,6 +275,7 @@ export default function App() {
           <ChaosCorner
             onBack={() => setActiveView('feed')}
             onOpenManifesto={() => setIsManifestoOpen(true)}
+            onOpenTranslator={() => setActiveView('translator')}
           />
         )}
 
@@ -480,6 +489,7 @@ export default function App() {
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}
         onOpenGroqChat={() => setActiveView('groq_chat')}
+        onOpenTranslator={() => setActiveView('translator')}
       />
 
       {/* Sticky Mobile Bottom Nav */}

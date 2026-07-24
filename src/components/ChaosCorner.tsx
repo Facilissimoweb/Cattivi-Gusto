@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Sparkles, Flame, RefreshCw, Bot, HelpCircle, AlertTriangle, ShieldCheck, ArrowLeft, Volume2, Image as ImageIcon, Download, Copy, Check } from 'lucide-react';
+import { Sparkles, Flame, RefreshCw, Bot, HelpCircle, AlertTriangle, ShieldCheck, ArrowLeft, Volume2, Image as ImageIcon, Download, Copy, Check, Languages } from 'lucide-react';
 import { GURU_QUOTES, INANIMATE_FORTUNES, VOID_WEATHER, CAT_PARANOIA_TESTS } from '../data/chaos';
+import { UnderTheHoodTranslator } from './UnderTheHoodTranslator';
 
 interface ChaosCornerProps {
   onBack: () => void;
   onOpenManifesto: () => void;
+  onOpenTranslator?: () => void;
 }
 
-export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifesto }) => {
+export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifesto, onOpenTranslator }) => {
   // AI Image Studio State
   const [imagePrompt, setImagePrompt] = useState('Un tostapane filosofo con gli occhiali da sole che riflette sul senso dell\'esistenza');
   const [imageStyle, setImageStyle] = useState('editorial');
@@ -47,8 +49,20 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
       });
       const data = await res.json();
       if (data.url) {
-        setGeneratedImageUrl(data.url);
-        setImageNotice(data.notice || "Opera generata con successo.");
+        // Append unique timestamp cache-buster so browser forces image element refresh every single time
+        const uniqueUrl = data.url.startsWith('data:') 
+          ? data.url 
+          : `${data.url}${data.url.includes('?') ? '&' : '?'}_t=${Date.now()}_s=${Math.floor(Math.random() * 99999)}`;
+        
+        setGeneratedImageUrl(uniqueUrl);
+        setImageNotice(data.notice || "Nuova opera d'arte generata con successo.");
+        
+        // Safety timeout so loading overlay never stays stuck on re-generations
+        setTimeout(() => {
+          setIsImageLoading(false);
+        }, 2000);
+      } else {
+        setIsImageLoading(false);
       }
     } catch (err) {
       console.error("Studio Image Generation error:", err);
@@ -429,6 +443,28 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
             </div>
           )}
         </div>
+      </section>
+
+      {/* Tool 5: Traduttore Sotto Il Cofano (Google Translate & Lingue Strane) */}
+      <section className="bg-[#111111] text-white border-4 border-black p-6 sm:p-8 shadow-[8px_8px_0px_#000] relative">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-6 border-b-2 border-neutral-700 pb-4">
+          <div className="flex items-center gap-3">
+            <Languages className="w-8 h-8 text-[#A0FF00]" />
+            <div>
+              <h2 className="font-anton text-2xl sm:text-3xl uppercase tracking-tight text-[#A0FF00]">
+                TRADUTTORE SOTTO IL COFANO (GOOGLE TRANSLATE & LINGUE STRANE)
+              </h2>
+              <p className="font-mono text-xs text-neutral-400">
+                Collegato a Google Translate e al modulo alieno della Redazione
+              </p>
+            </div>
+          </div>
+          <span className="bg-[#A0FF00] text-black font-mono text-xs px-2.5 py-1 font-bold uppercase border border-black">
+            🔧 MOTORE ATTIVO
+          </span>
+        </div>
+
+        <UnderTheHoodTranslator />
       </section>
 
     </div>

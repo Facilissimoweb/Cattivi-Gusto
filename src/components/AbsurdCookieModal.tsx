@@ -138,7 +138,34 @@ export const AbsurdCookieModal: React.FC<AbsurdCookieModalProps> = ({
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>('all');
 
-  // Countdown clock for 24h expiration
+  // Countdown clock for 24h expiration & sync state when opening
+  useEffect(() => {
+    if (isOpen) {
+      try {
+        const savedState = localStorage.getItem('cattivo_gusto_cookie_choices');
+        const savedTimestamp = localStorage.getItem('cattivo_gusto_cookie_timestamp');
+        const initial: Record<string, boolean> = {};
+        ABSURD_COOKIES.forEach(c => {
+          initial[c.id] = c.required ? true : false;
+        });
+
+        if (savedState) {
+          setSelectedCookies({ ...initial, ...JSON.parse(savedState) });
+        } else {
+          setSelectedCookies(initial);
+        }
+
+        if (savedTimestamp) {
+          setLastConsentTime(parseInt(savedTimestamp, 10));
+        } else {
+          setLastConsentTime(null);
+        }
+      } catch (e) {
+        // fallback
+      }
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     const updateCountdown = () => {
       if (!lastConsentTime) {
@@ -199,15 +226,20 @@ export const AbsurdCookieModal: React.FC<AbsurdCookieModalProps> = ({
       localStorage.setItem('cattivo_gusto_cookie_choices', JSON.stringify(updated));
       localStorage.setItem('cattivo_gusto_cookie_timestamp', now.toString());
       localStorage.setItem('cattivo_gusto_cookie_accepted', 'true');
+      window.dispatchEvent(new Event('cattivo_gusto_cookie_updated'));
     } catch (e) {
       // ignore
     }
 
-    confetti({
-      particleCount: 70,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
+    try {
+      confetti({
+        particleCount: 70,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    } catch (e) {
+      // ignore
+    }
 
     if (onConsentSaved) onConsentSaved();
     onClose();
@@ -216,7 +248,13 @@ export const AbsurdCookieModal: React.FC<AbsurdCookieModalProps> = ({
   const handleSimulate24hExpiration = () => {
     // Reset timestamp to 25 hours ago
     const past25h = Date.now() - (25 * 60 * 60 * 1000);
-    localStorage.setItem('cattivo_gusto_cookie_timestamp', past25h.toString());
+    try {
+      localStorage.setItem('cattivo_gusto_cookie_timestamp', past25h.toString());
+      localStorage.removeItem('cattivo_gusto_cookie_accepted');
+      window.dispatchEvent(new Event('cattivo_gusto_cookie_updated'));
+    } catch (e) {
+      // ignore
+    }
     setLastConsentTime(past25h);
     setIsExpired(true);
   };
@@ -306,7 +344,10 @@ export const AbsurdCookieModal: React.FC<AbsurdCookieModalProps> = ({
                             type="checkbox"
                             checked={isChecked}
                             disabled={cookie.required}
-                            onChange={() => {}} // handled by parent div
+                            onChange={(e) => {
+                              e.stopPropagation();
+                              handleToggleCookie(cookie.id, cookie.required);
+                            }}
                             className="w-5 h-5 mt-0.5 accent-black shrink-0 cursor-pointer"
                           />
 

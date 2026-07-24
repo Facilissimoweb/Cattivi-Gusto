@@ -9,6 +9,7 @@ interface FooterProps {
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
+  onOpenTranslator?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -19,6 +20,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenLegal,
   onOpenCookies,
   onOpenGroqChat,
+  onOpenTranslator,
 }) => {
   return (
     <footer className="bg-black text-[#F4F1EA] border-t-4 border-black pt-10 pb-20 md:pb-12 mt-16 font-typewriter">
@@ -50,6 +52,13 @@ export const Footer: React.FC<FooterProps> = ({
           </h3>
           <ul className="space-y-1.5 text-xs text-neutral-300">
 
+            {onOpenTranslator && (
+              <li>
+                <button onClick={onOpenTranslator} className="hover:text-[#A0FF00] transition text-[#A0FF00] font-bold flex items-center gap-1">
+                  🔧 Traduttore Sotto il Cofano (Lingue Strane)
+                </button>
+              </li>
+            )}
             <li>
               <button onClick={onOpenSubscriptions} className="hover:text-[#A0FF00] transition">
                 Abbonamenti VIP (€4,99)

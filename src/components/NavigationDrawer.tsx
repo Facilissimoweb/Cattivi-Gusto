@@ -17,6 +17,7 @@ interface NavigationDrawerProps {
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
+  onOpenTranslator?: () => void;
   savedCount: number;
 }
 
@@ -35,6 +36,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   savedCount,
   onOpenCookies,
   onOpenGroqChat,
+  onOpenTranslator,
 }) => {
   if (!isOpen) return null;
 
@@ -129,6 +131,22 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
             </button>
 
 
+
+            {onOpenTranslator && (
+              <button
+                onClick={() => {
+                  onOpenTranslator();
+                  onClose();
+                }}
+                className="w-full bg-[#A0FF00] text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-black hover:text-[#A0FF00] transition shadow-[3px_3px_0px_#000] cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 fill-black" />
+                  <span>TRADUTTORE SOTTO IL COFANO</span>
+                </div>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            )}
 
             <button
               onClick={() => {

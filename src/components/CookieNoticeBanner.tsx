@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Cookie, ShieldAlert, Clock, Sparkles, ChevronRight, RefreshCw, X } from 'lucide-react';
+import { Cookie, ChevronRight } from 'lucide-react';
 
 interface CookieNoticeBannerProps {
   onOpenPreferences: () => void;
@@ -13,37 +13,48 @@ export const CookieNoticeBanner: React.FC<CookieNoticeBannerProps> = ({
   onAcceptAllQuick,
 }) => {
   const [shouldShowBanner, setShouldShowBanner] = useState<boolean>(false);
-  const [hoursLeft, setHoursLeft] = useState<number | null>(null);
+
+  const checkConsentState = () => {
+    try {
+      const savedTimestamp = localStorage.getItem('cattivo_gusto_cookie_timestamp');
+      const accepted = localStorage.getItem('cattivo_gusto_cookie_accepted');
+
+      if (!savedTimestamp || !accepted) {
+        setShouldShowBanner(true);
+        return;
+      }
+
+      const elapsed = Date.now() - parseInt(savedTimestamp, 10);
+      if (elapsed >= TWENTY_FOUR_HOURS_MS) {
+        // Expired after 24 hours! Show banner again to force renewal!
+        setShouldShowBanner(true);
+      } else {
+        setShouldShowBanner(false);
+      }
+    } catch (e) {
+      setShouldShowBanner(true);
+    }
+  };
 
   useEffect(() => {
-    const checkConsentState = () => {
-      try {
-        const savedTimestamp = localStorage.getItem('cattivo_gusto_cookie_timestamp');
-        const accepted = localStorage.getItem('cattivo_gusto_cookie_accepted');
+    checkConsentState();
+    const interval = setInterval(checkConsentState, 3000);
 
-        if (!savedTimestamp || !accepted) {
-          setShouldShowBanner(true);
-          return;
-        }
-
-        const elapsed = Date.now() - parseInt(savedTimestamp, 10);
-        if (elapsed >= TWENTY_FOUR_HOURS_MS) {
-          // Expired after 24 hours! Show banner again to force renewal!
-          setShouldShowBanner(true);
-        } else {
-          setShouldShowBanner(false);
-          const remaining = Math.max(0, Math.floor((TWENTY_FOUR_HOURS_MS - elapsed) / (1000 * 60 * 60)));
-          setHoursLeft(remaining);
-        }
-      } catch (e) {
-        setShouldShowBanner(true);
-      }
+    const handleCookieUpdated = () => {
+      checkConsentState();
     };
 
-    checkConsentState();
-    const interval = setInterval(checkConsentState, 5000);
-    return () => clearInterval(interval);
+    window.addEventListener('cattivo_gusto_cookie_updated', handleCookieUpdated);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('cattivo_gusto_cookie_updated', handleCookieUpdated);
+    };
   }, []);
+
+  const handleAcceptAll = () => {
+    onAcceptAllQuick();
+    setShouldShowBanner(false);
+  };
 
   if (!shouldShowBanner) return null;
 
@@ -59,7 +70,7 @@ export const CookieNoticeBanner: React.FC<CookieNoticeBannerProps> = ({
                 ⚠️ SCADENZA RIGIDA 24 ORE
               </span>
               <span className="font-mono text-xs font-bold text-black uppercase">
-                AVVISO OBLIGATORIO DI CONSENSO SCADUTO O MANCANTE
+                AVVISO OBBLIGATORIO DI CONSENSO SCADUTO O MANCANTE
               </span>
             </div>
 
@@ -79,7 +90,7 @@ export const CookieNoticeBanner: React.FC<CookieNoticeBannerProps> = ({
           </button>
 
           <button
-            onClick={onAcceptAllQuick}
+            onClick={handleAcceptAll}
             className="flex-1 md:flex-none bg-black text-[#A0FF00] font-anton text-xs sm:text-sm px-5 py-2.5 border-2 border-black hover:bg-white hover:text-black transition shadow-[3px_3px_0px_#000] cursor-pointer flex items-center justify-center gap-1"
           >
             <span>Accetta per 24 Ore</span>
@@ -91,3 +102,4 @@ export const CookieNoticeBanner: React.FC<CookieNoticeBannerProps> = ({
     </div>
   );
 };
+

@@ -240,6 +240,164 @@ async function startServer() {
     return handleImageGeneration(req, res);
   });
 
+  // Under-The-Hood Translator Endpoint (Google Translate + Bizarre Languages Engine)
+  app.post("/api/translate", async (req, res) => {
+    try {
+      const { text, targetLang = "nap" } = req.body || {};
+      if (!text || typeof text !== "string" || !text.trim()) {
+        return res.status(400).json({ error: "Testo mancante per la traduzione." });
+      }
+
+      const cleanText = text.trim();
+
+      // Special deterministic/algorithmic strange languages
+      if (targetLang === "binary") {
+        const binary = cleanText
+          .split("")
+          .map((char) => char.charCodeAt(0).toString(2).padStart(8, "0"))
+          .join(" ");
+        return res.json({
+          translated: binary,
+          provider: "Codice Binario 8-bit Engine",
+          targetLang
+        });
+      }
+
+      if (targetLang === "morse") {
+        const MORSE_MAP: Record<string, string> = {
+          A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.", H: "....",
+          I: "..", J: ".---", K: "-.-", L: ".-..", M: "--", N: "-.", O: "---", P: ".--.",
+          Q: "--.-", R: ".-.", S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-",
+          Y: "-.--", Z: "--..", "1": ".----", "2": "..---", "3": "...--", "4": "....-",
+          "5": ".....", "6": "-....", "7": "--...", "8": "---..", "9": "----.", "0": "-----",
+          " ": " / "
+        };
+        const morse = cleanText
+          .toUpperCase()
+          .split("")
+          .map((ch) => MORSE_MAP[ch] || ch)
+          .join(" ");
+        return res.json({
+          translated: morse,
+          provider: "Telegrafo Morse Rustico Engine",
+          targetLang
+        });
+      }
+
+      if (targetLang === "cat") {
+        const meows = ["Miau!", "Mrrrp...", "MIAO!", "Purrrr...", "Meow-meow!"];
+        const words = cleanText.split(/\s+/);
+        const catTranslated = words.map(() => meows[Math.floor(Math.random() * meows.length)]).join(" ");
+        return res.json({
+          translated: `${catTranslated} 🐾 [Traduzione certificata dal Gatto di Redazione]`,
+          provider: "Gattese Redazionale Engine",
+          targetLang
+        });
+      }
+
+      // Try Google Translate Free Web API for real languages (Latin, Esperanto)
+      if (["la", "eo"].includes(targetLang)) {
+        try {
+          const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(cleanText)}`;
+          const gRes = await fetch(gUrl);
+          if (gRes.ok) {
+            const gData = await gRes.json();
+            if (gData && gData[0]) {
+              const translatedStr = gData[0].map((item: any) => item[0]).join("");
+              return res.json({
+                translated: translatedStr,
+                provider: `Google Translate (${targetLang.toUpperCase()})`,
+                targetLang
+              });
+            }
+          }
+        } catch (gErr) {
+          console.warn("[Google Translate API Warning]:", gErr);
+        }
+      }
+
+      // Try Groq / Gemini AI for Neapolitan, Klingon, Emoji, Bizzarro, Elvish
+      const groqKey = process.env.GROQ_API_KEY;
+      const geminiKey = process.env.GEMINI_API_KEY;
+
+      const langPrompts: Record<string, string> = {
+        nap: "Traduci il testo in Dialetto Napoletano stretto, verace, comico e viscerale. Restituisci SOLO la traduzione napoletana senza commenti aggiuntivi.",
+        tlh: "Traduci il testo in Klingon (Star Trek) o in un dialetto alieno guerriero foneticamente simile. Restituisci SOLO la traduzione in Klingon.",
+        la: "Traduci il testo in Latino solenne ed ecclesiastico. Restituisci SOLO la traduzione in latino.",
+        emoji: "Traduci o decodifica il testo interamente usando una sequenza di emoji cospirazioniste, buffe ed espressive.",
+        bizzarro: "Riscrivi il testo nello stile aulico, grottesco e iper-satirico dell'Alter Ego di Cattivo Gusto. Massima carica di sarcasmo.",
+        elvish: "Traduci il testo nello stile dell'Alto Elfico Quenya (Tolkien) con sonorità poetiche e mistiche.",
+        eo: "Traduci il testo in Esperanto. Restituisci solo la traduzione in Esperanto."
+      };
+
+      const systemInstruction = langPrompts[targetLang] || "Traduci il testo nella lingua richiesta con tono comico e accurato.";
+
+      if (groqKey && groqKey.trim().length > 0) {
+        try {
+          const groq = new Groq({ apiKey: groqKey.trim() });
+          const completion = await groq.chat.completions.create({
+            messages: [
+              { role: "system", content: systemInstruction },
+              { role: "user", content: cleanText }
+            ],
+            model: "llama-3.3-70b-versatile",
+            temperature: 0.7,
+            max_tokens: 300
+          });
+          const result = completion.choices[0]?.message?.content?.trim();
+          if (result) {
+            return res.json({
+              translated: result,
+              provider: "Google Translate + Groq AI LPU",
+              targetLang
+            });
+          }
+        } catch (groqErr) {
+          console.warn("[Groq Translate Warning]:", groqErr);
+        }
+      }
+
+      if (geminiKey && geminiKey.trim().length > 0) {
+        try {
+          const ai = new GoogleGenAI({ apiKey: geminiKey.trim() });
+          const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: cleanText,
+            config: { systemInstruction, temperature: 0.7 }
+          });
+          if (response.text) {
+            return res.json({
+              translated: response.text.trim(),
+              provider: "Google Translate + Gemini AI Engine",
+              targetLang
+            });
+          }
+        } catch (geminiErr) {
+          console.warn("[Gemini Translate Warning]:", geminiErr);
+        }
+      }
+
+      // Satirical fallback if AI services are down
+      const fallbacks: Record<string, string> = {
+        nap: `Uaglio', chest e' 'a traduzione: "${cleanText}" sta a dicere ca 'o gatto tene sulo famme e o tostapane e' addiventato pazzo!`,
+        tlh: `nuqneH! Qapla'! [Klingon Translation]: ${cleanText.toUpperCase()} -- Qo'noS jIH!`,
+        la: `[Latino Ecclesiastico]: Absurditas magna est: "${cleanText}" -- Amen et requiescat.`,
+        emoji: `🎭 🐈‍⬛ 🍞 ⚡ 🍕 🌀 🛸 ✨`,
+        bizzarro: `[Bizzarro Redazionale]: Egregio lettore, la frase "${cleanText}" denota una profonda vacuità ontologica che la Redazione approva.`,
+        elvish: `[Quenya]: Elen síla lúmenn' omentielvo: ${cleanText} -- Namárië.`
+      };
+
+      return res.json({
+        translated: fallbacks[targetLang] || `[Tradotto sotto il cofano]: ${cleanText}`,
+        provider: "Motore Redazionale Locale (Google Translate Sotto il Cofano)",
+        targetLang
+      });
+    } catch (err: any) {
+      console.error("Translate error:", err);
+      res.status(500).json({ error: "Errore durante la traduzione sotto il cofano." });
+    }
+  });
+
   // Vite development mode vs production static serving
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

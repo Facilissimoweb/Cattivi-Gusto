@@ -16,6 +16,7 @@ interface HeaderProps {
   isSubscribed: boolean;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
+  onOpenTranslator?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -33,6 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
   isSubscribed,
   onOpenCookies,
   onOpenGroqChat,
+  onOpenTranslator,
 }) => {
   const isHomeActive = activeTab === 'feed' || activeTab === 'home';
 
@@ -110,6 +112,17 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          {onOpenTranslator && (
+            <button
+              onClick={onOpenTranslator}
+              className="hidden md:flex items-center gap-1 bg-white text-black border-2 border-black px-2.5 py-1.5 font-anton text-xs hover:bg-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer whitespace-nowrap"
+              title="Traduttore di lingue strane sotto il cofano"
+            >
+              <Sparkles className="w-3.5 h-3.5 fill-black" />
+              <span>TRADUTTORE</span>
+            </button>
+          )}
+
           {/* Manifesto Quick Link - Shown only on desktop to keep mobile navbar clean */}
           <button
             onClick={onOpenManifesto}
