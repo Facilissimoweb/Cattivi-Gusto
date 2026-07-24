@@ -17,6 +17,82 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'intervista-gianna-subbuglio-milano-estetica-brutta',
+    title: "INTERVISTA A GIANNA 'SUBBUGLIO': \"LA PELLE PULITA È DA DEBOLI, NELL'ATELIER DI LAMBRATE VI REGALO L'ANSIA IN FORMATO MASCHERA FACCIALE\"",
+    subtitle: "Siamo entrati nel tempio milanese del Bruttalismo Facciale: tra fango della Martesana, impacchi al gorgonzola piccante e permanente al baffo da terrore bancario. In esclusiva: la super PROMO 'Insonnia & Pori Splendenti'!",
+    category: 'estetica-bellezza',
+    categoryLabel: 'ESTETICA & BELLEZZA BRUTTA',
+    author: 'Donna Cringe & La Redazione Sottosopra',
+    date: '24 LUGLIO 2026',
+    readTime: '7 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Gianna Subbuglio nel suo salone di bellezza bruttalista a Milano Lambrate',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 18940,
+    isHot: true,
+    content: {
+      intro: "A Milano, tra un aperitivo chic a 18 euro e una palestra con filtro HEPA, sorge un'oasi di pura resistenza contro il dittato dell'estetica patinata. Siamo a Lambrate, via dei Pori Ostruiti 12, davanti all'insegna al neon tremolante dell'Atelier 'Bruttezza e Dignità'. Ad accoglierci c'è lei: Gianna 'Subbuglio', 58 anni d'esperienza, zoccoli sanitari con il tacco in ghisa e un grembiule macchiato di fango termale e sugo d'umido del 2012. Ci sediamo sulla poltrona da barbiere del 1974 mentre Gianna ci spalma sul viso una sostanza vischiosa che profuma di insaccato e insicurezza finanziaria.",
+      sections: [
+        {
+          heading: "D: Gianna, cos'è esattamente il 'Bruttalismo Facciale' e perché spaventa la Milano bene?",
+          paragraphs: [
+            "R: 'Ascolta, caro il mio giornalista cotonato: la gente spende migliaia di euro in sieri all'acido ialuronico, fiale di oro colloidale e correttori illuminanti per sembrare finti angeli di plastica. Ma quando ti svegli il lunedì mattina dopo tre spritz di sottomarca e quattro ore di sonno, la realtà ti chiede il conto! Io non nascondo le occhiaie: io le doverei proclamare Patrimonio dell'UNESCO!'",
+            "R: 'Il Bruttalismo Facciale lavora sul rilievo naturale. Hai un punto nero monumentale sul naso? Noi gli mettiamo un filo di luce perlata attorno per farlo sembrare il Duomo di Milano visto dal satellite. Hai le borse sotto gli occhi? Le riempiamo di pigmento viola melanzana per dare quel look da 'ho appena scoperto la fattura del conguaglio gas'. Questo è carattere, questa è dignità!'"
+          ],
+          quote: "Il retinolo è un complotto della borghesia per farvi dimenticare che siamo tutti destinati a diventare prugne secche sotto il sole dell'Ipercoop."
+        },
+        {
+          heading: "D: Quali sono i trattamenti di punta del salone 'Bruttezza e Dignità'?",
+          paragraphs: [
+            "1. L'Impacco al Gorgonzola e Fondame di Caffè: 'Nutre la pelle stanca, distrugge i batteri buoni e rilascia un aroma di osteria di periferia che allontana i colleghi di lavoro nel raggio di tre metri. Ottimo per lo smart working solitario.'",
+            "2. La Micro-Abitudine del Baffo da Tensione: 'Stiriamo i peli del labbro superiore verso l'alto con cera d'api grezza e colla vinilica per garantire una permanente perenne da terrore fiscale.'",
+            "3. Il Peeling alla Sabbia del Naviglio Grande: 'Rimuove tre strati di epidermide, due ricordi d'infanzia e qualsiasi traccia di autostima residua in soli otto minuti di bruciore intenso.'"
+          ]
+        },
+        {
+          heading: "D: È vero che la tua clientela comprende anche influencer e manager di banche?",
+          paragraphs: [
+            "R: 'Certo! L'altro giorno è venuta una fashion blogger da due milioni di follower. Piangeva perché aveva la pelle troppo liscia e i brand la consideravano 'troppo poco autentica'. Le ho fatto un trattamento intensivo di 'Stress Urbano & Pori Aperti' mettendola a dormire tre ore vicino allo scappamento di un autobus della linea 90. Ora è testimonial di un noto marchio di streetwear distopico e prende 10k a post!'"
+          ],
+          quote: "Quando una cliente esce da qui e i passanti al semaforo le chiedono 'Signora ha bisogno di chiamare un'ambulanza?', io so di aver fatto un capolavoro."
+        },
+        {
+          heading: "🔥 LA PROMOZIONE IMPERDIBILE DI GIANNA (CTA AL MOMENTO PROMOZIONALE!)",
+          paragraphs: [
+            "ATTENZIONE! Solo per i lettori di Cattivo Gusto che si prenotano entro la mezzanotte di stasera, Gianna offre il pacchetto promozionale esclusivo 'ANNI DI INSONNIA & PORI SPLENDENTI' al prezzo stracciato di soli 49,99€ (anziché 180€ di sensi di colpa)!",
+            "Cosa include il pacchetto Promo 'Subbuglio Premium':",
+            "• 1 Seduta di Contouring Occhiaie tonalità 'Melanzana da Coma'",
+            "• 1 Maschera al Gorgonzola DOP e Polvere di Calcinaccio di Lambrate",
+            "• 1 Campione omaggio di Olio d'Oliva per lucidare la Zona T prima degli appuntamenti galanti",
+            "👉 CLICCA SUL TASTO 'PRENOTA IL TUO DISASTRO' O CANTA L'INNO DI LAMBRATE FUORI DAL SALONE PER OTTENERE LO SCONTO IMMEDIATO!"
+          ],
+          quote: "Prenota ora o resta bello e insignificante per il resto della tua triste vita!"
+        }
+      ],
+      conclusion: "Non lasciatevi sfuggire questa opportunità irripetibile. Correte a Lambrate, abbracciate il vostro degrado cutaneo e ricordatevi sempre: la bellezza passa, ma un'occhiaia ben curata da Gianna dura per sempre!"
+    },
+    comments: [
+      {
+        id: 'c-gianna-1',
+        author: 'MilanoDaBereEPiangere',
+        avatar: '🧟‍♀️',
+        date: '2 minuti fa',
+        text: 'Ho prenotato subito la promo a 49,99€! Gianna mi ha messo la maschera al gorgonzola e in metro adesso tutti mi lasciano il posto a sedere. Salone atomico!',
+        likes: 340
+      },
+      {
+        id: 'c-gianna-2',
+        author: 'BloggerInCrisi',
+        avatar: '💄',
+        date: '8 minuti fa',
+        text: 'Ero stufa di avere la pelle perfetta. Dopo il Peeling alla Sabbia del Naviglio finalmente mi scambiano per un personaggio di un film di David Lynch!',
+        likes: 215
+      }
+    ]
+  },
+  {
     id: 'teresa-tarocchi-come-non-leggere-i-tarocchi',
     title: "TERESA E I TAROCCHI: GUIDA PRATICA SU COME NON LEGGERE I TAROCCHI E ROVINARE OGNI PREVISIONE",
     subtitle: "Per fare una lettura dei tarocchi completamente sballata basta davvero poco e chiunque ne è perfettamente capace. Ecco i segreti di Teresa per seminare il panico esoterico a costo zero.",
