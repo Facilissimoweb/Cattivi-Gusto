@@ -31,6 +31,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onOpenSubscriptions,
   onOpenChaosCorner,
   onOpenBookmarks,
+  onOpenLegal,
   savedCount,
   onOpenCookies,
   onOpenGroqChat,
@@ -127,21 +128,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               <ChevronRight className="w-5 h-5" />
             </button>
 
-            {onOpenGroqChat && (
-              <button
-                onClick={() => {
-                  onOpenGroqChat();
-                  onClose();
-                }}
-                className="w-full bg-[#A0FF00] text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-black hover:text-[#A0FF00] transition shadow-[3px_3px_0px_#000] cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 fill-black" />
-                  <span>CHAT CON NINA (REDAZIONALE)</span>
-                </div>
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            )}
+
 
             <button
               onClick={() => {
