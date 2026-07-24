@@ -85,3 +85,48 @@
   background: #A0FF00;
 }
 
+/* Fix Google Translate Overlapping Banner & Top Margin Offset */
+body {
+  top: 0px !important;
+  position: static !important;
+  min-height: 100vh;
+}
+
+.goog-te-banner-frame,
+.goog-te-banner,
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+.VIpgJd-Z443b-O92Bfe,
+.VIpgJd-Z443b-e3131e,
+.VIpgJd-Z443b-fw218c,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  pointer-events: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0px !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+  color: black !important;
+  font-size: 12px !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+header {
+  top: 0 !important;
+}
+

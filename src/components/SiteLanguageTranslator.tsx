@@ -63,6 +63,20 @@ export const SiteLanguageTranslator: React.FC = () => {
         setCurrentLang(target);
       }
     }
+
+    // Continuously ensure Google Translate banner frame is hidden and body position is unaffected
+    const interval = setInterval(() => {
+      if (document.body.style.top !== '0px') {
+        document.body.style.top = '0px';
+      }
+      const bannerIframe = document.querySelector('.goog-te-banner-frame') as HTMLElement;
+      if (bannerIframe) {
+        bannerIframe.style.display = 'none';
+        bannerIframe.style.visibility = 'hidden';
+      }
+    }, 300);
+
+    return () => clearInterval(interval);
   }, []);
 
   const changeLanguage = (langCode: string) => {
