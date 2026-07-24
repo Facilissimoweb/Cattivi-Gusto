@@ -70,14 +70,15 @@ export async function handleImageGeneration(req: any, res: any) {
     }
   }
 
-  // TIER 2: Open-Source Pollinations FLUX Engine (0 Keys required, 100% free & instant!)
+  // TIER 2: Open-Source Pollinations FLUX / Turbo Engine (0 Keys required, 100% free & instant!)
   const encodedPrompt = encodeURIComponent(fullPrompt);
-  const pollinationsUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&nologo=true&seed=${seed}&model=flux`;
+  // Use turbo model for super fast rendering (1-2s) or flux with fallbacks
+  const pollinationsUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&nologo=true&seed=${seed}&model=turbo`;
 
   return res.status(200).json({
     url: pollinationsUrl,
     prompt: fullPrompt,
-    provider: "pollinations_flux",
-    notice: "Immagine generata tramite Motore Open-Source FLUX AI (Nessuna API Key richiesta)."
+    provider: "pollinations_turbo",
+    notice: "Immagine generata tramite Motore Open-Source Turbo AI (Nessuna API Key richiesta)."
   });
 }

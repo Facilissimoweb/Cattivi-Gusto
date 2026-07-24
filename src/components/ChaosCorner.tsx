@@ -13,6 +13,7 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
   const [imageStyle, setImageStyle] = useState('editorial');
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(false);
   const [imageNotice, setImageNotice] = useState<string | null>(null);
   const [copiedUrl, setCopiedUrl] = useState(false);
 
@@ -31,6 +32,7 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
   const handleGenerateStudioImage = async () => {
     if (!imagePrompt.trim()) return;
     setIsGeneratingImage(true);
+    setIsImageLoading(true);
     setImageNotice(null);
     try {
       const res = await fetch('/api/generate-image', {
@@ -50,6 +52,7 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
       }
     } catch (err) {
       console.error("Studio Image Generation error:", err);
+      setIsImageLoading(false);
     } finally {
       setIsGeneratingImage(false);
     }
@@ -219,11 +222,28 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
         {/* Image Preview Area */}
         {generatedImageUrl && (
           <div className="bg-neutral-900 border-2 border-[#A0FF00] p-4 animate-in zoom-in-95 space-y-3">
-            <div className="relative overflow-hidden border border-neutral-700 bg-black flex justify-center">
+            <div className="relative overflow-hidden border border-neutral-700 bg-black flex justify-center min-h-[300px] items-center">
+              {isImageLoading && (
+                <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-4 z-10">
+                  <RefreshCw className="w-8 h-8 text-[#A0FF00] animate-spin mb-2" />
+                  <span className="font-mono text-xs text-[#A0FF00] uppercase font-bold text-center">
+                    CATTIVO GUSTO AI STA DIPINGENDO L'OPERA...
+                  </span>
+                  <span className="font-mono text-[10px] text-neutral-400 mt-1">
+                    Rendering in corso
+                  </span>
+                </div>
+              )}
               <img
                 src={generatedImageUrl}
                 alt={imagePrompt}
-                className="max-h-[500px] w-auto object-contain"
+                onLoad={() => setIsImageLoading(false)}
+                onError={() => {
+                  setIsImageLoading(false);
+                  setImageNotice("Nota: Il server AI esterno era congestionato, è stata caricata un'illustrazione satirica sostitutiva.");
+                  setGeneratedImageUrl("https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=1000");
+                }}
+                className={`max-h-[500px] w-auto object-contain transition-opacity duration-300 ${isImageLoading ? 'opacity-20' : 'opacity-100'}`}
               />
             </div>
 
@@ -238,7 +258,7 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
                   target="_blank"
                   rel="noreferrer"
                   download="cattivo-gusto-artwork.png"
-                  className="bg-[#A0FF00] text-black px-3 py-1 font-anton uppercase flex items-center gap-1 hover:bg-white transition"
+                  className="bg-[#A0FF00] text-black px-3 py-1 font-anton uppercase flex items-center gap-1 hover:bg-white transition cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>SCARICA</span>

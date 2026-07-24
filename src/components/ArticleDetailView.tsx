@@ -22,6 +22,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
 }) => {
   const [currentHeroImage, setCurrentHeroImage] = useState(article.heroImage);
   const [isGeneratingAiImage, setIsGeneratingAiImage] = useState(false);
+  const [isHeroLoading, setIsHeroLoading] = useState(false);
   const [aiImageNotice, setAiImageNotice] = useState<string | null>(null);
   const [likes, setLikes] = useState(article.likesCount);
   const [hasLiked, setHasLiked] = useState(false);
@@ -125,6 +126,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
   // AI Image Cover Generator function
   const handleRegenerateAiCover = async () => {
     setIsGeneratingAiImage(true);
+    setIsHeroLoading(true);
     setAiImageNotice(null);
     try {
       const res = await fetch('/api/generate-image', {
@@ -144,6 +146,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
       }
     } catch (err) {
       console.error("AI Image Generation Error:", err);
+      setIsHeroLoading(false);
     } finally {
       setIsGeneratingAiImage(false);
     }
@@ -253,11 +256,30 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
           
           {/* Main Hero Photo Card with AI Generator Button */}
           <div className="relative border-3 border-black bg-white p-3 shadow-[6px_6px_0px_#000]">
-            <img
-              src={currentHeroImage}
-              alt={article.imageAlt}
-              className="w-full h-auto max-h-[480px] object-cover border border-black mb-2 transition-all duration-300"
-            />
+            <div className="relative bg-neutral-100 border border-black min-h-[250px] flex items-center justify-center overflow-hidden mb-2">
+              {isHeroLoading && (
+                <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-4 z-10 text-center">
+                  <Sparkles className="w-8 h-8 text-[#A0FF00] animate-spin mb-2" />
+                  <span className="font-anton text-sm text-[#A0FF00] uppercase tracking-wide">
+                    GENERAZIONE ILLUSTRAZIONE AI IN CORSO...
+                  </span>
+                  <span className="font-typewriter text-xs text-neutral-300 mt-1">
+                    Creazione dell'opera satirica in tempo reale
+                  </span>
+                </div>
+              )}
+              <img
+                src={currentHeroImage}
+                alt={article.imageAlt}
+                onLoad={() => setIsHeroLoading(false)}
+                onError={() => {
+                  setIsHeroLoading(false);
+                  setAiImageNotice("Nota: Servizio AI esterno occupato, è stata caricata un'immagine satirica di riserva.");
+                  setCurrentHeroImage("https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=1000");
+                }}
+                className={`w-full h-auto max-h-[480px] object-cover transition-opacity duration-300 ${isHeroLoading ? 'opacity-20' : 'opacity-100'}`}
+              />
+            </div>
             
             <div className="flex flex-wrap items-center justify-between gap-2 mt-2 pt-2 border-t border-black">
               <p className="font-typewriter text-xs text-neutral-600 italic">
