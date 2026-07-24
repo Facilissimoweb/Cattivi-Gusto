@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flame, Heart } from 'lucide-react';
+import { SiteLanguageTranslator } from './SiteLanguageTranslator';
 
 interface FooterProps {
   onOpenSubscriptions: () => void;
@@ -9,7 +10,6 @@ interface FooterProps {
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
-  onOpenTranslator?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -20,7 +20,6 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenLegal,
   onOpenCookies,
   onOpenGroqChat,
-  onOpenTranslator,
 }) => {
   return (
     <footer className="bg-black text-[#F4F1EA] border-t-4 border-black pt-10 pb-20 md:pb-12 mt-16 font-typewriter">
@@ -52,13 +51,12 @@ export const Footer: React.FC<FooterProps> = ({
           </h3>
           <ul className="space-y-1.5 text-xs text-neutral-300">
 
-            {onOpenTranslator && (
-              <li>
-                <button onClick={onOpenTranslator} className="hover:text-[#A0FF00] transition text-[#A0FF00] font-bold flex items-center gap-1">
-                  🔧 Traduttore Sotto il Cofano (Lingue Strane)
-                </button>
-              </li>
-            )}
+            <li>
+              <div className="flex items-center gap-2 text-xs text-neutral-300 py-1">
+                <span>🌐 Traduci Sito:</span>
+                <SiteLanguageTranslator />
+              </div>
+            </li>
             {onOpenContacts && (
               <li>
                 <button onClick={onOpenContacts} className="hover:text-[#A0FF00] transition text-yellow-200 font-bold flex items-center gap-1">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Article, Comment } from '../types';
 import { ArrowLeft, Volume2, VolumeX, Heart, Share2, MessageSquare, Send, Flame, Sparkles, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { ArticleShareButtons } from './ArticleShareButtons';
+import { createNormalizedUtterance } from '../utils/speechUtils';
 
 const VOID_WEATHER = {
   condition: 'Pioggia di oggetti smarriti (18°C)',
@@ -85,10 +86,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
         setIsPlayingSpeech(false);
       } else {
         const textToRead = `${article.title}. ${article.subtitle}. ${article.content.intro} ${article.content.sections.map(s => s.paragraphs.join(' ')).join(' ')}`;
-        const utterance = new SpeechSynthesisUtterance(textToRead);
-        utterance.lang = 'it-IT';
-        utterance.rate = 0.95;
-        utterance.pitch = 0.9;
+        const utterance = createNormalizedUtterance(textToRead);
         
         utterance.onend = () => setIsPlayingSpeech(false);
         utterance.onerror = () => setIsPlayingSpeech(false);

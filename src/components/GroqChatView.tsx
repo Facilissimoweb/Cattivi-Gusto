@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, Bot, User, Cpu, Sparkles, RefreshCw, AlertTriangle, Zap, Copy, Check, MessageSquare, Trash2, ArrowLeft, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
+import { initSpeechVoices, createNormalizedUtterance } from '../utils/speechUtils';
 
 interface ChatMessage {
   id: string;
@@ -88,8 +89,9 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
-  // Clean up speech synthesis on unmount
+  // Clean up speech synthesis on unmount and initialize normalized voices
   useEffect(() => {
+    initSpeechVoices();
     return () => {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -183,7 +185,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     }
   };
 
-  // Text-to-Speech (Audio Output) Handler with Apple Safari Support
+  // Text-to-Speech (Audio Output) Handler with Apple Safari Normalization
   const speakMessage = (text: string, id: string) => {
     if (!('speechSynthesis' in window)) {
       setErrorMessage("La sintesi vocale audio non è supportata dal tuo browser.");
@@ -203,21 +205,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       window.speechSynthesis.resume();
     }
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'it-IT';
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-
-    // Pick Italian voice on Apple Safari if available
-    try {
-      const voices = window.speechSynthesis.getVoices();
-      const italianVoice = voices.find(v => v.lang.startsWith('it'));
-      if (italianVoice) {
-        utterance.voice = italianVoice;
-      }
-    } catch (vErr) {
-      // fallback
-    }
+    const utterance = createNormalizedUtterance(text);
 
     utterance.onend = () => setSpeakingMessageId(null);
     utterance.onerror = () => setSpeakingMessageId(null);
