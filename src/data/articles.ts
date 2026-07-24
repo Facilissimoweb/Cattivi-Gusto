@@ -2,6 +2,7 @@ import { Article, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: 'tutti', label: 'TUTTO IL CAOS', badge: 'ALL' },
+  { id: 'accoppiamento', label: 'ACCOPPIAMENTO E DINTORNI', badge: '💘' },
   { id: 'trash-tv', label: 'TEMPTATION & TRASH', badge: '🏝️' },
   { id: 'complotto-felino', label: 'COMPLOTTO FELINO', badge: '🐱' },
   { id: 'filosofia-nulla', label: 'FILOSOFIA DEL NULLA', badge: '🧠' },
@@ -12,6 +13,79 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const ARTICLES: Article[] = [
+  {
+    id: 'guida-primo-appuntamento-sabotaggio',
+    title: "ACCOPPIAMENTO E DINTORNI: MANUALE PRATICO PER ESSERE SCARTATI CATEGORICAMENTE AL PRIMO APPUNTAMENTO",
+    subtitle: "Dall'evocare l'ex come unità di misura del cibo al pagare il conto con 700 monetine di rame: 10 mosse infallibili per garantire un blocco immediato su WhatsApp.",
+    category: 'accoppiamento',
+    categoryLabel: 'ACCOPPIAMENTO & DINTORNI',
+    author: 'Dott. Satira Amorosa & Redazione Cattivo Gusto',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Foto satirica di un primo appuntamento romantico andato storto al ristorante',
+    imageCutoutStyle: 'green-outline',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 3890,
+    isHot: true,
+    content: {
+      intro: "Trovare l'anima gemella è un processo lungo, faticoso e pieno di incognite. Perché perdere tempo in corteggiamenti estenuanti quando puoi distruggere qualsiasi speranza di relazione nei primi venti minuti di cena? Benvenuti nella Guida Definitiva al Sabotaggio Relazionale, curata dagli esperti di corteggiamento al contrario della Redazione di Cattivo Gusto.",
+      sections: [
+        {
+          heading: "1. Il 'Fattore Ex': Usala/o come unità di misura universale",
+          paragraphs: [
+            "Il primo grande segreto di un appuntamento fallimentare è far sentire costantemente la presenza di una terza persona invisibile al tavolo. Non limitarti a citare casualmente l'ex partner: trasformalo nello standard di paragone di qualsiasi piatto o conversazione.",
+            "• 'I tagliolini al tartufo sono squisiti... ma sai chi li faceva davvero mantecati a dovere? La mia ex Marta. A proposito, ti mostro questa cartella condivisa su Google Drive con 1.400 foto delle nostre vacanze a Gabicce Mare nel 2021'.",
+            "• 'Hai lo stesso identico tono di voce di quando il mio ex mi comunicava che voleva prendersi una pausa di riflessione. Scusa se mi commuovo mentre mastico il grissino'."
+          ],
+          quote: "Se alla fine del secondo antipasto il tuo interlocutore non ha finto un malessere improvviso per fuggire dalla finestra del bagno, stai sbagliando qualcosa."
+        },
+        {
+          heading: "2. La Divisione Chirurgica del Conto con le Monetine di Rame",
+          paragraphs: [
+            "Quando il cameriere porta il conto a fine serata, sfoggia il tuo talento contabile spietato. Tira fuori dal giubbotto un taccuino millimetrato e un calibro digitale:",
+            "• 'Allora: tu hai bevuto tre sorsi della mia acqua frizzante, hai toccato due volte il cestino del pane ed hai preso una spolverata di parmigiano extra. Il tuo quota parte esatto è 14,87€'.",
+            "• Paga la tua quota esatta contando una ad una 743 monetine da due centesimi tenute dentro un sacchetto della farmacia, lamentandoti ad alta voce con il personale di sala per l'inflazione e il costo del coperto."
+          ]
+        },
+        {
+          heading: "3. La Diagnosi Psicoanalitica Non Richiesta al Secondo Bicchier d'Acqua",
+          paragraphs: [
+            "Anziché fare conversazione leggera sulle proprie passioni, trasforma la cena in una seduta d'assalto di psicoterapia d'emergenza:",
+            "• 'Ho notato che hai tagliato la pizza in sei spicchi anziché in otto: questo rivela un latente complesso edipico non risolto e una strisciante paura del fallimento emotivo. Parlami di tua madre, voglio fare una mappa concettuale sui tovaglioli di carta'.",
+            "• Metti al centro del tavolo una clessidra e concedi al partner esattamente 45 secondi per rispondere a domande intime sulla propria infanzia."
+          ]
+        },
+        {
+          heading: "4. Rivelazioni Cospirazionista-Felini sulle Onde 5G nel Cibo",
+          paragraphs: [
+            "Piegati verso il partner con sguardo cospiratorio, abbassa la voce e svela la verità sulla digestione umana:",
+            "• 'Io non mangio mai la crosta del corClone perché rischia di attirare la frequenza telepatica dei gatti di quartiere. Se vuoi ti inoltro il canale Telegram dove spieghiamo come schermare i tostapane col foglio d'alluminio'."
+          ]
+        }
+      ],
+      conclusion: "Seguendo religiosamente questi quattro pilastri del disastro romantico, garantiamo un tasso di rifiuto del 100% con blocco preventivo su tutti i canali social e telefonici entro la mezzanotte. Unico rischio collaterale: incontrare un partner con lo stesso livello di squilibrio che decida di sposarvi sul posto."
+    },
+    comments: [
+      {
+        id: 'c-app-1',
+        author: 'Gianluigi_CringeMaster',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=GianluigiCringe',
+        date: '12 minuti fa',
+        text: 'Ho applicato la tecnica delle 743 monetine da 2 centesimi ieri sera al ristorante. Ora vivo felicemente da solo con tre tostapane. Funziona alla perfezione!',
+        likes: 312
+      },
+      {
+        id: 'c-app-2',
+        author: 'SeducenteAnonimo',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=AnonimoSeducente',
+        date: '40 minuti fa',
+        text: 'Io ho mostrato le diapositive PowerPoint sui gatti di redazione al terzo minuto di aperitivo. Mi hanno scortato fuori i vigili urbani. Voto 10/10.',
+        likes: 540
+      }
+    ]
+  },
   {
     id: 'temptation-island-perle-assurde',
     title: "TEMPTATION ISLAND: FALÒ, DISSOCIAZIONE E LE PERLE PIÙ ASSURDE DELLE COPPIE IN CRISI",
