@@ -59,10 +59,6 @@ function generateSurrealLocalReply(userQuery: string, systemPrompt?: string): st
     return `[💪 Coach Marcus]: Ascolta bene! Per la tua richiesta su "${userQuery.slice(0, 30)}...", il consiglio Alpha è uno solo: indossa la canottiera a rete, parla per 3 ore del carburatore della Fiat Duna e vai in bianco con orgoglio sul divano!`;
   }
 
-  if (systemPrompt?.toLowerCase().includes('ginetta')) {
-    return `[🥩 Ginetta la Cargna]: Ammore de zia, per la questione di "${userQuery.slice(0, 30)}..." ti faccio 'na bella porchetta col punto croce sul bicipite! Pure Belzebù dall'Inferno sta a approva'!`;
-  }
-
   return `[🎭 Alter Ego Redazionale - NINA]: ${randomIntro}${randomMiddle}${randomOutro}`;
 }
 
