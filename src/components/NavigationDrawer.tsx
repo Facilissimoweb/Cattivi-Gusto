@@ -137,7 +137,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               >
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-5 h-5 fill-black" />
-                  <span>CHAT GROQ AI (GROQ_API_KEY)</span>
+                  <span>CHAT CON NINA (REDAZIONALE)</span>
                 </div>
                 <ChevronRight className="w-5 h-5" />
               </button>

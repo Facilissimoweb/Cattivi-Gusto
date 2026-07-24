@@ -225,7 +225,7 @@ export const AbsurdCookieModal: React.FC<AbsurdCookieModalProps> = ({
     { key: 'essenziali', title: '🍞 Cookie Tecnici Obbligatori per la Fisica Quantistica', color: 'bg-black text-[#A0FF00]' },
     { key: 'analitici', title: '💨 Cookie Analitici di Angoscia & Disperazione', color: 'bg-white text-black' },
     { key: 'profilazione', title: '⚡ Cookie di Profilazione Fanta-Sociologica', color: 'bg-[#A0FF00] text-black' },
-    { key: 'terze_parti', title: '🛸 Cookie di Terze Parti Abusive & Bizzarre', color: 'bg-[#FFFEEB] text-black' },
+    { key: 'terze_parti', title: '🛸 Cookie di Terze Parti Bizzarre & Inconsuete', color: 'bg-[#FFFEEB] text-black' },
   ];
 
   return (
@@ -251,7 +251,7 @@ export const AbsurdCookieModal: React.FC<AbsurdCookieModalProps> = ({
           </div>
 
           <h2 className="font-anton text-3xl sm:text-5xl uppercase tracking-tight text-black mb-2">
-            PANNELLO COOKIE & ESTRONZI DIGITALI
+            PANNELLO COOKIE & PREFERENZE DIGITALI
           </h2>
 
           <p className="font-typewriter text-xs sm:text-sm text-neutral-800 leading-relaxed mb-4">

@@ -53,36 +53,17 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "Benvenuto nel terminale Groq AI dell'Alter Ego! Sono alimentato esclusivamente dai server ultra-veloci di Groq (`GROQ_API_KEY`). Fai una domanda assurda o scegli una personalità.",
+      content: "Ciao! Sono NINA, l'intelligenza artificiale dell'Alter Ego di Cattivo Gusto. Fai una domanda provocatoria o scegli una delle mie personalità redazionali!",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      model: 'llama-3.3-70b-versatile'
     }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPersona, setSelectedPersona] = useState(PERSONAS[0]);
-  const [selectedModel, setSelectedModel] = useState('llama-3.3-70b-versatile');
-  const [isConfigured, setIsConfigured] = useState<boolean | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Check Groq status on mount
-  useEffect(() => {
-    fetch('/api/groq/status')
-      .then(res => {
-        if (!res.ok) return fetch('/api/chat');
-        return res;
-      })
-      .then(res => res.json())
-      .then(data => {
-        setIsConfigured(data.configured ?? true);
-      })
-      .catch(() => {
-        setIsConfigured(false);
-      });
-  }, []);
 
   // Auto-scroll to bottom of chat
   useEffect(() => {
@@ -108,7 +89,6 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     try {
       const payload = {
         messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
-        model: selectedModel,
         systemPrompt: selectedPersona.prompt,
         temperature: 0.85
       };
@@ -133,10 +113,8 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       const botMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.reply || "La mente dell'Alter Ego ha generato silenzio radio.",
+        content: data.reply || "NINA ha generato un momento di profonda riflessione.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        model: data.model || selectedModel,
-        latencyMs: data.latencyMs
       };
 
       setMessages(prev => [...prev, botMsg]);
@@ -145,9 +123,8 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       const fallbackMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "[🎭 Alter Ego Redazionale - Offline Guard]: La connessione di rete ha vacillato, ma il gatto di redazione ha salvato il messaggio. Nessun errore 500 consentito!",
+        content: "[🎭 NINA Redazionale]: Il gatto di redazione ha intercettato il messaggio. Nessun problema, NINA è sempre attiva!",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        model: 'alter-ego-guard'
       };
       setMessages(prev => [...prev, fallbackMsg]);
     } finally {
@@ -166,9 +143,8 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       {
         id: Date.now().toString(),
         role: 'assistant',
-        content: "Conversazione azzerata. Il canale Groq AI dell'Alter Ego è pronto per nuove perle d'assurdo.",
+        content: "Conversazione azzerata. NINA è pronta per nuove riflessioni e perle dell'assurdo.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        model: selectedModel
       }
     ]);
   };
@@ -188,21 +164,13 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
 
         <div className="flex items-center gap-2">
           <span className="bg-[#A0FF00] text-black font-anton text-xs sm:text-sm px-3 py-1 border-2 border-black uppercase font-bold flex items-center gap-1.5 shadow-[2px_2px_0px_#000]">
-            <Zap className="w-4 h-4 text-black fill-black animate-bounce" />
-            <span>GROQ_API_KEY ENGINE</span>
+            <Sparkles className="w-4 h-4 text-black fill-black" />
+            <span>NINA AI REDAZIONALE</span>
           </span>
 
-          {isConfigured === true && (
-            <span className="bg-green-600 text-white font-mono text-[10px] px-2 py-1 uppercase font-bold border border-black">
-              LIVE ONLINE
-            </span>
-          )}
-
-          {isConfigured === false && (
-            <span className="bg-red-600 text-white font-mono text-[10px] px-2 py-1 uppercase font-bold border border-black animate-pulse">
-              KEY MANCANTE
-            </span>
-          )}
+          <span className="bg-black text-[#A0FF00] font-mono text-[10px] px-2 py-1 uppercase font-bold border border-black">
+            ATTIVA NOW
+          </span>
         </div>
       </div>
 
@@ -214,79 +182,42 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
           <div className="flex items-center gap-2 mb-1">
             <Bot className="w-7 h-7 text-black fill-[#A0FF00]" />
             <h1 className="font-anton text-3xl sm:text-5xl uppercase text-black tracking-tight">
-              CHAT GROQ AI DELL'ALTER EGO
+              CHAT CON NINA (L'ALTER EGO)
             </h1>
           </div>
           <p className="font-typewriter text-xs sm:text-sm text-neutral-700 leading-relaxed">
-            Interfaccia di intelligenza artificiale ad altissima velocità alimentata direttamente dall'architettura Groq LPU via <strong>GROQ_API_KEY</strong>.
+            Interfaccia intelligente e satirica a cura della redazione. Fai una domanda assurda a NINA!
           </p>
         </div>
 
-        {/* Warning missing key notification box */}
-        {isConfigured === false && (
-          <div className="bg-[#FFFEEB] border-2 border-black p-4 mb-6 shadow-[4px_4px_0px_#000] space-y-2">
-            <div className="flex items-center gap-2 text-black font-anton text-base uppercase">
-              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />
-              <span>CONFIGURAZIONE CHIAVE GROQ_API_KEY</span>
-            </div>
-            <p className="text-xs font-typewriter text-neutral-800 leading-relaxed">
-              I comandi vengono indirizzati unicamente alla chiave d'ambiente <code>GROQ_API_KEY</code>.
-              Per attivare le risposte in tempo reale con i modelli Groq (es. <code>llama-3.3-70b-versatile</code>), aggiungi <code>GROQ_API_KEY</code> nel pannello Secrets di AI Studio o Vercel.
-            </p>
-          </div>
-        )}
-
-        {/* Persona & Model Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-neutral-100 p-4 border-2 border-black">
-          {/* Personas */}
-          <div>
-            <label className="font-anton text-xs uppercase text-black block mb-2 flex items-center gap-1">
-              <span>🎭 SELEZIONA PERSONALITÀ REDAZIONALE:</span>
+        {/* Persona Selection */}
+        <div className="mb-6 bg-neutral-100 p-4 border-2 border-black">
+          <div className="flex items-center justify-between mb-2">
+            <label className="font-anton text-xs uppercase text-black flex items-center gap-1">
+              <span>🎭 SELEZIONA PERSONALITÀ DI NINA:</span>
             </label>
-            <div className="grid grid-cols-2 gap-2">
-              {PERSONAS.map(persona => (
-                <button
-                  key={persona.id}
-                  onClick={() => setSelectedPersona(persona)}
-                  className={`p-2 border-2 border-black text-left transition cursor-pointer ${
-                    selectedPersona.id === persona.id
-                      ? 'bg-black text-[#A0FF00] font-bold shadow-[2px_2px_0px_#000]'
-                      : 'bg-white text-black hover:bg-[#A0FF00] hover:text-black'
-                  }`}
-                >
-                  <div className="font-anton text-xs uppercase truncate">{persona.name}</div>
-                  <div className="font-mono text-[9px] opacity-80 uppercase">{persona.badge}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Models */}
-          <div>
-            <label className="font-anton text-xs uppercase text-black block mb-2 flex items-center gap-1">
-              <Cpu className="w-4 h-4 text-black" />
-              <span>⚡ MODELLO GROQ AI:</span>
-            </label>
-            <select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
-              className="w-full bg-white border-2 border-black p-2 font-mono text-xs uppercase focus:outline-none font-bold"
+            <button
+              onClick={handleClearChat}
+              className="text-red-700 hover:underline flex items-center gap-1 font-mono text-xs cursor-pointer"
             >
-              <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile (Ultra Veloce & Intelligente)</option>
-              <option value="llama-3.1-8b-instant">llama-3.1-8b-instant (Latenza Minima)</option>
-              <option value="mixtral-8x7b-32768">mixtral-8x7b-32768 (Contesto Ampio)</option>
-              <option value="gemma2-9b-it">gemma2-9b-it (Google Gemma via Groq)</option>
-            </select>
-
-            <div className="mt-2 text-[10px] font-mono text-neutral-600 flex items-center justify-between">
-              <span>CANALE: /api/groq/chat</span>
+              <Trash2 className="w-3 h-3" /> Pulisci Chat
+            </button>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {PERSONAS.map(persona => (
               <button
-                onClick={handleClearChat}
-                className="text-red-700 hover:underline flex items-center gap-1 cursor-pointer"
+                key={persona.id}
+                onClick={() => setSelectedPersona(persona)}
+                className={`p-2.5 border-2 border-black text-left transition cursor-pointer ${
+                  selectedPersona.id === persona.id
+                    ? 'bg-black text-[#A0FF00] font-bold shadow-[2px_2px_0px_#000]'
+                    : 'bg-white text-black hover:bg-[#A0FF00] hover:text-black'
+                }`}
               >
-                <Trash2 className="w-3 h-3" /> Pulisci Chat
+                <div className="font-anton text-xs uppercase truncate">{persona.name}</div>
+                <div className="font-mono text-[9px] opacity-80 uppercase">{persona.badge}</div>
               </button>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -316,7 +247,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
               >
                 {!isUser && (
                   <div className="w-8 h-8 rounded-none bg-black text-[#A0FF00] border border-black flex items-center justify-center shrink-0 font-anton text-xs">
-                    GROQ
+                    NINA
                   </div>
                 )}
 
@@ -328,15 +259,10 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
                   <div className="flex items-center justify-between gap-2 border-b border-neutral-300 pb-1 mb-2 font-mono text-[10px] opacity-80">
                     <span className="font-bold uppercase flex items-center gap-1">
                       {isUser ? <User className="w-3 h-3" /> : <Bot className="w-3 h-3 text-[#A0FF00]" />}
-                      {isUser ? 'TU' : `GROQ AI (${msg.model || 'llama-3.3-70b'})`}
+                      {isUser ? 'TU' : 'NINA AI'}
                     </span>
 
                     <div className="flex items-center gap-2">
-                      {msg.latencyMs && (
-                        <span className="text-green-700 font-bold bg-[#A0FF00]/20 px-1">
-                          ⚡ {msg.latencyMs}ms
-                        </span>
-                      )}
                       <span>{msg.timestamp}</span>
                       <button
                         onClick={() => handleCopy(msg.content, msg.id)}
@@ -366,7 +292,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
           {isLoading && (
             <div className="flex gap-3 items-center text-black font-mono text-xs bg-white border-2 border-black p-3 shadow-[2px_2px_0px_#000] max-w-xs animate-pulse">
               <RefreshCw className="w-4 h-4 animate-spin text-black" />
-              <span>L'Alter Ego sta consultando Groq LPU...</span>
+              <span>NINA sta elaborando la risposta...</span>
             </div>
           )}
 
@@ -398,7 +324,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={`Scrivi un messaggio all'Alter Ego (Modello: ${selectedModel})...`}
+            placeholder="Scrivi un messaggio a NINA..."
             disabled={isLoading}
             className="flex-1 bg-white border-2 border-black p-3 text-xs sm:text-sm font-typewriter focus:outline-none focus:bg-[#FFFEEB] placeholder-neutral-500 shadow-[3px_3px_0px_#000]"
           />

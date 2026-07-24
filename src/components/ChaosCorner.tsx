@@ -133,7 +133,7 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
             </h2>
           </div>
           <span className="bg-[#A0FF00] text-black font-mono text-xs px-2.5 py-1 font-bold uppercase">
-            MOTORE OPEN-SOURCE FLUX / IMAGEN
+            LABORATORIO D'ARTE CREATIVA AI
           </span>
         </div>
 
