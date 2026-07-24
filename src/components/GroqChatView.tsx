@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, Cpu, Sparkles, RefreshCw, AlertTriangle, Zap, Copy, Check, MessageSquare, Trash2, ArrowLeft } from 'lucide-react';
+import { Send, Bot, User, Cpu, Sparkles, RefreshCw, AlertTriangle, Zap, Copy, Check, MessageSquare, Trash2, ArrowLeft, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 
 interface ChatMessage {
   id: string;
@@ -53,7 +53,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "Ciao! Sono NINA, l'intelligenza artificiale dell'Alter Ego di Cattivo Gusto. Fai una domanda provocatoria o scegli una delle mie personalità redazionali!",
+      content: "Ciao! Sono NINA, l'intelligenza artificiale dell'Alter Ego di Cattivo Gusto. Fai una domanda provocatoria, parla al microfono o ascolta le mie risposte audio!",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
   ]);
@@ -63,16 +63,115 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Audio & Speech States
+  const [isListening, setIsListening] = useState(false);
+  const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const [autoReadAudio, setAutoReadAudio] = useState(false);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   // Auto-scroll to bottom of chat
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
+  // Clean up speech synthesis on unmount
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  // Speech Recognition (Microphone) Handler
+  const toggleListening = () => {
+    if (isListening) {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      setIsListening(false);
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setErrorMessage("Il tuo browser non supporta il riconoscimento vocale. Prova ad usare Google Chrome o Edge.");
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'it-IT';
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event: any) => {
+        let currentTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          currentTranscript += event.results[i][0].transcript;
+        }
+        if (currentTranscript) {
+          setInput(currentTranscript);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.warn("Speech recognition error:", event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (err) {
+      setIsListening(false);
+      setErrorMessage("Errore durante l'avvio del microfono.");
+    }
+  };
+
+  // Text-to-Speech (Audio Output) Handler
+  const speakMessage = (text: string, id: string) => {
+    if (!('speechSynthesis' in window)) {
+      setErrorMessage("La sintesi vocale audio non è supportata dal tuo browser.");
+      return;
+    }
+
+    if (speakingMessageId === id) {
+      window.speechSynthesis.cancel();
+      setSpeakingMessageId(null);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'it-IT';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    utterance.onend = () => setSpeakingMessageId(null);
+    utterance.onerror = () => setSpeakingMessageId(null);
+
+    setSpeakingMessageId(id);
+    window.speechSynthesis.speak(utterance);
+  };
+
   const handleSendMessage = async (customPrompt?: string) => {
     const textToSend = customPrompt || input;
     if (!textToSend.trim() || isLoading) return;
+
+    if (isListening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
 
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
@@ -99,7 +198,6 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
         body: JSON.stringify(payload)
       });
 
-      // Fallback to /api/chat if /api/groq/chat is not found on Vercel
       if (response.status === 404) {
         response = await fetch('/api/chat', {
           method: 'POST',
@@ -118,8 +216,12 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       };
 
       setMessages(prev => [...prev, botMsg]);
+
+      // Auto read if enabled
+      if (autoReadAudio) {
+        speakMessage(botMsg.content, botMsg.id);
+      }
     } catch (err: any) {
-      // Local safety response if server is completely unreachable
       const fallbackMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -127,6 +229,9 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages(prev => [...prev, fallbackMsg]);
+      if (autoReadAudio) {
+        speakMessage(fallbackMsg.content, fallbackMsg.id);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -139,6 +244,10 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
   };
 
   const handleClearChat = () => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setSpeakingMessageId(null);
     setMessages([
       {
         id: Date.now().toString(),
@@ -163,13 +272,20 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
         </button>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => setAutoReadAudio(!autoReadAudio)}
+            className={`px-3 py-1 font-mono text-[11px] uppercase font-bold border-2 border-black flex items-center gap-1.5 transition cursor-pointer shadow-[2px_2px_0px_#000] ${
+              autoReadAudio ? 'bg-[#A0FF00] text-black font-bold' : 'bg-white text-black hover:bg-neutral-200'
+            }`}
+            title="Attiva/Disattiva lettura vocale automatica dei messaggi di NINA"
+          >
+            {autoReadAudio ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            <span>AUDIO AUTO: {autoReadAudio ? 'ON' : 'OFF'}</span>
+          </button>
+
           <span className="bg-[#A0FF00] text-black font-anton text-xs sm:text-sm px-3 py-1 border-2 border-black uppercase font-bold flex items-center gap-1.5 shadow-[2px_2px_0px_#000]">
             <Sparkles className="w-4 h-4 text-black fill-black" />
             <span>NINA AI REDAZIONALE</span>
-          </span>
-
-          <span className="bg-black text-[#A0FF00] font-mono text-[10px] px-2 py-1 uppercase font-bold border border-black">
-            ATTIVA NOW
           </span>
         </div>
       </div>
@@ -178,16 +294,18 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
       <div className="bg-white border-4 border-black shadow-[8px_8px_0px_#000] p-4 sm:p-6 mb-8">
         
         {/* Title Header */}
-        <div className="border-b-2 border-black pb-4 mb-6">
-          <div className="flex items-center gap-2 mb-1">
-            <Bot className="w-7 h-7 text-black fill-[#A0FF00]" />
-            <h1 className="font-anton text-3xl sm:text-5xl uppercase text-black tracking-tight">
-              CHAT CON NINA (L'ALTER EGO)
-            </h1>
+        <div className="border-b-2 border-black pb-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Bot className="w-7 h-7 text-black fill-[#A0FF00]" />
+              <h1 className="font-anton text-3xl sm:text-5xl uppercase text-black tracking-tight">
+                CHAT CON NINA (L'ALTER EGO)
+              </h1>
+            </div>
+            <p className="font-typewriter text-xs sm:text-sm text-neutral-700 leading-relaxed">
+              Interfaccia intelligente e satirica con supporto vocale (Microfono 🎙️ e Voce Audio 🔊).
+            </p>
           </div>
-          <p className="font-typewriter text-xs sm:text-sm text-neutral-700 leading-relaxed">
-            Interfaccia intelligente e satirica a cura della redazione. Fai una domanda assurda a NINA!
-          </p>
         </div>
 
         {/* Persona Selection */}
@@ -240,6 +358,8 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
         <div className="border-2 border-black bg-[#F4F1EA] p-4 min-h-[350px] max-h-[500px] overflow-y-auto space-y-4 mb-4 shadow-[inner_0_2px_4px_rgba(0,0,0,0.1)]">
           {messages.map((msg) => {
             const isUser = msg.role === 'user';
+            const isSpeakingThis = speakingMessageId === msg.id;
+
             return (
               <div
                 key={msg.id}
@@ -263,6 +383,21 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
                     </span>
 
                     <div className="flex items-center gap-2">
+                      {!isUser && (
+                        <button
+                          onClick={() => speakMessage(msg.content, msg.id)}
+                          className={`p-1 border border-black transition cursor-pointer flex items-center gap-1 ${
+                            isSpeakingThis ? 'bg-[#A0FF00] text-black font-bold animate-pulse' : 'bg-neutral-100 hover:bg-[#A0FF00]'
+                          }`}
+                          title={isSpeakingThis ? "Ferma riproduzione audio" : "Ascolta risposta in audio"}
+                        >
+                          {isSpeakingThis ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                          <span className="text-[9px] font-bold uppercase hidden sm:inline">
+                            {isSpeakingThis ? 'STOP' : 'ASCOLTA'}
+                          </span>
+                        </button>
+                      )}
+
                       <span>{msg.timestamp}</span>
                       <button
                         onClick={() => handleCopy(msg.content, msg.id)}
@@ -312,7 +447,15 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
           </div>
         )}
 
-        {/* Message Input Form */}
+        {/* Listening Live Badge */}
+        {isListening && (
+          <div className="bg-[#A0FF00] text-black border-2 border-black p-2 mb-2 text-xs font-mono font-bold flex items-center gap-2 animate-pulse shadow-[2px_2px_0px_#000]">
+            <span className="w-3 h-3 rounded-full bg-red-600 animate-ping shrink-0" />
+            <span>🎙️ MICROFONO ATTIVO: NINA sta ascoltando la tua voce... Parla adesso!</span>
+          </div>
+        )}
+
+        {/* Message Input Form with Microphone Button */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -324,15 +467,33 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Scrivi un messaggio a NINA..."
+            placeholder={isListening ? "Ascoltando la tua voce..." : "Scrivi un messaggio o premi il microfono..."}
             disabled={isLoading}
-            className="flex-1 bg-white border-2 border-black p-3 text-xs sm:text-sm font-typewriter focus:outline-none focus:bg-[#FFFEEB] placeholder-neutral-500 shadow-[3px_3px_0px_#000]"
+            className={`flex-1 border-2 border-black p-3 text-xs sm:text-sm font-typewriter focus:outline-none placeholder-neutral-500 shadow-[3px_3px_0px_#000] ${
+              isListening ? 'bg-[#FFFEEB] border-red-600' : 'bg-white focus:bg-[#FFFEEB]'
+            }`}
           />
 
+          {/* Microphone Voice Button */}
+          <button
+            type="button"
+            onClick={toggleListening}
+            disabled={isLoading}
+            className={`p-3 border-2 border-black transition shadow-[3px_3px_0px_#000] cursor-pointer flex items-center justify-center shrink-0 ${
+              isListening
+                ? 'bg-red-600 text-white animate-bounce'
+                : 'bg-white text-black hover:bg-[#A0FF00]'
+            }`}
+            title={isListening ? "Interrompi ascolto vocale" : "Parla al microfono"}
+          >
+            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+          </button>
+
+          {/* Send Button */}
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-[#A0FF00] text-black font-anton text-sm sm:text-base px-6 py-3 border-2 border-black hover:bg-black hover:text-[#A0FF00] disabled:opacity-50 transition shadow-[3px_3px_0px_#000] cursor-pointer flex items-center gap-2 shrink-0"
+            className="bg-[#A0FF00] text-black font-anton text-sm sm:text-base px-5 sm:px-6 py-3 border-2 border-black hover:bg-black hover:text-[#A0FF00] disabled:opacity-50 transition shadow-[3px_3px_0px_#000] cursor-pointer flex items-center gap-2 shrink-0"
           >
             <Send className="w-4 h-4" />
             <span className="hidden sm:inline">INVIA</span>
@@ -343,3 +504,4 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
     </div>
   );
 };
+

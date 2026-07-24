@@ -58,23 +58,34 @@ export const ChaosCorner: React.FC<ChaosCornerProps> = ({ onBack, onOpenManifest
     }
   };
 
-  // Generate Guru Wisdom (Local or Gemini API)
+  // Generate Guru Wisdom (Groq / Gemini AI)
   const handleGenerateGuruQuote = async () => {
     setIsLoadingAiGuru(true);
     try {
+      const topics = [
+        "il caffè freddo e il senso del lavoro",
+        "i lavori in corso perenni e il destino umano",
+        "il rumore del condizionatore e la meditazione",
+        "il tostapane che brucia il pane e la rabbia repressione",
+        "il vuoto cosmico nei messaggi vocali da tre minuti",
+        "i calzini spaiati e il disordine dell'anima",
+        "il gatto che ti fissa senza battere ciglio",
+        "la riunione di lavoro che poteva essere una mail"
+      ];
+      const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+
       const res = await fetch('/api/ai/generate-absurdity', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'guru',
-          prompt: 'Genera un consiglio filosofico assurdo per il Guru del Nulla'
+          prompt: `Genera una perla di saggezza tagliente, grottesca e satirica del Guru del Nulla incentrata su: ${randomTopic}. Max 2-3 frasi folgoranti.`
         })
       });
       const data = await res.json();
       if (data.text) {
         setCurrentGuruQuote(data.text);
       } else {
-        // Fallback local quote
         const randomQ = GURU_QUOTES[Math.floor(Math.random() * GURU_QUOTES.length)];
         setCurrentGuruQuote(randomQ);
       }

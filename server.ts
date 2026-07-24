@@ -153,44 +153,84 @@ async function startServer() {
     });
   });
 
-  // AI-powered generator endpoint (Gemini)
+  // AI-powered generator endpoint (Groq + Gemini + Local Fallback)
   app.post("/api/ai/generate-absurdity", async (req, res) => {
     try {
-      const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        return res.status(400).json({
-          error: "Chiave GEMINI_API_KEY non trovata nelle variabili d'ambiente.",
-          fallback: "In assenza della chiave AI Studio, la redazione di Cattivo Gusto raccomanda di guardare fuori dalla finestra per 5 minuti."
-        });
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
       const { prompt, type } = req.body;
 
-      let systemInstruction = "Sei la redazione della rivista satirica e d'avanguardia 'Cattivo Gusto' (motto: 'La rivista che mancava a cura di alter ego'). Il tuo tono è assurdo, cinico, brillante, d'impatto e surreale. Rispondi in italiano perfetto con formattazione pulita.";
+      let systemInstruction = "Sei la redazione della rivista satirica e d'avanguardia 'Cattivo Gusto' (motto: 'La rivista che mancava a cura di alter ego'). Il tuo tono è assurdo, cinico, brillante, tagliente, grottesco e surreale. Rispondi in italiano con massimo 2-3 frasi folgoranti.";
 
       if (type === "guru") {
-        systemInstruction += " Genera un consiglio filosofico assurdo per il 'Guru del Nulla in 5 minuti'. Include una tecnica di respirazione stramba e una massima senza senso.";
+        systemInstruction = "Sei il 'Guru del Nulla in 5 Minuti' di Cattivo Gusto. Dispensare perle di saggezza filosofica assolutamente inutili, taglienti, grottesche e surreali. Rispondi in 2-3 frasi folgoranti, ciniche e comiche. Includi una tecnica di respirazione stramba o una meditazione sul fissare oggetti inanimati.";
       } else if (type === "horoscope") {
-        systemInstruction += " Genera l'oroscopo quotidiano per un oggetto inanimato (es. un tostapane, una lampada, un calzino spaiato, un divano).";
+        systemInstruction = "Sei l'Astrologo dell'Assurdo di Cattivo Gusto. Genera l'oroscopo quotidiano per un oggetto inanimato di casa. Tono cinico, grottesco e spassoso.";
       } else if (type === "cat_evidence") {
-        systemInstruction += " Genera una 'prova scientifica' esilarante e cospirazionista sul perché il gatto di casa sta pianificando la caduta del proprietario.";
+        systemInstruction = "Genera una 'prova scientifica' esilarante, tagliente e cospirazionista sul perché il gatto di casa sta pianificando la caduta del padrone.";
       } else if (type === "manifesto") {
-        systemInstruction += " Genera una clausola aggiuntiva del 'Manifesto dell'Assurdo' scritta con linguaggio pseudo-legale e filosofico nonsense.";
+        systemInstruction = "Genera una clausola aggiuntiva del 'Manifesto dell'Assurdo' scritta con linguaggio pseudo-legale e filosofico nonsense.";
       }
 
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt || "Genera una perla di saggezza inutile",
-        config: {
-          systemInstruction,
-          temperature: 0.95,
-        }
-      });
+      const userPrompt = prompt || "Genera un nuovo consiglio di saggezza inutile ed esilarante per il Guru del Nulla.";
 
-      res.json({ text: response.text });
+      // TIER 1: Groq API
+      const groqKey = process.env.GROQ_API_KEY;
+      if (groqKey && groqKey.trim().length > 0) {
+        try {
+          const groq = new Groq({ apiKey: groqKey.trim() });
+          const completion = await groq.chat.completions.create({
+            messages: [
+              { role: "system", content: systemInstruction },
+              { role: "user", content: userPrompt }
+            ],
+            model: "llama-3.3-70b-versatile",
+            temperature: 0.95,
+            max_tokens: 250,
+          });
+
+          const replyText = completion.choices[0]?.message?.content?.trim();
+          if (replyText) {
+            return res.json({ text: replyText, provider: "groq", model: "llama-3.3-70b-versatile" });
+          }
+        } catch (groqErr: any) {
+          console.warn("[Groq generate-absurdity warning]:", groqErr?.message || groqErr);
+        }
+      }
+
+      // TIER 2: Gemini API
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (apiKey && apiKey.trim().length > 0) {
+        try {
+          const ai = new GoogleGenAI({ apiKey: apiKey.trim() });
+          const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: userPrompt,
+            config: {
+              systemInstruction,
+              temperature: 0.95,
+            }
+          });
+
+          if (response.text) {
+            return res.json({ text: response.text.trim(), provider: "gemini", model: "gemini-2.5-flash" });
+          }
+        } catch (geminiErr: any) {
+          console.warn("[Gemini generate-absurdity warning]:", geminiErr?.message || geminiErr);
+        }
+      }
+
+      // TIER 3: Local Satirical Fallback (never fails)
+      const guruFallbacks = [
+        "Respira profondamente per 4 secondi, poi fissa la caffettiera finché non capisci che neanche lei sa dove sta andando la tua vita.",
+        "Se una porta si chiude, la fisica quantistica suggerisce che era semplicemente mal registrata sui cardini. Non farne un dramma spirituale.",
+        "Chiudi gli occhi e visualizza un conto in banca infinito. Riaprili: era un'illusione, ma ora il tostapane sembra più simpatico.",
+        "Inala il futuro, esala la contabilità. Ripeti tre volte e poi fai finta di essere un pezzo di pane integrale.",
+        "Non inseguire i tuoi sogni: lasciali correre avanti e prenditi una brioche al bar all'angolo."
+      ];
+
+      const randomText = guruFallbacks[Math.floor(Math.random() * guruFallbacks.length)];
+      return res.json({ text: randomText, provider: "local_engine" });
     } catch (err: any) {
-      console.error("Gemini API Error:", err);
+      console.error("AI Absurdity Error:", err);
       res.status(500).json({ error: err.message || "Errore sconosciuto nella matrice del caos." });
     }
   });
