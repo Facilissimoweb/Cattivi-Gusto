@@ -1,3 +1,5 @@
-import handler from '../chat';
+import { handleChatRequest } from "../../lib/chatHandler";
 
-export default handler;
+export default async function handler(req: any, res: any) {
+  return handleChatRequest(req, res);
+}

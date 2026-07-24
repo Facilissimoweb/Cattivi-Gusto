@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-[#F4F1EA] border-b-2 border-black shadow-[0_2px_0px_#000]">
       {/* Top Banner Ticker */}
-      <div className="bg-black text-[#A0FF00] text-xs font-mono py-1 px-3 flex items-center justify-between overflow-hidden select-none">
+      <div className="bg-black text-[#A0FF00] text-xs font-mono py-1 px-2 sm:px-3 flex items-center justify-between overflow-hidden select-none">
         <div className="whitespace-nowrap animate-marquee flex items-center gap-6 font-semibold">
           <span>🔥 ULTIM'ORA: IL TUO GATTO TI STA GUARDANDO IN QUESTO MOMENTO.</span>
           <span>•</span>
@@ -52,16 +52,6 @@ export const Header: React.FC<HeaderProps> = ({
           <span>✍️ MANIFESTO DELL'ASSURDO: OLTRE 1.000 FIRME UTILI AL NULLA.</span>
         </div>
         <div className="hidden md:flex items-center gap-3 shrink-0 ml-4 font-sans text-white text-[11px]">
-          {onOpenCookies && (
-            <button
-              onClick={onOpenCookies}
-              className="bg-[#A0FF00] text-black px-2 py-0.5 font-anton text-[10px] uppercase border border-black hover:bg-white transition cursor-pointer"
-              title="Gestisci i Cookie Briciole e Telepatia (Scadenza 24h)"
-            >
-              🍪 COOKIE (24H)
-            </button>
-          )}
-
           {isSubscribed ? (
             <span className="bg-[#A0FF00] text-black px-2 py-0.5 rounded font-black text-[10px] uppercase tracking-wider">
               VIP CAOS ATTIVO
@@ -77,24 +67,24 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Main Header Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 sm:gap-4">
+      {/* Main Header Container - Mobile First Optimized */}
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 py-2 flex items-center justify-between gap-2 sm:gap-4 overflow-hidden">
         
         {/* Left Action Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             onClick={onOpenMenu}
-            className="flex items-center gap-1.5 bg-black text-white px-3.5 py-2 border-2 border-black font-anton tracking-wider text-sm sm:text-base hover:bg-[#A0FF00] hover:text-black transition-all shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
+            className="flex items-center gap-1 bg-black text-white px-2.5 py-1.5 sm:px-3.5 sm:py-2 border-2 border-black font-anton tracking-wider text-xs sm:text-base hover:bg-[#A0FF00] hover:text-black transition-all shadow-[2px_2px_0px_#000] sm:shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer whitespace-nowrap"
             aria-label="Apri Menu"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>MENU</span>
           </button>
 
-          {/* Chaos Audio Toggle */}
+          {/* Chaos Audio Toggle - Icon only on mobile to save horizontal space */}
           <button
             onClick={onToggleChaosAudio}
-            className={`p-2 border-2 border-black font-mono text-xs flex items-center gap-1 transition shadow-[2px_2px_0px_#000] cursor-pointer ${
+            className={`p-1.5 sm:p-2 border-2 border-black font-mono text-xs flex items-center gap-1 transition shadow-[2px_2px_0px_#000] cursor-pointer ${
               isChaosAudioActive 
                 ? 'bg-[#A0FF00] text-black font-bold animate-pulse' 
                 : 'bg-white hover:bg-neutral-100 text-black'
@@ -108,33 +98,33 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Center Logo & Tagline */}
         <div 
-          className="text-center cursor-pointer flex-1 group py-1" 
+          className="text-center cursor-pointer flex-1 min-w-0 px-1 py-0.5 group" 
           onClick={() => setActiveTab('home')}
           title="Cattivo Gusto - Torna alla Home Page"
         >
-          <h1 className="font-anton text-2xl sm:text-5xl md:text-6xl tracking-tight text-black uppercase leading-none select-none drop-shadow-[2px_2px_0px_#A0FF00] group-hover:scale-[1.01] transition-transform">
+          <h1 className="font-anton text-xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-black uppercase leading-none select-none drop-shadow-[1.5px_1.5px_0px_#A0FF00] group-hover:scale-[1.01] transition-transform truncate sm:overflow-visible">
             Cattivo Gusto
           </h1>
-          <p className="font-typewriter text-[10px] sm:text-xs md:text-sm text-neutral-800 tracking-wide mt-1 font-bold">
+          <p className="font-typewriter text-[9px] sm:text-xs text-neutral-800 tracking-wide mt-0.5 font-bold truncate">
             La rivista che mancava a cura di alter ego
           </p>
         </div>
 
         {/* Right Action Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Search Trigger */}
           <button
             onClick={() => setShowSearchModal(true)}
-            className="p-2 bg-white border-2 border-black hover:bg-[#A0FF00] transition shadow-[2px_2px_0px_#000]"
+            className="p-1.5 sm:p-2 bg-white border-2 border-black hover:bg-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer"
             title="Cerca tra le assurdistà"
           >
             <Search className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
           </button>
 
-          {/* Manifesto Quick Link */}
+          {/* Manifesto Quick Link - Shown only on desktop to keep mobile navbar clean */}
           <button
             onClick={onOpenManifesto}
-            className="hidden sm:flex items-center gap-1.5 bg-[#A0FF00] text-black border-2 border-black px-3 py-1.5 font-anton text-xs sm:text-sm hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000]"
+            className="hidden lg:flex items-center gap-1.5 bg-[#A0FF00] text-black border-2 border-black px-3 py-1.5 font-anton text-xs sm:text-sm hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer whitespace-nowrap"
           >
             <Flame className="w-4 h-4" />
             <span>FIRMA MANIFESTO</span>
@@ -143,12 +133,12 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Bookmarks Counter */}
           <button
             onClick={onOpenBookmarks}
-            className="relative p-2 bg-white border-2 border-black hover:bg-black hover:text-white transition shadow-[2px_2px_0px_#000]"
+            className="relative p-1.5 sm:p-2 bg-white border-2 border-black hover:bg-black hover:text-white transition shadow-[2px_2px_0px_#000] cursor-pointer"
             title="I tuoi articoli salvati"
           >
             <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />
             {savedCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#A0FF00] text-black border-2 border-black font-anton text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-1.5 -right-1.5 bg-[#A0FF00] text-black border-2 border-black font-anton text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-bold">
                 {savedCount}
               </span>
             )}
