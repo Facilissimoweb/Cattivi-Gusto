@@ -59,6 +59,30 @@ export default function App() {
     }
   }, [savedArticleIds]);
 
+  // Check URL search params for deep-linking to direct article on mount & browser navigation
+  useEffect(() => {
+    const checkUrlArticle = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const articleIdFromUrl = params.get('article');
+        if (articleIdFromUrl) {
+          const found = ARTICLES.find(a => a.id === articleIdFromUrl);
+          if (found) {
+            setSelectedArticleId(found.id);
+            setActiveView('reader');
+            return;
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    };
+
+    checkUrlArticle();
+    window.addEventListener('popstate', checkUrlArticle);
+    return () => window.removeEventListener('popstate', checkUrlArticle);
+  }, []);
+
   // Always scroll to top whenever navigation, category, search, or active article changes
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -71,6 +95,14 @@ export default function App() {
     setSelectedCategory('tutti');
     setSearchQuery('');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('article');
+      window.history.pushState({}, '', url.pathname + (url.search ? url.search : ''));
+    } catch (e) {
+      // ignore
+    }
   };
 
   // Legal Modal Handler
@@ -146,6 +178,14 @@ export default function App() {
     setSelectedArticleId(id);
     setActiveView('reader');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    try {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set('article', id);
+      window.history.pushState({ articleId: id }, '', url.toString());
+    } catch (e) {
+      // ignore
+    }
   };
 
   // Audio Chaos Background Loop (Web Audio API Synthesizer)

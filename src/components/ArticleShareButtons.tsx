@@ -14,65 +14,36 @@ export const ArticleShareButtons: React.FC<ArticleShareProps> = ({ article, vari
 
   const getArticleUrl = () => {
     if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
+      const url = new URL(window.location.origin + window.location.pathname);
       url.searchParams.set('article', article.id);
       return url.toString();
     }
-    return `https://cattivo-gusto.it/articolo/${article.id}`;
+    return `https://cattivo-gusto.it/?article=${article.id}`;
   };
 
   const articleUrl = getArticleUrl();
 
-  // Summary preparation
-  const briefSummary = article.content.intro || article.subtitle;
-  const fullShareText = `📰 CATTIVO GUSTO: "${article.title}"
-
-${article.subtitle}
-
-📝 RIASSUNTO:
-${briefSummary}
-
-🖼️ IMMAGINE DI RIFERIMENTO:
-${article.heroImage}
-
-🔗 LEGGI L'ARTICOLO COMPLETO:
-${articleUrl}`;
+  // Share text contains ONLY the H1 article title + direct link as requested
+  const fullShareText = `${article.title}\n\n${articleUrl}`;
 
   // WhatsApp Share URL
   const handleWhatsAppShare = () => {
-    const waText = `📰 *${article.title}*\n\n_${article.subtitle}_\n\n📝 *Riassunto*: ${briefSummary}\n\n🖼️ *Immagine*: ${article.heroImage}\n\n🔗 ${articleUrl}`;
+    const waText = `${article.title}\n\n${articleUrl}`;
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   // Telegram Share URL
   const handleTelegramShare = () => {
-    const tgText = `📰 ${article.title}\n\n${article.subtitle}\n\n📝 Riassunto: ${briefSummary}\n\n🖼️ Foto: ${article.heroImage}`;
+    const tgText = article.title;
     const url = `https://t.me/share/url?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(tgText)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   // Email Share
   const handleEmailShare = () => {
-    const subject = `📰 [Cattivo Gusto] ${article.title}`;
-    const body = `Ciao!
-
-Ti consiglio di leggere questo articolo su Cattivo Gusto:
-
-📰 ${article.title}
-${article.subtitle}
-
-📝 RIASSUNTO:
-${briefSummary}
-
-🖼️ IMMAGINE DI RIFERIMENTO:
-${article.heroImage}
-
-🔗 LEGGI L'ARTICOLO COMPLETO QUI:
-${articleUrl}
-
----
-Inviato da Cattivo Gusto - Il Magazine dell'Alter Ego`;
+    const subject = article.title;
+    const body = `${article.title}\n\n${articleUrl}`;
 
     const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoUrl;
@@ -140,7 +111,7 @@ Inviato da Cattivo Gusto - Il Magazine dell'Alter Ego`;
             <div className="flex items-center gap-2">
               <Share2 className="w-5 h-5 text-black" />
               <h3 className="font-anton text-lg sm:text-xl uppercase tracking-tight text-black">
-                CONDIVIDI ARTICOLO CON RIASSUNTO & FOTO
+                CONDIVIDI ARTICOLO (TITOLO H1 & LINK DIRETTI)
               </h3>
             </div>
             <span className="bg-black text-[#A0FF00] font-mono text-[10px] px-2 py-0.5 border border-black uppercase font-bold">
@@ -149,7 +120,7 @@ Inviato da Cattivo Gusto - Il Magazine dell'Alter Ego`;
           </div>
 
           <p className="font-typewriter text-xs text-neutral-700">
-            Invia questo articolo completo di titolo, riassunto narrativo e link all'immagine di copertina ai tuoi contatti:
+            Invia questo articolo con il titolo H1 e il link diretto di accesso immediato ai tuoi contatti:
           </p>
 
           {/* Social Buttons Grid */}
@@ -193,7 +164,7 @@ Inviato da Cattivo Gusto - Il Magazine dell'Alter Ego`;
         </div>
       )}
 
-      {/* Share Modal with Summary & Image Reference */}
+      {/* Share Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="bg-white border-3 border-black p-5 sm:p-6 max-w-lg w-full shadow-[8px_8px_0px_#000] relative space-y-4 max-h-[90vh] overflow-y-auto">
@@ -212,37 +183,19 @@ Inviato da Cattivo Gusto - Il Magazine dell'Alter Ego`;
               </button>
             </div>
 
-            {/* Article Image Reference Preview */}
-            <div className="border-2 border-black bg-[#FAF8F5] p-3 space-y-2">
-              <span className="bg-black text-[#A0FF00] font-mono text-[10px] px-2 py-0.5 uppercase border border-black font-bold">
-                🖼️ IMMAGINE DI RIFERIMENTO
-              </span>
-              <div className="relative aspect-video border border-black overflow-hidden bg-neutral-200">
-                <img
-                  src={article.heroImage}
-                  alt={article.imageAlt}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <p className="font-mono text-[11px] text-neutral-600 truncate">
-                {article.heroImage}
-              </p>
-            </div>
-
-            {/* Article Summary Box */}
+            {/* Article Share Payload Box */}
             <div className="border-2 border-black bg-[#FFFEEB] p-4 space-y-2 font-typewriter text-xs">
               <div className="flex items-center justify-between border-b border-black pb-1">
                 <span className="font-anton text-sm uppercase text-black">
-                  📝 RIASSUNTO & SCHEDA CONDIVISIONE
+                  📝 CONTENUTO CONDIVISIONE (TITOLO H1 & LINK)
                 </span>
                 <span className="font-mono text-[10px] text-neutral-500">
                   {article.readTime}
                 </span>
               </div>
-              <p className="font-bold text-sm text-black">{article.title}</p>
-              <p className="text-neutral-700 italic">{article.subtitle}</p>
-              <div className="bg-white border border-neutral-300 p-2 text-neutral-800 leading-relaxed text-[11px]">
-                "{briefSummary}"
+              <p className="font-anton text-base text-black uppercase leading-tight">{article.title}</p>
+              <div className="bg-white border border-neutral-300 p-2 font-mono text-[11px] text-blue-700 break-all">
+                {articleUrl}
               </div>
             </div>
 
@@ -284,7 +237,7 @@ Inviato da Cattivo Gusto - Il Magazine dell'Alter Ego`;
                 className="w-full bg-[#A0FF00] text-black font-anton text-xs py-2.5 border-2 border-black flex items-center justify-center gap-2 hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer"
               >
                 {copiedFullText ? <Check className="w-4 h-4 text-green-700" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedFullText ? 'TESTO E IMMAGINE COPIATI NEGLI APPUNTI!' : 'COPIA TESTO COMPLETO + LINK IMMAGINE'}</span>
+                <span>{copiedFullText ? 'TITOLO E LINK COPIATI NEGLI APPUNTI!' : 'COPIA TITOLO H1 + LINK DIRETTO'}</span>
               </button>
             </div>
 

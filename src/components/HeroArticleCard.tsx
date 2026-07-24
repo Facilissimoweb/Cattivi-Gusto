@@ -17,32 +17,29 @@ export const HeroArticleCard: React.FC<HeroArticleCardProps> = ({
 }) => {
   const getArticleUrl = () => {
     if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
+      const url = new URL(window.location.origin + window.location.pathname);
       url.searchParams.set('article', article.id);
       return url.toString();
     }
-    return `https://cattivo-gusto.it/articolo/${article.id}`;
+    return `https://cattivo-gusto.it/?article=${article.id}`;
   };
 
   const handleQuickWhatsApp = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const briefSummary = article.content.intro || article.subtitle;
-    const waText = `📰 *${article.title}*\n\n_${article.subtitle}_\n\n📝 *Riassunto*: ${briefSummary}\n\n🖼️ *Immagine*: ${article.heroImage}\n\n🔗 ${getArticleUrl()}`;
+    const waText = `${article.title}\n\n${getArticleUrl()}`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleQuickTelegram = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const briefSummary = article.content.intro || article.subtitle;
-    const tgText = `📰 ${article.title}\n\n${article.subtitle}\n\n📝 Riassunto: ${briefSummary}\n\n🖼️ Foto: ${article.heroImage}`;
+    const tgText = article.title;
     window.open(`https://t.me/share/url?url=${encodeURIComponent(getArticleUrl())}&text=${encodeURIComponent(tgText)}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleQuickEmail = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const briefSummary = article.content.intro || article.subtitle;
-    const subject = `📰 [Cattivo Gusto] ${article.title}`;
-    const body = `Ciao!\n\nTi consiglio questo articolo su Cattivo Gusto:\n\n📰 ${article.title}\n${article.subtitle}\n\n📝 RIASSUNTO:\n${briefSummary}\n\n🖼️ IMMAGINE DI RIFERIMENTO:\n${article.heroImage}\n\n🔗 LEGGI L'ARTICOLO:\n${getArticleUrl()}`;
+    const subject = article.title;
+    const body = `${article.title}\n\n${getArticleUrl()}`;
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
