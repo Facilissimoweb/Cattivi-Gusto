@@ -17,6 +17,105 @@ export const CATEGORIES: Category[] = [
 
 export const ARTICLES: Article[] = [
   {
+    id: 'teresa-tarocchi-il-matto-pazza-gioia',
+    title: "TERESA E I TAROCCHI: L'ARCANO ZERO \"IL MATTO\" – GUIDA ALLA PAZZA GIOIA E AI SALTI NEL VUOTO CON LA CIABATTA BUCATA",
+    subtitle: "Camminare sul ciglio del burrone tenendo un sacchetto dell'Ipercoop e un cane stanco che ti morde le natiche: scopri perché Il Matto è la carta suprema della libertà assoluta e dell'incoscienza organizzata.",
+    category: 'teresa-tarocchi',
+    categoryLabel: 'TERESA E I TAROCCHI',
+    author: 'Teresa la Cartomante dell\'Assurdo',
+    date: '24 LUGLIO 2026',
+    readTime: '6 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Illustrazione eccentrica e colorata dell Arcano Zero Il Matto con tarocchi ed elementi surrealisti',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 24150,
+    isHot: true,
+    content: {
+      intro: "Benvenuti alla prima vera lezione della rubrica 'Teresa e i Tarocchi'! Dimenticate i sacerdoti solenni, i vestiti di seta bianca e i libri d'esoterismo da quattrocento pagine. Oggi parliamo del Re Indiscusso del Mazzo: L'ARCANO ZERO, IL MATTO. Il Matto è l'unico personaggio dei Tarocchi che non ha debiti con le banche, non risponde ai messaggi WhatsApp di lavoro e cammina spedito verso il ciglio di una roccia a strapiombo indossando un cappello con i campanelli e una ciabatta spaiata.",
+      sections: [
+        {
+          heading: "1. Anatomia di un Incosciente Felice: Cosa C'è nel Fagotto del Matto?",
+          paragraphs: [
+            "Tutti i grandi studiosi di tarocchi si sono interrogati su cosa contenga la sacca che Il Matto porta sulla spalla appesa ad un bastone. C'è chi dice le esperienze delle vite precedenti, chi dice la saggezza dell'universo. Teresa ha fatto un'analisi approfondita con la lente d'ingrandimento:",
+            "• Un calzino sinistro di spugna spaiato dal 2017.",
+            "• Due caramelle alla menta coperte di lanugine di cappotto.",
+            "• La ricevuta sbiadita di un abbonamento in palestra mai utilizzato.",
+            "• Metà panino con la mortadella avvolto nell'alluminio."
+          ],
+          quote: "Il Matto viaggia leggero perché sa che l'accumulo di beni materiali porta solo all'ansia da trasloco e alla pulizia dei filtri del condizionatore."
+        },
+        {
+          heading: "2. Il Cane alle Natiche e il Salto nel Burrone",
+          paragraphs: [
+            "Ai piedi del Matto c'è sempre un cane. Nei tarocchi classici simboleggia l'istinto o i moniti della ragione. Per Teresa, quel cane è la rappresentazione plastica dell'Amministratore di Condominio o del tuo senso di colpa finanziario che cerca di azzannarti i pantaloni per gridare: 'Ehi, guarda che devi pagare il bollo auto!'",
+            "Ma Il Matto non ascolta. Guarda verso il cielo, sorride alle nuvole e continua a camminare verso il vuoto con la gioia sfacciata di chi ha appena disattivato tutte le notifiche del telefono."
+          ]
+        },
+        {
+          heading: "3. Come Interpretare Il Matto in una Lettura di Carte",
+          paragraphs: [
+            "Se durante un consulto ti esce Il Matto, ecco l'interpretazione ufficiale di Teresa:",
+            "• In Amore: Ti innamorerai di una persona completamente sballata che si presenta agli appuntamenti in pigiama di pile e ti proporrà di adottare un lama a rate.",
+            "• Nel Lavoro: Mandare una mail al tuo capo con scritto soltanto 'Basta, vado a fare il raccoglitore di noci di cocco a Santo Domingo' e spegnere il cellulare.",
+            "• Sulla Salute: Una salute di ferro dovuta al fatto che la tua mente è troppo occupata a pensare alle cavallette per accorgersi dell'influenza."
+          ],
+          quote: "Nella vita sii come Il Matto: quando tutti corrono frenetici verso la carriera, tu fa' un passo di danza e casca dal dirupo ridendo a crepapelle!"
+        }
+      ],
+      conclusion: "Il Matto ci insegna la lezione più importante di tutte: il caos non va temuto, va cavalcato con un paio di occhiali da sole da 2 euro ed un sorriso impertinente. E ora, mettetevi alla prova con il nostro Test Ufficiale!",
+      quiz: {
+        title: "🧪 TEST DELLA PAZZA GIOIA: QUANTO SEI PRONTO A SALTARE NEL BURRONE CON IL MATTO?",
+        subtitle: "Rispondi alle domande di Teresa e scopri il tuo livello di incoscienza esoterica!",
+        questions: [
+          {
+            id: 'q1',
+            question: "1. Ti trovi sul ciglio di un precipizio senza paracadute. Cosa fai?",
+            options: [
+              { label: 'A', text: 'Tiro fuori una banana dal taschino, salto nel vuoto e urlo "YOLO!"', outcomeText: 'Complimenti! Sei Il Matto al 100%! La gravità per te è solo un consiglio opinabile.' },
+              { label: 'B', text: 'Chiamo il geometra per chiedere se la roccia è a norma di legge CE.', outcomeText: 'Troppa burocrazia! Il Matto ti avrebbe già lanciato una ciabatta in testa.' },
+              { label: 'C', text: 'Tiro fuori i tarocchi unti di Teresa e leggo l\'oroscopo del tostapane.', outcomeText: 'Scelta esoterica eccellente! Teresa approva e ti regala un amuleto di maionese.' }
+            ]
+          },
+          {
+            id: 'q2',
+            question: "2. Cosa c'è nella tua borsa ideale per viaggiare leggeri?",
+            options: [
+              { label: 'A', text: 'Un calzino spaiato, tre monete da 20 centesimi e mezzo panino con la mortadella.', outcomeText: 'Hai lo stesso bagaglio spirituale del Matto! Sii fiero del tuo disordine!' },
+              { label: 'B', text: 'Tre caricabatterie di riserva, il gel disinfettante e la cartella clinica.', outcomeText: 'Troppo ansioso! Hai bisogno urgente di una cura a base di sbornie e coriandoli.' },
+              { label: 'C', text: 'Solo la ricevuta dell\'abbonamento VIP a Cattivo Gusto.', outcomeText: 'Sei un cittadino dell\'Assurdo da medaglia d\'oro!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "🚽 PRENOTA SUBITO LA TUA LETTURA DISASTROSA DI CARTE \"AR CESSO\" CON TERESA!",
+        subtitle: "Niente liturgie solenni, niente candele al sandalo: Teresa si accomoderà sul trono di ceramica del bagno della Redazione e ti farà una stesa di tarocchi completamente sballata, caustica ed esilarante!",
+        buttonText: "🚽 APRI LA CHAT E RICEVI LA LETTURA \"AR CESSO\"",
+        badge: "ESCLUSIVO REDAZIONE AR CESSO"
+      }
+    },
+    comments: [
+      {
+        id: 'c-matto-1',
+        author: 'PaoloIlMattoNaturale',
+        avatar: '🤡',
+        date: '3 minuti fa',
+        text: 'Articolo sublime! Mi è uscito Il Matto ieri e stamattina mi sono licenziato dal bar via messaggio vocale di 12 minuti. Mi sento libero come una rondine ubriaca!',
+        likes: 412
+      },
+      {
+        id: 'c-matto-2',
+        author: 'NonnaEsoterica',
+        avatar: '🔮',
+        date: '12 minuti fa',
+        text: 'Teresa sei una divinità! Ho fatto il test e sono uscita Matto al 100%. Ora vado al supermercato con le pantofole a forma di coniglio!',
+        likes: 290
+      }
+    ]
+  },
+  {
     id: 'intervista-gianna-subbuglio-milano-estetica-brutta',
     title: "INTERVISTA A GIANNA 'SUBBUGLIO': \"LA PELLE PULITA È DA DEBOLI, NELL'ATELIER DI LAMBRATE VI REGALO L'ANSIA IN FORMATO MASCHERA FACCIALE\"",
     subtitle: "Siamo entrati nel tempio milanese del Bruttalismo Facciale: tra fango della Martesana, impacchi al gorgonzola piccante e permanente al baffo da terrore bancario. In esclusiva: la super PROMO 'Insonnia & Pori Splendenti'!",

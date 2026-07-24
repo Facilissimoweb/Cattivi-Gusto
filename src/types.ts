@@ -51,6 +51,25 @@ export interface Article {
       imageCaption?: string;
     }[];
     conclusion?: string;
+    quiz?: {
+      title: string;
+      subtitle: string;
+      questions: {
+        id: string;
+        question: string;
+        options: {
+          label: string;
+          text: string;
+          outcomeText: string;
+        }[];
+      }[];
+    };
+    cta?: {
+      title: string;
+      subtitle: string;
+      buttonText: string;
+      badge?: string;
+    };
   };
   comments: Comment[];
   likesCount: number;

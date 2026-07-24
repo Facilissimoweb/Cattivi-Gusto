@@ -269,6 +269,7 @@ export default function App() {
               setSelectedArticleId(null);
             }}
             onOpenManifesto={() => setIsManifestoOpen(true)}
+            onOpenGroqChat={() => setActiveView('groq_chat')}
             onSelectArticle={handleReadArticle}
             isSaved={savedArticleIds.includes(currentReaderArticle.id)}
             onToggleSave={handleToggleSave}

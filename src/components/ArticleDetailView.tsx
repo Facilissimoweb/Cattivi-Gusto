@@ -18,6 +18,7 @@ interface ArticleDetailViewProps {
   article: Article;
   onBack: () => void;
   onOpenManifesto: () => void;
+  onOpenGroqChat?: () => void;
   onSelectArticle: (articleId: string) => void;
   isSaved: boolean;
   onToggleSave: (articleId: string) => void;
@@ -27,6 +28,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
   article,
   onBack,
   onOpenManifesto,
+  onOpenGroqChat,
   onSelectArticle,
   isSaved,
   onToggleSave,
@@ -38,6 +40,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
   const [likes, setLikes] = useState(article.likesCount);
   const [hasLiked, setHasLiked] = useState(false);
   const [comments, setComments] = useState<Comment[]>(article.comments);
+  const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
   const [isPlayingSpeech, setIsPlayingSpeech] = useState(false);
@@ -342,6 +345,94 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
                 VERDETTO FINALE
               </span>
               {article.content.conclusion}
+            </div>
+          )}
+
+          {/* Interactive Quiz Section */}
+          {article.content.quiz && (
+            <div className="bg-[#FFFBEA] border-3 border-black p-5 sm:p-7 shadow-[6px_6px_0px_#000] space-y-6 my-6">
+              <div className="border-b-2 border-black pb-3">
+                <span className="bg-[#A0FF00] border border-black font-mono text-xs px-2 py-0.5 uppercase font-bold">
+                  TEST INTERATTIVO
+                </span>
+                <h3 className="font-anton text-2xl sm:text-3xl uppercase tracking-tight text-black mt-1">
+                  {article.content.quiz.title}
+                </h3>
+                <p className="font-typewriter text-xs sm:text-sm text-neutral-700 mt-1">
+                  {article.content.quiz.subtitle}
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {article.content.quiz.questions.map((q) => {
+                  const selectedOptIdx = quizAnswers[q.id];
+                  return (
+                    <div key={q.id} className="bg-white border-2 border-black p-4 shadow-[3px_3px_0px_#000]">
+                      <p className="font-anton text-base sm:text-lg text-black mb-3">
+                        {q.question}
+                      </p>
+
+                      <div className="space-y-2">
+                        {q.options.map((opt, optIdx) => {
+                          const isSelected = selectedOptIdx === optIdx;
+                          return (
+                            <button
+                              key={optIdx}
+                              onClick={() => setQuizAnswers({ ...quizAnswers, [q.id]: optIdx })}
+                              className={`w-full text-left p-3 border-2 border-black font-typewriter text-xs sm:text-sm flex items-start gap-2.5 transition cursor-pointer shadow-[2px_2px_0px_#000] ${
+                                isSelected
+                                  ? 'bg-[#A0FF00] font-bold text-black border-black'
+                                  : 'bg-[#FAF8F5] hover:bg-yellow-100 text-neutral-900'
+                              }`}
+                            >
+                              <span className="font-anton bg-black text-white px-2 py-0.5 text-xs rounded-none">
+                                {opt.label}
+                              </span>
+                              <span className="flex-1">{opt.text}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {selectedOptIdx !== undefined && (
+                        <div className="mt-3 bg-black text-[#A0FF00] p-3 border border-black font-typewriter text-xs sm:text-sm animate-fade-in">
+                          🔮 <strong>ESITO DI TERESA:</strong> {q.options[selectedOptIdx].outcomeText}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Interactive CTA Section (Lettura Disastrosa Ar Cesso) */}
+          {article.content.cta && (
+            <div className="bg-[#A0FF00] border-3 border-black p-6 sm:p-8 shadow-[8px_8px_0px_#000] text-black relative overflow-hidden my-6">
+              {article.content.cta.badge && (
+                <div className="bg-black text-[#A0FF00] font-mono font-bold text-xs uppercase px-3 py-1 border border-black inline-block mb-2">
+                  {article.content.cta.badge}
+                </div>
+              )}
+              <h3 className="font-anton text-2xl sm:text-4xl uppercase tracking-tight leading-none mb-3">
+                {article.content.cta.title}
+              </h3>
+              <p className="font-typewriter text-sm sm:text-base leading-relaxed mb-6 font-medium">
+                {article.content.cta.subtitle}
+              </p>
+
+              <button
+                onClick={() => {
+                  if (onOpenGroqChat) {
+                    onOpenGroqChat();
+                  } else {
+                    alert("Teresa si sta accomodando in bagno col mazzo di carte unte! Apri la Chat per iniziare la lettura.");
+                  }
+                }}
+                className="w-full bg-black text-[#A0FF00] hover:bg-white hover:text-black font-anton text-lg sm:text-xl py-4 px-6 border-2 border-black flex items-center justify-center gap-3 transition shadow-[4px_4px_0px_#000] cursor-pointer"
+              >
+                <span>{article.content.cta.buttonText}</span>
+              </button>
             </div>
           )}
 
