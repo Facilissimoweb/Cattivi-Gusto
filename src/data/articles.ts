@@ -2,6 +2,7 @@ import { Article, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: 'tutti', label: 'TUTTO IL CAOS', badge: 'ALL' },
+  { id: 'economia-disperazione', label: 'ECONOMIA E DISPERAZIONE', badge: '💳' },
   { id: 'teresa-tarocchi', label: 'TERESA E I TAROCCHI', badge: '🔮' },
   { id: 'estetica-bellezza', label: 'ESTETICA & BELLEZZA BRUTTA', badge: '💄' },
   { id: 'tatuaggi', label: 'TATUAGGI CARNEI', badge: '🥩' },
@@ -16,6 +17,99 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const ARTICLES: Article[] = [
+  {
+    id: 'economia-disperazione-soldi-di-plastica-carmen-consoli',
+    title: "RUBRICA \"ECONOMIA E DISPERAZIONE\" #1: COME INVENTARE SOLDI DI PLASTICA DA UN 'AMORE DI PLASTICA'",
+    subtitle: "Inauguriamo la nuova rubrica economico-esistenziale con la lezione finanziaria di Carmen Consoli: quando l'amore stenta ad accendersi, non sa quando è il tuo compleanno e non c'è quando piangi, l'unica soluzione è convertire il vuoto affettivo in carte di credito fittizie!",
+    category: 'economia-disperazione',
+    categoryLabel: 'ECONOMIA E DISPERAZIONE',
+    author: 'Il Banker del Nulla & Carmen la Consigliere',
+    date: '25 LUGLIO 2026',
+    readTime: '7 MIN READ',
+    heroImage: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=1200',
+    imageAlt: 'Carte di credito sintetiche di plastica fluttuanti in un\'atmosfera concettuale e finanziaria',
+    imageCutoutStyle: 'paper-tape',
+    featured: true,
+    gridSpan: 'full',
+    likesCount: 61200,
+    isHot: true,
+    content: {
+      intro: "Benvenuti al debutto di \"ECONOMIA E DISPERAZIONE\", la rubrica dove l'alta finanza incontra il baratro emotivo e i bilanci in rosso dell'anima! Inauguriamo questo filone d'avanguardia prendendo spunto dalla profonda saggezza economica contenuta nel capolavoro di Carmen Consoli: 'Amore di Plastica'. Diciamocelo chiaramente: cosa fare quando un partner ti offre solo illusioni, non è mai presente nei momenti di pianto, non sa quando è il tuo compleanno e vaghi nel buio? Semplice: si batte moneta! Ecco la guida definitiva in 4 punti per convertire la delusione in valuta plastica ad alto rendimento sinteticamente garantita.",
+      sections: [
+        {
+          heading: "1. \"NON SEI PER NULLA OBBLIGATO A COMPRENDERMI\": La nascita del micro-credito emotivo",
+          paragraphs: [
+            "• DALLA CANZONE AL BILANCIO: \"Non sei per nulla obbligato a comprendermi / e quasi non sento il bisogno d'insistere...\". Nella teoria monetaria d'avanguardia, l'incomprensione di coppia è la prima materia prima ad alta densità. Quando l'altro non ti capisce e tu smetti di insistere, stai accumulando un surplus di energia inespressa.",
+            "• COME CREARE I SOLDI DI PLASTICA: Prendi vecchie tessere della palestra scadute, carte fedeltà del supermercato o tessere della videoteca del 2004. Stampaci sopra la scritta 'VALUTA DI PLASTICA SINTETICA'. Ogni volta che qualcuno ti delude o ti offre perplessità, striscia la carta su un lettore immaginario ed esclama: 'Transazione approvata dalla disperazione!'"
+          ],
+          quote: "Se l'amore che ti offrono è di plastica, non disperare: stampaci sopra un chip d'oro, fissaci un plafond da 5.000 euro e usalo per pagarci i rimpianti!"
+        },
+        {
+          heading: "2. \"TU SEI QUELLO CHE NON C'È QUANDO IO PIANGO E NON SA QUANDO È IL MIO COMPLEANNO\"",
+          paragraphs: [
+            "• IL RATING CREDITIZIO DELL'ASSENZA: In economia tradizionale, le agenzie di rating valutano i titoli di stato. In Economia e Disperazione, valutiamo l'assenza del partner. Se lui/lei non si presenta quando piangi o dimentica il tuo compleanno mentre vaghi nel buio, il suo Rating emotivo crolla a 'JUNK' (Titolo Spazzatura).",
+            "• LA TATTICA DEL RIFIUTO BANCARIO: \"Ma come posso dare l'anima / e riuscire a credere / che tutto sia più o meno facile / quando è impossibile?\". Quando il partner prova a giustificarsi con scuse inconsistenti, applica la procedura bancaria: esigi il rimborso con gli interessi ed emetti una nota di credito di sola plastica rigida!"
+          ]
+        },
+        {
+          heading: "3. \"TU SEI QUEL FUOCO CHE STENTA AD ACCENDERSI\": La parabola dell'inflazione affettiva",
+          paragraphs: [
+            "• IL FUOCO CHE STENTA AD ACCENDERSI: Un partner che stenta ad accendersi è come un conto deposito a tasso d'interesse negativo. Più investi sentimenti, più il valore reale del tuo investimento crolla per via dell'inflazione di scuse.",
+            "• REGOLA D'ORO DI CARMEN CONSOLI: \"Volevo essere più forte di ogni tua perplessità / Ma io non posso accontentarmi se tutto quello che sai darmi è un amore di plastica!\". Morale finanziaria: non accontentarti di liquidità scadente. Meglio fondare il proprio circuito di pagamento autonomo ed emettere carte dorate di pura autostima!"
+          ],
+          quote: "Non accontentarti di un amore di plastica: pretendi lingotti di presenza o, in alternativa, il pagamento immediato in contanti di dignità!"
+        }
+      ],
+      conclusion: "Si chiude così il primo capitolo di 'Economia e Disperazione'. Ricordate: se qualcuno tenta di offrirvi una relazione fatta di materiale sintetico e promesse non mantenute, alzate la testa, intonate Carmen Consoli a squarciagola e mostrate la vostra nuova carta di credito dell'indipendenza!",
+      quiz: {
+        title: "💳 TEST DI SOLVIBILITÀ EMOZIONALE: QUANTO È 'DI PLASTICA' LA TUA FINANZA SENTIMENTALE?",
+        subtitle: "Verifica il rating della tua vita amorosa con il test ufficiale di Economia e Disperazione!",
+        questions: [
+          {
+            id: 'qeco1',
+            question: "1. Il tuo partner dimentica la data del tuo compleanno e non si presenta quando hai una giornata no. Come reagisci?",
+            options: [
+              { label: 'A', text: "Ci rimango male e passo la serata a rinfacciargli gli errori del passato.", outcomeText: 'Rating Emotivo: BBB. Un classico, ma poca visione finanziario-sintetica!' },
+              { label: 'B', text: "Comincio a cantare Carmen Consoli a memoria e stampo una carta di plastica con il suo nome sbarrato!", outcomeText: 'Rating Emotivo: AAA+! Hai convertito la delusione in valuta di plastica ad altissimo rendimento!' },
+              { label: 'C', text: "Gli mando la fattura dettagliata di tutte le cene e i regali degli ultimi tre anni.", outcomeText: 'Spirito di Economia e Disperazione allo stato puro! Contabilità rigorosa!' }
+            ]
+          },
+          {
+            id: 'qeco2',
+            question: "2. Ti offrono una relazione piena di perplessità, scuse e fuochi che stentano ad accendersi. Cosa fai?",
+            options: [
+              { label: 'A', text: "Tento di riaccendere il fuoco soffiando sulle braci con pazienza infinita.", outcomeText: "Rischio inflazione al 90%! Attento ai tassi d'interesse affettivi!" },
+              { label: 'B', text: "Dichiaro il default della relazione, declino l'offerta e pretendo un amore a tasso fisso d'oro puro!", outcomeText: 'Strategia da Banca Centrale del Cuore! Nessun accontentamento di plastica!' }
+            ]
+          }
+        ]
+      },
+      cta: {
+        title: "💳 VUOI VALUTARE IL TUO RATING IN CHAT CON L'ALTER EGO?",
+        subtitle: "Apri la Chat di Redazione per consultare il 'Banker del Nulla' e ricevere consigli spietati ma esilaranti su come gestire la tua economia sentimentale!",
+        buttonText: "💬 PARLA IN CHAT DI ECONOMIA E DISPERAZIONE",
+        badge: "RUBRICA ECONOMIA E DISPERAZIONE"
+      }
+    },
+    comments: [
+      {
+        id: 'c-eco-1',
+        author: 'CarmenFanClubSicilia',
+        avatar: '🎸',
+        date: '5 minuti fa',
+        text: 'Articolo sublime! Ho appena stampato la mia carta di plastica dell\'autostima e l\'ho strisciata sul muso del mio ex!',
+        likes: 2150
+      },
+      {
+        id: 'c-eco-2',
+        author: 'EconomistaSenzaFondi',
+        avatar: '💳',
+        date: '12 minuti fa',
+        text: 'La citazione "Tu sei quello che non c\'è quando piango" applicata alle agenzie di rating è genio puro. Iscritto subito a questa nuova rubrica!',
+        likes: 1840
+      }
+    ]
+  },
   {
     id: 'beatrice-dante-dubbia-figura-accoppiamento',
     title: "LA DUBBIA FIGURA DI BEATRICE: DANTE, IL PRIMO 'STALKER' STILNOVISTA E LA DONNA CHE SALUTÒ UNA VOLTA E SPARÌ IN PARADISO",
