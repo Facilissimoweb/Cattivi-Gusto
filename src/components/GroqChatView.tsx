@@ -26,7 +26,8 @@ const PERSONAS = [
     id: 'teresa',
     name: '🔮 Teresa i Tarocchi',
     prompt: "Sei Teresa la Cartomante dell'Assurdo. Leggi il futuro nelle macchie di maionese ossidata. Rispondi con profezie comiche e surreali, scherzando con garbo sul suo destino senza mai essere cattiva, perversa o volgare. Non discutere mai di suicidio o malattie sensibili.",
-    badge: 'TAROCCHI SBALLETTATI'
+    badge: 'TAROCCHI SBALLETTATI',
+    avatarImage: '/TERESA.png'
   },
   {
     id: 'estetista',
@@ -395,7 +396,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
           </div>
         </div>
 
-        {/* Selected Persona Coach Marcus Banner (if active) */}
+        {/* Selected Persona Banner (Coach Marcus or Teresa) */}
         {selectedPersona.id === 'marcus' && (
           <div className="mb-4 bg-black text-[#A0FF00] border-2 border-black p-3 shadow-[4px_4px_0px_#000] flex items-center gap-3">
             <img src="/MARCUS.png" alt="Coach Marcus" className="w-12 h-12 object-cover border-2 border-[#A0FF00] shrink-0" />
@@ -406,6 +407,21 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
               <h4 className="font-anton text-lg uppercase tracking-wide text-white">COACH MARCUS</h4>
               <p className="font-typewriter text-xs text-neutral-300">
                 "Oggi non ce la farai, ma lo farai in canottiera e con stile Alpha imbattibile!"
+              </p>
+            </div>
+          </div>
+        )}
+
+        {selectedPersona.id === 'teresa' && (
+          <div className="mb-4 bg-black text-[#A0FF00] border-2 border-black p-3 shadow-[4px_4px_0px_#000] flex items-center gap-3">
+            <img src="/TERESA.png" alt="Teresa l'Operatrice Cartomante" className="w-12 h-12 object-cover border-2 border-[#A0FF00] shrink-0" />
+            <div>
+              <span className="bg-[#A0FF00] text-black font-anton text-[10px] px-1.5 py-0.5 uppercase tracking-wider">
+                CARTOMANTE & OPERATRICE DELL'ASSURDO IN LINEA
+              </span>
+              <h4 className="font-anton text-lg uppercase tracking-wide text-white">TERESA L'OPERATRICE</h4>
+              <p className="font-typewriter text-xs text-neutral-300">
+                "Niente liturgie solenni: mazzo di carte unte, macchie di maionese e profezie sballettate!"
               </p>
             </div>
           </div>
@@ -439,8 +455,8 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
               >
                 {!isUser && (
                   <div className="w-8 h-8 rounded-none bg-black text-[#A0FF00] border border-black flex items-center justify-center shrink-0 font-anton text-xs overflow-hidden">
-                    {selectedPersona.id === 'marcus' ? (
-                      <img src="/MARCUS.png" alt="Coach Marcus" className="w-full h-full object-cover" />
+                    {selectedPersona.avatarImage ? (
+                      <img src={selectedPersona.avatarImage} alt={selectedPersona.name} className="w-full h-full object-cover" />
                     ) : (
                       'NINA'
                     )}
@@ -455,7 +471,7 @@ export const GroqChatView: React.FC<GroqChatViewProps> = ({ onBackToHome }) => {
                   <div className="flex items-center justify-between gap-2 border-b border-neutral-300 pb-1 mb-2 font-mono text-[10px] opacity-80">
                     <span className="font-bold uppercase flex items-center gap-1">
                       {isUser ? <User className="w-3 h-3" /> : <Bot className="w-3 h-3 text-[#A0FF00]" />}
-                      {isUser ? 'TU' : (selectedPersona.id === 'marcus' ? 'COACH MARCUS' : 'NINA AI')}
+                      {isUser ? 'TU' : selectedPersona.name.toUpperCase()}
                     </span>
 
                     <div className="flex items-center gap-2">
