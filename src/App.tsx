@@ -483,6 +483,8 @@ export default function App() {
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onGoHome={handleGoHome}
+        onOpenBookmarks={() => setActiveView('bookmarks')}
+        savedCount={savedArticleIds.length}
         onOpenContacts={() => setActiveView('contacts')}
         onOpenLegal={handleOpenLegal}
         onOpenCookies={() => setIsCookieModalOpen(true)}

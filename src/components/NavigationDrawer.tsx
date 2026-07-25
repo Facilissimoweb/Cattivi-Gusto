@@ -1,8 +1,7 @@
 import React from 'react';
-import { X, Flame, Sparkles, CreditCard, Bookmark, Newspaper, Shield, FileText, ChevronRight, HelpCircle, Home, Globe } from 'lucide-react';
+import { X, ChevronRight, Home } from 'lucide-react';
 import { CATEGORIES } from '../data/articles';
 import { CategoryId } from '../types';
-import { SiteLanguageTranslator } from './SiteLanguageTranslator';
 
 interface NavigationDrawerProps {
   isOpen: boolean;
@@ -11,14 +10,14 @@ interface NavigationDrawerProps {
   onSelectCategory: (cat: CategoryId) => void;
   activeView?: string;
   onGoHome?: () => void;
-  onOpenManifesto: () => void;
-  onOpenSubscriptions: () => void;
-  onOpenBookmarks: () => void;
+  onOpenManifesto?: () => void;
+  onOpenSubscriptions?: () => void;
+  onOpenBookmarks?: () => void;
   onOpenContacts?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
   onOpenCookies?: () => void;
   onOpenGroqChat?: () => void;
-  savedCount: number;
+  savedCount?: number;
 }
 
 export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
@@ -28,14 +27,6 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onSelectCategory,
   activeView,
   onGoHome,
-  onOpenManifesto,
-  onOpenSubscriptions,
-  onOpenBookmarks,
-  onOpenContacts,
-  onOpenLegal,
-  savedCount,
-  onOpenCookies,
-  onOpenGroqChat,
 }) => {
   if (!isOpen) return null;
 
@@ -71,8 +62,8 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
             </button>
           </div>
 
-          {/* Navigation Links inside Hamburger Menu */}
-          <div className="space-y-2.5 mb-6">
+          {/* 1. HOME BUTTON */}
+          <div className="mb-6">
             <button
               onClick={() => {
                 if (onGoHome) {
@@ -82,7 +73,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 }
                 onClose();
               }}
-              className={`w-full border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between transition shadow-[3px_3px_0px_#000] cursor-pointer ${
+              className={`w-full border-2 border-black p-3.5 font-anton text-base uppercase flex items-center justify-between transition shadow-[3px_3px_0px_#000] cursor-pointer ${
                 isHomeActive 
                   ? 'bg-[#A0FF00] text-black font-bold ring-2 ring-black' 
                   : 'bg-white text-black hover:bg-[#A0FF00]'
@@ -100,118 +91,15 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 <ChevronRight className="w-5 h-5" />
               )}
             </button>
-
-            <button
-              onClick={() => {
-                onOpenSubscriptions();
-                onClose();
-              }}
-              className="w-full bg-white text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-black hover:text-white transition shadow-[3px_3px_0px_#000] cursor-pointer"
-            >
-              <div className="flex items-center gap-2">
-                <CreditCard className="w-5 h-5" />
-                <span>ABBONAMENTI SURREALI</span>
-              </div>
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={() => {
-                onOpenManifesto();
-                onClose();
-              }}
-              className="w-full bg-black text-white border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-[#A0FF00] hover:text-black transition shadow-[3px_3px_0px_#000]"
-            >
-              <div className="flex items-center gap-2">
-                <Flame className="w-5 h-5 text-[#A0FF00]" />
-                <span>FIRMA IL MANIFESTO</span>
-              </div>
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-
-
-            <div className="w-full bg-[#EFECE6] border-2 border-black p-3 flex items-center justify-between shadow-[3px_3px_0px_#000]">
-              <div className="flex items-center gap-2">
-                <Globe className="w-5 h-5 text-black" />
-                <span className="font-anton text-base uppercase">TRADUCI SITO (GOOGLE TRANSLATE)</span>
-              </div>
-              <SiteLanguageTranslator />
-            </div>
-
-            <button
-              onClick={() => {
-                onOpenBookmarks();
-                onClose();
-              }}
-              className="w-full bg-white border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-neutral-100 transition shadow-[3px_3px_0px_#000] cursor-pointer"
-            >
-              <div className="flex items-center gap-2">
-                <Bookmark className="w-5 h-5" />
-                <span>ARTICOLI SALVATI ({savedCount})</span>
-              </div>
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {onOpenContacts && (
-              <button
-                onClick={() => {
-                  onOpenContacts();
-                  onClose();
-                }}
-                className="w-full bg-[#FFFEEB] text-black border-2 border-black p-3 font-anton text-base uppercase flex items-center justify-between hover:bg-[#A0FF00] transition shadow-[3px_3px_0px_#000] cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-red-600" />
-                  <span>📞 CONTATTI ASSURDI & SEGNALAZIONI</span>
-                </div>
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            )}
-
-            {/* Legal Absurd Buttons */}
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              <button
-                onClick={() => {
-                  onOpenLegal?.('privacy');
-                  onClose();
-                }}
-                className="bg-neutral-100 border-2 border-black p-2 text-left font-anton text-xs uppercase hover:bg-[#A0FF00] hover:text-black transition cursor-pointer"
-              >
-                🔒 PRIVACY POLICY
-              </button>
-              <button
-                onClick={() => {
-                  onOpenLegal?.('terms');
-                  onClose();
-                }}
-                className="bg-neutral-100 border-2 border-black p-2 text-left font-anton text-xs uppercase hover:bg-[#A0FF00] hover:text-black transition cursor-pointer"
-              >
-                📜 TERMINI D'USO
-              </button>
-            </div>
-
-            {/* Cookie Preferences Trigger Button */}
-            {onOpenCookies && (
-              <button
-                onClick={() => {
-                  onOpenCookies();
-                  onClose();
-                }}
-                className="w-full bg-[#A0FF00] text-black border-2 border-black p-2.5 font-anton text-xs uppercase flex items-center justify-between hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer mt-2"
-              >
-                <span>🍪 GESTISCI COOKIE GROTTESCHI (24H)</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            )}
           </div>
 
-          {/* Categories Header */}
-          <div className="mb-3">
-            <h3 className="font-anton text-xl uppercase tracking-wide border-b-2 border-black pb-1 mb-3">
-              SEZIONI RIVISTA
+          {/* 2. SEZIONI RIVISTA */}
+          <div className="mb-6">
+            <h3 className="font-anton text-xl uppercase tracking-wide border-b-2 border-black pb-1 mb-3 flex items-center justify-between">
+              <span>SEZIONI RIVISTA</span>
+              <span className="text-xs font-mono bg-black text-[#A0FF00] px-2 py-0.5">CATEGORIE</span>
             </h3>
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               {CATEGORIES.map((cat) => {
                 const isSelected = selectedCategory === cat.id;
                 return (
@@ -221,13 +109,13 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       onSelectCategory(cat.id);
                       onClose();
                     }}
-                    className={`w-full text-left px-3 py-2 border-2 border-black font-anton text-sm uppercase flex items-center justify-between transition ${
+                    className={`w-full text-left px-3.5 py-2.5 border-2 border-black font-anton text-sm uppercase flex items-center justify-between transition shadow-[2px_2px_0px_#000] cursor-pointer ${
                       isSelected 
-                        ? 'bg-black text-[#A0FF00] translate-x-1 shadow-[2px_2px_0px_#A0FF00]' 
-                        : 'bg-white hover:bg-[#A0FF00]/30 text-black'
+                        ? 'bg-black text-[#A0FF00] translate-x-1 shadow-[3px_3px_0px_#A0FF00]' 
+                        : 'bg-white hover:bg-[#A0FF00] text-black'
                     }`}
                   >
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2.5">
                       <span className="text-base">{cat.badge}</span>
                       <span>{cat.label}</span>
                     </span>
@@ -254,3 +142,4 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     </div>
   );
 };
+
