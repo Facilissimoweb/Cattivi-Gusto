@@ -164,9 +164,6 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
   };
 
   // AI Image Cover Generator function
-  const [currentPromptUsed, setCurrentPromptUsed] = useState<string | null>(null);
-  const [showPromptDetails, setShowPromptDetails] = useState(false);
-
   const handleRegenerateAiCover = async () => {
     setIsGeneratingAiImage(true);
     setIsHeroLoading(true);
@@ -185,7 +182,6 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
       const data = await res.json();
       if (data.url) {
         setCurrentHeroImage(data.url);
-        setCurrentPromptUsed(data.prompt || `Surrealist illustration for H1 Headline: "${article.title}". Grainy low-fi aesthetic, high-contrast monochrome with direct flash photography...`);
         setAiImageNotice(data.notice || "Nuova illustrazione d'arte brutalista generata secondo il titolo H1!");
       }
     } catch (err) {
@@ -319,51 +315,20 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
                 Figura 1.1: {article.imageAlt}
               </p>
               
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setShowPromptDetails(!showPromptDetails)}
-                  className="bg-black text-[#A0FF00] border-2 border-black px-2.5 py-1 font-mono text-[11px] uppercase hover:bg-neutral-800 transition"
-                  title="Mostra la struttura del Prompt AI e le linee guida di stile brutalista"
-                >
-                  {showPromptDetails ? 'NASCONDI PROMPT' : '🔍 ISPEZIONE PROMPT AI'}
-                </button>
-
-                <button
-                  onClick={handleRegenerateAiCover}
-                  disabled={isGeneratingAiImage}
-                  className="bg-[#A0FF00] text-black border-2 border-black px-3 py-1 font-anton text-xs uppercase flex items-center gap-1.5 hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer"
-                  title="Genera una nuova copertina artistica basata sul titolo di questo articolo"
-                >
-                  <Sparkles className={`w-3.5 h-3.5 ${isGeneratingAiImage ? 'animate-spin' : ''}`} />
-                  <span>{isGeneratingAiImage ? 'GENERAZIONE OPERA AI IN CORSO...' : "🎨 RIGENERA OPERA D'ARTE AI"}</span>
-                </button>
-              </div>
+              <button
+                onClick={handleRegenerateAiCover}
+                disabled={isGeneratingAiImage}
+                className="bg-[#A0FF00] text-black border-2 border-black px-3 py-1 font-anton text-xs uppercase flex items-center gap-1.5 hover:bg-black hover:text-[#A0FF00] transition shadow-[2px_2px_0px_#000] cursor-pointer"
+                title="Genera una nuova copertina artistica basata sul titolo di questo articolo"
+              >
+                <Sparkles className={`w-3.5 h-3.5 ${isGeneratingAiImage ? 'animate-spin' : ''}`} />
+                <span>{isGeneratingAiImage ? 'GENERAZIONE OPERA AI IN CORSO...' : "🎨 RIGENERA OPERA D'ARTE AI"}</span>
+              </button>
             </div>
 
             {aiImageNotice && (
               <div className="mt-2 bg-black text-[#A0FF00] font-mono text-[11px] p-2 border border-[#A0FF00]">
                 ✨ {aiImageNotice}
-              </div>
-            )}
-
-            {showPromptDetails && (
-              <div className="mt-3 bg-[#FAF8F5] border-2 border-black p-3.5 space-y-2 text-xs font-mono">
-                <div className="flex items-center justify-between border-b border-black/20 pb-1.5">
-                  <span className="font-bold font-anton text-sm uppercase text-black">
-                    📐 STRUTTURA PROMPT GENERATO PER H1
-                  </span>
-                  <span className="bg-[#A0FF00] text-black text-[10px] font-bold px-1.5 py-0.5 border border-black uppercase">
-                    STILE UNIFICATO BRUTALISTA
-                  </span>
-                </div>
-                <div className="bg-black text-[#A0FF00] p-2.5 rounded-none font-mono text-[11px] leading-relaxed break-words border border-black">
-                  {currentPromptUsed || `Surrealist illustration for H1 Headline: "${article.title}". Grainy low-fi aesthetic, high-contrast monochrome with direct flash photography, surrealist imagery with intentional glitch effects, off-white background (#F4F1EA) with jarring neon green (#A0FF00) accent pops, brutalist editorial newsprint collage style, massive overlapping typography.`}
-                </div>
-                <div className="text-[11px] text-neutral-700 leading-normal space-y-1">
-                  <p><strong>1. Tecnica:</strong> grainy, low-fi aesthetic, high-contrast monochrome, direct flash photography.</p>
-                  <p><strong>2. Composizione:</strong> surrealist imagery, intentional glitch effects, broken layout.</p>
-                  <p><strong>3. Palette:</strong> Off-white (#F4F1EA), neri profondi e accenti stridenti in verde neon (#A0FF00).</p>
-                </div>
               </div>
             )}
           </div>
@@ -583,9 +548,6 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
               🔥 FIRMA IL MANIFESTO
             </button>
           </div>
-
-          {/* Social Share Section (WhatsApp, Telegram, Email, Summary & Reference Image) */}
-          <ArticleShareButtons article={article} variant="footer" />
 
           {/* Comments Thread */}
           <div className="bg-[#FAF8F5] border-2 border-black p-6 shadow-[5px_5px_0px_#000] mt-10">
