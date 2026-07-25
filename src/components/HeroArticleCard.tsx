@@ -106,7 +106,7 @@ export const HeroArticleCard: React.FC<HeroArticleCardProps> = ({
             <img
               src={article.heroImage}
               alt={article.imageAlt}
-              className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-300"
+              className="w-full h-full object-cover contrast-110 brightness-105 group-hover:scale-105 transition-all duration-300"
             />
 
             {/* Sticker Stamp */}

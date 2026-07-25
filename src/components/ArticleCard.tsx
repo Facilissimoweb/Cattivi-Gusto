@@ -93,7 +93,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           <img
             src={article.heroImage}
             alt={article.imageAlt}
-            className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-300"
+            className="w-full h-full object-cover contrast-110 brightness-105 group-hover:scale-105 transition-all duration-300"
           />
           {article.isHot && (
             <div className="absolute top-2 right-2 bg-[#A0FF00] text-black border border-black font-anton text-[10px] px-1.5 py-0.5 uppercase tracking-wider font-bold">

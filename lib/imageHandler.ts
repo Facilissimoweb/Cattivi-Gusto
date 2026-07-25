@@ -28,17 +28,20 @@ export async function handleImageGeneration(req: any, res: any) {
   const cleanPrompt = prompt.trim();
   const seed = Math.floor(Math.random() * 9999999);
 
-  // Enhance prompt with satirical magazine aesthetic
-  let styleModifier = "Satirical magazine cover illustration, vintage editorial art, high contrast, surrealist, bold colors, 4k detail";
+  // Enhance prompt with satirical magazine aesthetic following Cattivo Gusto Brutalist guidelines
+  const CATTIVO_GUSTO_BRUTALIST_STYLE = 
+    "grainy low-fi aesthetic, high-contrast monochrome with direct flash photography, surrealist imagery with intentional glitch effects, off-white background (#F4F1EA) with jarring neon green (#A0FF00) accent pops, brutalist editorial newsprint collage style, massive overlapping typography";
+
+  let styleModifier = CATTIVO_GUSTO_BRUTALIST_STYLE;
   if (style === "poster") {
-    styleModifier = "Pop art propaganda poster, vintage screenprint, bold typography aesthetic, absurdist art, high contrast";
+    styleModifier = `${CATTIVO_GUSTO_BRUTALIST_STYLE}, pop art propaganda poster, bold typography aesthetic`;
   } else if (style === "surreal") {
-    styleModifier = "Surrealist collage, Salvador Dali meets modern pop art, bizarre dreamlike composition, vivid lighting";
+    styleModifier = `${CATTIVO_GUSTO_BRUTALIST_STYLE}, bizarre dreamlike surrealist composition`;
   } else if (style === "cat") {
-    styleModifier = "Funny conspirator cat overlord artwork, retro magazine illustration, detailed fur, villainous cinematic light";
+    styleModifier = `${CATTIVO_GUSTO_BRUTALIST_STYLE}, conspirator cat overlord artwork`;
   }
 
-  const fullPrompt = `${cleanPrompt}. ${styleModifier}`;
+  const fullPrompt = `Surrealist illustration for H1 Headline: "${cleanPrompt}". ${styleModifier}`;
 
   // TIER 1: Check if GEMINI_API_KEY exists for Gemini Imagen
   const geminiKey = process.env.GEMINI_API_KEY;
