@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ChevronRight, Home } from 'lucide-react';
+import { X, ChevronRight, Home, GraduationCap, Sparkles, BookOpen } from 'lucide-react';
 import { CATEGORIES } from '../data/articles';
 import { CategoryId } from '../types';
 
@@ -10,6 +10,7 @@ interface NavigationDrawerProps {
   onSelectCategory: (cat: CategoryId) => void;
   activeView?: string;
   onGoHome?: () => void;
+  onOpenCourses?: (courseId?: 'marcus' | 'teresa' | null) => void;
   onOpenManifesto?: () => void;
   onOpenSubscriptions?: () => void;
   onOpenBookmarks?: () => void;
@@ -27,6 +28,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onSelectCategory,
   activeView,
   onGoHome,
+  onOpenCourses,
 }) => {
   if (!isOpen) return null;
 
@@ -123,6 +125,65 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          {/* 3. I NOSTRI CORSI */}
+          <div className="mb-6">
+            <h3 className="font-anton text-xl uppercase tracking-wide border-b-2 border-black pb-1 mb-3 flex items-center justify-between">
+              <span>🎓 I NOSTRI CORSI</span>
+              <span className="text-xs font-mono bg-[#A0FF00] text-black px-2 py-0.5 border border-black font-bold">ACADEMY</span>
+            </h3>
+            
+            <div className="space-y-2">
+              {/* Main Courses Link */}
+              <button
+                onClick={() => {
+                  onOpenCourses?.(null);
+                  onClose();
+                }}
+                className={`w-full text-left px-3.5 py-2.5 border-2 border-black font-anton text-sm uppercase flex items-center justify-between transition shadow-[2px_2px_0px_#000] cursor-pointer ${
+                  activeView === 'courses' 
+                    ? 'bg-[#A0FF00] text-black font-bold' 
+                    : 'bg-[#FAF8F5] hover:bg-[#A0FF00] text-black'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <GraduationCap className="w-4 h-4 text-black" />
+                  <span>🎓 TUTTI I NOSTRI CORSI</span>
+                </span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+
+              {/* Course 1: Coach Marcus */}
+              <button
+                onClick={() => {
+                  onOpenCourses?.('marcus');
+                  onClose();
+                }}
+                className="w-full text-left pl-6 pr-3 py-2 border-2 border-black font-anton text-xs uppercase flex items-center justify-between transition bg-white hover:bg-[#A0FF00] text-black shadow-[2px_2px_0px_#000] cursor-pointer"
+              >
+                <span className="flex items-center gap-2 font-bold">
+                  <span>1)</span>
+                  <span>CORSO CON COACH MARCUS</span>
+                </span>
+                <span className="text-[10px] font-mono bg-black text-[#A0FF00] px-1.5 py-0.5">LOGORREA</span>
+              </button>
+
+              {/* Course 2: Tarocchi Cubisti Teresa */}
+              <button
+                onClick={() => {
+                  onOpenCourses?.('teresa');
+                  onClose();
+                }}
+                className="w-full text-left pl-6 pr-3 py-2 border-2 border-black font-anton text-xs uppercase flex items-center justify-between transition bg-white hover:bg-[#A0FF00] text-black shadow-[2px_2px_0px_#000] cursor-pointer"
+              >
+                <span className="flex items-center gap-2 font-bold">
+                  <span>2)</span>
+                  <span>TAROCCHI CUBISTI (TERESA)</span>
+                </span>
+                <span className="text-[10px] font-mono bg-black text-[#A0FF00] px-1.5 py-0.5">ESOTERICO</span>
+              </button>
             </div>
           </div>
         </div>

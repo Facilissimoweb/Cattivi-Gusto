@@ -11,6 +11,7 @@ import { AbsurdCookieModal, ABSURD_COOKIES } from './components/AbsurdCookieModa
 import { CookieNoticeBanner } from './components/CookieNoticeBanner';
 import { GroqChatView } from './components/GroqChatView';
 import { ContactsView } from './components/ContactsView';
+import { CoursesView } from './components/CoursesView';
 import { FloatingNuvolettaGroq } from './components/FloatingNuvolettaGroq';
 import { Footer } from './components/Footer';
 import { BottomNavMobile } from './components/BottomNavMobile';
@@ -22,7 +23,8 @@ import { Flame, Sparkles, Filter, Bookmark, X, AlertCircle } from 'lucide-react'
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('tutti');
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'bookmarks' | 'groq_chat' | 'contacts'>('feed');
+  const [selectedCourseId, setSelectedCourseId] = useState<'marcus' | 'teresa' | null>(null);
+  const [activeView, setActiveView] = useState<'feed' | 'reader' | 'subscriptions' | 'bookmarks' | 'groq_chat' | 'contacts' | 'courses'>('feed');
   
   const [savedArticleIds, setSavedArticleIds] = useState<string[]>(() => {
     try {
@@ -100,6 +102,14 @@ export default function App() {
     } catch (e) {
       // ignore
     }
+  };
+
+  // Open Courses View Handler
+  const handleOpenCourses = (courseId?: 'marcus' | 'teresa' | null) => {
+    setSelectedCourseId(courseId || null);
+    setActiveView('courses');
+    setSelectedArticleId(null);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   // Legal Modal Handler
@@ -226,6 +236,7 @@ export default function App() {
         }}
         activeView={activeView}
         onGoHome={handleGoHome}
+        onOpenCourses={handleOpenCourses}
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onOpenSubscriptions={() => setActiveView('subscriptions')}
         onOpenBookmarks={() => setActiveView('bookmarks')}
@@ -238,6 +249,15 @@ export default function App() {
 
       {/* Main View Switcher */}
       <main className="flex-1">
+
+        {/* COURSES VIEW */}
+        {activeView === 'courses' && (
+          <CoursesView
+            onBackHome={handleGoHome}
+            initialCourseId={selectedCourseId}
+            onOpenGroqChat={() => setActiveView('groq_chat')}
+          />
+        )}
 
         {/* CONTACTS VIEW */}
         {activeView === 'contacts' && (
@@ -484,6 +504,7 @@ export default function App() {
         onOpenManifesto={() => setIsManifestoOpen(true)}
         onGoHome={handleGoHome}
         onOpenBookmarks={() => setActiveView('bookmarks')}
+        onOpenCourses={handleOpenCourses}
         savedCount={savedArticleIds.length}
         onOpenContacts={() => setActiveView('contacts')}
         onOpenLegal={handleOpenLegal}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Bookmark, CreditCard, HelpCircle, Shield, FileText, Cookie, Globe } from 'lucide-react';
+import { Flame, Bookmark, CreditCard, HelpCircle, Shield, FileText, Cookie, Globe, GraduationCap } from 'lucide-react';
 import { SiteLanguageTranslator } from './SiteLanguageTranslator';
 
 interface FooterProps {
@@ -7,6 +7,7 @@ interface FooterProps {
   onOpenManifesto: () => void;
   onGoHome?: () => void;
   onOpenBookmarks?: () => void;
+  onOpenCourses?: (courseId?: 'marcus' | 'teresa' | null) => void;
   savedCount?: number;
   onOpenContacts?: () => void;
   onOpenLegal?: (tab: 'privacy' | 'terms') => void;
@@ -19,6 +20,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenManifesto,
   onGoHome,
   onOpenBookmarks,
+  onOpenCourses,
   savedCount = 0,
   onOpenContacts,
   onOpenLegal,
@@ -60,6 +62,19 @@ export const Footer: React.FC<FooterProps> = ({
               </span>
               <SiteLanguageTranslator />
             </li>
+
+            {/* I NOSTRI CORSI */}
+            {onOpenCourses && (
+              <li>
+                <button 
+                  onClick={() => onOpenCourses(null)} 
+                  className="w-full text-left bg-neutral-900 hover:bg-[#A0FF00] hover:text-black border border-neutral-800 p-2 font-anton text-xs uppercase flex items-center gap-2 transition cursor-pointer"
+                >
+                  <GraduationCap className="w-4 h-4 text-[#A0FF00]" />
+                  <span>🎓 I NOSTRI CORSI (MARCUS & TERESA)</span>
+                </button>
+              </li>
+            )}
 
             {/* ABBONAMENTI */}
             <li>
