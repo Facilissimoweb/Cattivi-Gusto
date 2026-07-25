@@ -341,6 +341,31 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
             {article.content.intro}
           </div>
 
+          {/* Coach Marcus Featured Card */}
+          {(article.author.toLowerCase().includes('marcus') || article.title.toLowerCase().includes('marcus')) && (
+            <div className="bg-black text-white border-3 border-black p-5 shadow-[6px_6px_0px_#A0FF00] flex flex-col sm:flex-row items-center gap-5">
+              <img 
+                src="/MARCUS.png" 
+                alt="Coach Marcus" 
+                className="w-28 h-28 sm:w-32 sm:h-32 object-cover border-2 border-[#A0FF00] shadow-[3px_3px_0px_#A0FF00] shrink-0" 
+              />
+              <div className="space-y-1.5 text-center sm:text-left">
+                <div className="flex items-center justify-center sm:justify-start gap-2">
+                  <span className="bg-[#A0FF00] text-black font-anton text-xs px-2 py-0.5 uppercase tracking-wider">
+                    AUTORE & GURU REDAZIONALE
+                  </span>
+                </div>
+                <h4 className="font-anton text-2xl sm:text-3xl uppercase tracking-wide text-[#A0FF00]">
+                  COACH MARCUS
+                </h4>
+                <p className="font-typewriter text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                  Personal Coach di Seduzione al Contrario & Filosofia dell'Andare in Bianco.
+                  Ispiratore del Metodo Sfinimento, cultore della Fiat Duna e delle ciabatte sanitarie in ghisa.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Sections */}
           {article.content.sections.map((sec, idx) => (
             <div key={idx} className="bg-[#FAF8F5] border-2 border-black p-5 sm:p-6 shadow-[4px_4px_0px_#000] space-y-4">
@@ -357,8 +382,17 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
               ))}
 
               {sec.quote && (
-                <blockquote className="bg-[#A0FF00] border-2 border-black p-4 font-typewriter text-sm sm:text-base font-bold text-black my-4 shadow-[3px_3px_0px_#000] rotate-[-1deg]">
-                  "{sec.quote}"
+                <blockquote className="bg-[#A0FF00] border-2 border-black p-4 font-typewriter text-sm sm:text-base font-bold text-black my-4 shadow-[3px_3px_0px_#000] rotate-[-0.5deg] flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  {(sec.quote.toLowerCase().includes('marcus') || sec.heading?.toLowerCase().includes('marcus') || article.author.toLowerCase().includes('marcus')) && (
+                    <img 
+                      src="/MARCUS.png" 
+                      alt="Coach Marcus Quote" 
+                      className="w-12 h-12 rounded-none object-cover border-2 border-black shrink-0 shadow-[2px_2px_0px_#000]" 
+                    />
+                  )}
+                  <div>
+                    "{sec.quote}"
+                  </div>
                 </blockquote>
               )}
             </div>
