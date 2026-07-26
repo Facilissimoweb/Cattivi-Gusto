@@ -1,13 +1,21 @@
-// Helper for cross-platform SpeechSynthesis normalization (especially Apple iOS/macOS Safari)
+// Helper for cross-platform SpeechSynthesis normalization (especially Apple iOS/macOS Safari & Chrome)
 
 export function initSpeechVoices() {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    // Pre-trigger voice loading for Safari
-    window.speechSynthesis.getVoices();
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-      };
+    // Pre-trigger voice loading for Safari / Chrome
+    try {
+      window.speechSynthesis.getVoices();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = () => {
+          try {
+            window.speechSynthesis.getVoices();
+          } catch (e) {
+            // ignore
+          }
+        };
+      }
+    } catch (e) {
+      // ignore
     }
   }
 }
@@ -18,8 +26,7 @@ export function createNormalizedUtterance(text: string): SpeechSynthesisUtteranc
   // Enforce standard Italian language tag
   utterance.lang = 'it-IT';
   
-  // STRICT NORMALIZATION: Keep pitch at 1.0 and rate at 1.0.
-  // Pitch modulation in Apple WebKit/Safari causes severe robotic distortion on iOS/macOS.
+  // Pitch and rate normalization for natural speech across browsers
   utterance.pitch = 1.0;
   utterance.rate = 1.0;
 
@@ -60,24 +67,35 @@ export function createNormalizedUtterance(text: string): SpeechSynthesisUtteranc
 
 // Module-level references to prevent Garbage Collection during active speech playback
 let globalUtteranceQueue: SpeechSynthesisUtterance[] = [];
-let keepAliveInterval: any = null;
+let chunkWatchdogTimer: any = null;
+let interChunkTimer: any = null;
 let isSpeakingGlobal = false;
 let currentOnEndCallback: (() => void) | null = null;
 
 export function stopSpeech() {
+  if (interChunkTimer) {
+    clearTimeout(interChunkTimer);
+    interChunkTimer = null;
+  }
+  if (chunkWatchdogTimer) {
+    clearTimeout(chunkWatchdogTimer);
+    chunkWatchdogTimer = null;
+  }
+
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     try {
       window.speechSynthesis.cancel();
     } catch (e) {
       // ignore
     }
+    // Clear global window references to allow clean garbage collection on stop
+    delete (window as any)._activeSpeechQueue;
+    delete (window as any)._activeSpeechUtterance;
   }
-  if (keepAliveInterval) {
-    clearInterval(keepAliveInterval);
-    keepAliveInterval = null;
-  }
+
   globalUtteranceQueue = [];
   isSpeakingGlobal = false;
+
   if (currentOnEndCallback) {
     const cb = currentOnEndCallback;
     currentOnEndCallback = null;
@@ -92,6 +110,7 @@ export function stopSpeech() {
 export function cleanTextForSpeech(text: string): string {
   if (!text) return '';
   return text
+    .replace(/<[^>]*>/g, '') // remove HTML tags
     .replace(/https?:\/\/\S+/g, '') // remove URLs
     .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '') // remove emojis
     .replace(/[*#_~`•]/g, ' ') // remove markdown symbols
@@ -99,27 +118,28 @@ export function cleanTextForSpeech(text: string): string {
     .trim();
 }
 
-export function splitTextIntoChunks(text: string, maxChunkLength = 150): string[] {
+export function splitTextIntoChunks(text: string, maxChunkLength = 130): string[] {
   const cleaned = cleanTextForSpeech(text);
   if (!cleaned) return [];
 
-  // Split by sentence ending punctuation
-  const rawSentences = cleaned.match(/[^.!?;]+[.!?;]+/g) || [cleaned];
+  // Split text cleanly by sentence boundaries (. ! ? ; : \n), retaining all text without losing trailing sentences
+  const rawSentences = cleaned
+    .split(/(?<=[.!?;:])\s+|\n+/)
+    .map(s => s.trim())
+    .filter(Boolean);
+
   const chunks: string[] = [];
 
   for (const sentence of rawSentences) {
-    const trimmed = sentence.trim();
-    if (!trimmed) continue;
-
-    if (trimmed.length <= maxChunkLength) {
-      chunks.push(trimmed);
+    if (sentence.length <= maxChunkLength) {
+      chunks.push(sentence);
     } else {
       // Split long sentences by clauses (commas, colons, dashes) or word bounds
-      const subClauses = trimmed.split(/(?<=[,:\-\–])\s+/);
+      const subClauses = sentence.split(/(?<=[,:\-\–])\s+/);
       let currentChunk = '';
 
       for (const clause of subClauses) {
-        if ((currentChunk + ' ' + clause).trim().length <= maxChunkLength) {
+        if ((currentChunk ? `${currentChunk} ${clause}` : clause).length <= maxChunkLength) {
           currentChunk = currentChunk ? `${currentChunk} ${clause}` : clause;
         } else {
           if (currentChunk.trim()) chunks.push(currentChunk.trim());
@@ -127,10 +147,10 @@ export function splitTextIntoChunks(text: string, maxChunkLength = 150): string[
             currentChunk = clause;
           } else {
             // Word level split for ultra long clauses
-            const words = clause.split(' ');
+            const words = clause.split(/\s+/);
             currentChunk = '';
             for (const word of words) {
-              if ((currentChunk + ' ' + word).trim().length > maxChunkLength) {
+              if ((currentChunk ? `${currentChunk} ${word}` : word).length > maxChunkLength) {
                 if (currentChunk.trim()) chunks.push(currentChunk.trim());
                 currentChunk = word;
               } else {
@@ -184,35 +204,66 @@ export function speakText(
 
   // Pre-create and store utterances to prevent Garbage Collection during speech
   globalUtteranceQueue = chunks.map((chunkText) => createNormalizedUtterance(chunkText));
+  (window as any)._activeSpeechQueue = globalUtteranceQueue;
 
   let currentChunkIndex = 0;
 
-  const playNextChunk = () => {
-    if (!isSpeakingGlobal || currentChunkIndex >= globalUtteranceQueue.length) {
+  const playChunk = (index: number) => {
+    if (!isSpeakingGlobal || index >= globalUtteranceQueue.length) {
       stopSpeech();
       return;
     }
 
-    const currentUtterance = globalUtteranceQueue[currentChunkIndex];
+    currentChunkIndex = index;
+    const currentUtterance = globalUtteranceQueue[index];
+    (window as any)._activeSpeechUtterance = currentUtterance;
 
-    currentUtterance.onend = () => {
-      currentChunkIndex++;
-      if (currentChunkIndex < globalUtteranceQueue.length) {
-        playNextChunk();
+    let hasHandledEnd = false;
+
+    const advanceToNext = () => {
+      if (hasHandledEnd) return;
+      hasHandledEnd = true;
+
+      if (chunkWatchdogTimer) {
+        clearTimeout(chunkWatchdogTimer);
+        chunkWatchdogTimer = null;
+      }
+
+      if (!isSpeakingGlobal) return;
+
+      const nextIndex = currentChunkIndex + 1;
+      if (nextIndex < globalUtteranceQueue.length) {
+        // 50ms breather gives browser speech engine time to reset audio context between chunks
+        interChunkTimer = setTimeout(() => {
+          playChunk(nextIndex);
+        }, 50);
       } else {
         stopSpeech();
       }
+    };
+
+    currentUtterance.onend = () => {
+      advanceToNext();
     };
 
     currentUtterance.onerror = (e) => {
       console.warn('Speech chunk error, advancing:', e);
-      currentChunkIndex++;
-      if (currentChunkIndex < globalUtteranceQueue.length) {
-        playNextChunk();
-      } else {
-        stopSpeech();
-      }
+      advanceToNext();
     };
+
+    // Watchdog timer: If a chunk doesn't finish within timeout, force advance
+    const estimatedDurationMs = Math.max(8000, (currentUtterance.text.length / 10) * 1000 + 4000);
+    chunkWatchdogTimer = setTimeout(() => {
+      if (isSpeakingGlobal && !hasHandledEnd) {
+        console.warn(`Speech chunk ${index} watchdog triggered after timeout. Forcing next chunk.`);
+        try {
+          window.speechSynthesis.cancel();
+        } catch (e) {
+          // ignore
+        }
+        advanceToNext();
+      }
+    }, estimatedDurationMs);
 
     try {
       if (window.speechSynthesis.paused) {
@@ -221,25 +272,14 @@ export function speakText(
       window.speechSynthesis.speak(currentUtterance);
     } catch (err) {
       console.error('SpeechSynthesis.speak failed:', err);
-      stopSpeech();
+      advanceToNext();
     }
   };
 
-  // Keep-alive timer for Chrome 15s pause bug
-  keepAliveInterval = setInterval(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }
-    }
-  }, 10000);
-
   // Short delay after cancel() to ensure browser speech engine resets cleanly
-  setTimeout(() => {
-    playNextChunk();
+  interChunkTimer = setTimeout(() => {
+    playChunk(0);
   }, 60);
 
   return () => stopSpeech();
 }
-

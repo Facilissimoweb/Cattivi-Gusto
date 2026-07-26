@@ -49,7 +49,7 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
   const [dontClickEffect, setDontClickEffect] = useState<string | null>(null);
   const [copiedToast, setCopiedToast] = useState(false);
 
-  // Reset state and scroll to top when article changes
+  // Reset state and scroll to top when article changes or component unmounts
   useEffect(() => {
     window.scrollTo(0, 0);
     setCurrentHeroImage(article.heroImage);
@@ -59,6 +59,10 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
     setQuizAnswers({});
     setIsPlayingSpeech(false);
     stopSpeech();
+
+    return () => {
+      stopSpeech();
+    };
   }, [article.id]);
 
   // Programmatically suggest 3 other articles from the same category
@@ -116,7 +120,15 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
         stopSpeech();
         setIsPlayingSpeech(false);
       } else {
-        const textToRead = `${article.title}. ${article.subtitle}. ${article.content.intro} ${article.content.sections.map(s => s.paragraphs.join(' ')).join(' ')}`;
+        const textParts = [
+          article.title,
+          article.subtitle,
+          article.content.intro,
+          ...article.content.sections.flatMap(s => [s.title, ...s.paragraphs])
+        ].filter(Boolean);
+
+        const textToRead = textParts.join('. ');
+
         speakText(textToRead, {
           onStart: () => setIsPlayingSpeech(true),
           onEnd: () => setIsPlayingSpeech(false),
